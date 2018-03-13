@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_image">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="fill_horizontal"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/hospital"/>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/pharmacy"/>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/municipality"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvHospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="13dp"
+                android:text="בתי חולים"
+                android:textSize="22dp"
+                tools:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tvPharmacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:text="בתי מרקחת"
+                android:textSize="22dp"
+                tools:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tvMunicipality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="עירייה"
+                android:textSize="22dp"
+                tools:textColor="@color/colorAccent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/bank"/>
+
+            <ImageButton
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/postal_service"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="28dp"
+                android:text="בנקים"
+                android:textSize="22dp"
+                tools:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tvPostal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="שירותי דואר"
+                android:textSize="22dp"
+                tools:textColor="@color/colorAccent" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
