@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity{
         tvSearch.setTextSize(20);
     }
 
-    public void bttnCategory(View v)
+    public void OnClickCategory(View v)
     {
         Intent i = new Intent(MainActivity.this,Categories.class);
         startActivity(i);

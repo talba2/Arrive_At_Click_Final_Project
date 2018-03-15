@@ -16,7 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Categories"></activity>
+        <activity android:name=".Categories" />
+        <activity android:name=".Hospitals" />
+        <activity android:name=".Banks" />
+        <activity android:name=".Pharmacies" />
+        <activity android:name=".Postal_Services" />
+        <activity android:name=".Municipality"></activity>
     </application>
 
 </manifest>
