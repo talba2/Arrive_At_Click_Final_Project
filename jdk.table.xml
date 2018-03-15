@@ -46,7 +46,7 @@
     <jdk version="2">
       <name value="Android API 27 Platform" />
       <type value="Android SDK" />
-      <homePath value="C:\Android\SDK" />
+      <homePath value="C:\Users\sapirbu\AppData\Local\Android\Sdk" />
       <roots>
         <annotationsPath>
           <root type="composite">
@@ -55,18 +55,16 @@
         </annotationsPath>
         <classPath>
           <root type="composite">
-            <root type="simple" url="jar://C:/Android/SDK/platforms/android-27/android.jar!/" />
-            <root type="simple" url="file://C:/Android/SDK/platforms/android-27/data/res" />
+            <root type="simple" url="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-27/android.jar!/" />
+            <root type="simple" url="file://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-27/data/res" />
           </root>
         </classPath>
         <javadocPath>
-          <root type="composite">
-            <root type="simple" url="http://developer.android.com/reference/" />
-          </root>
+          <root type="composite" />
         </javadocPath>
         <sourcePath>
           <root type="composite">
-            <root type="simple" url="file://C:/Android/SDK/sources/android-27" />
+            <root type="simple" url="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27" />
           </root>
         </sourcePath>
       </roots>
@@ -75,7 +73,7 @@
     <jdk version="2">
       <name value="Android API 26 Platform" />
       <type value="Android SDK" />
-      <homePath value="C:\Android\SDK" />
+      <homePath value="C:\Users\sapirbu\AppData\Local\Android\Sdk" />
       <roots>
         <annotationsPath>
           <root type="composite">
@@ -84,8 +82,8 @@
         </annotationsPath>
         <classPath>
           <root type="composite">
-            <root type="simple" url="jar://C:/Android/SDK/platforms/android-26/android.jar!/" />
-            <root type="simple" url="file://C:/Android/SDK/platforms/android-26/data/res" />
+            <root type="simple" url="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-26/android.jar!/" />
+            <root type="simple" url="file://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-26/data/res" />
           </root>
         </classPath>
         <javadocPath>
