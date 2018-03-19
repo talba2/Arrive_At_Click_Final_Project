@@ -14,19 +14,58 @@ public class Categories extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        ImageButton button = (ImageButton)findViewById(R.id.bttnBank);
-        button.setOnClickListener(new View.OnClickListener() {
+        ImageButton bttnBank = (ImageButton)findViewById(R.id.bttnBank);
+        bttnBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OnClickBanks(v);
+            }
+        });
+
+        ImageButton bttnPharmacies = (ImageButton)findViewById(R.id.bttnPharmacy);
+        bttnPharmacies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickPharmacies(v);
+            }
+        });
+
+        ImageButton bttnPostal = (ImageButton)findViewById(R.id.bttnPostal);
+        bttnPostal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickPostal(v);
+            }
+        });
+
+        ImageButton bttnMunicipality = (ImageButton)findViewById(R.id.bttnMunicipality);
+        bttnMunicipality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickMunicipality(v);
+            }
+        });
+
+        ImageButton bttnHospitals = (ImageButton)findViewById(R.id.bttnHospital);
+        bttnHospitals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickHospitals(v);
+            }
+        });
+
+        ImageButton bttnHMOospitals = (ImageButton)findViewById(R.id.bttnHMO);
+        bttnHospitals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickHMO(v);
             }
         });
     }
 
     public void OnClickBanks(View v)
     {
-        final Context context = this;
-        Intent i = new Intent(context,Banks.class);
+        Intent i = new Intent(this,Banks.class);
         startActivity(i);
     }
 
@@ -36,7 +75,7 @@ public class Categories extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void OnClickPPostal(View v)
+    public void OnClickPostal(View v)
     {
         Intent i = new Intent(Categories.this,Postal_Services.class);
         startActivity(i);
@@ -54,5 +93,10 @@ public class Categories extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void OnClickHMO(View v)
+    {
+        Intent i = new Intent(Categories.this,HMO.class);
+        startActivity(i);
+    }
 
 }

@@ -1,207 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/background_image">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
+        android:fillViewport="true"
         android:layout_height="match_parent"
-        android:gravity="fill_horizontal"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center" >
 
         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/bttnLeumi"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/leumi"/>
-
-            <ImageButton
-                android:id="@+id/bttnPoalim"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/poalim"/>
-
-            <ImageButton
-                android:id="@+id/bttnDiskont"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/diskont"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvLeumi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
-                android:text="בנק לאומי"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tvPoalim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:text="בנק הפועלים"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tvDiskont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="22dp"
-                android:text="בנק דיסקונט"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <ImageButton
-                android:id="@+id/bttnMarcantil"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/marcantil"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-            <ImageButton
-                android:id="@+id/bttnTfahot"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/tfahot"/>
+                <ImageButton
+                    android:id="@+id/bttnLeumi"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/leumi"/>
 
-            <ImageButton
-                android:id="@+id/bttnUbank"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/ubank"/>
+                <ImageButton
+                    android:id="@+id/bttnPoalim"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/poalim"/>
 
+                <ImageButton
+                    android:id="@+id/bttnDiskont"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/diskont"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvLeumi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="13dp"
+                    android:text="בנק לאומי"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvPoalim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:text="בנק הפועלים"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvDiskont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="22dp"
+                    android:text="בנק דיסקונט"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:id="@+id/bttnMarcantil"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/marcantil"/>
+
+                <ImageButton
+                    android:id="@+id/bttnTfahot"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/tfahot"/>
+
+                <ImageButton
+                    android:id="@+id/bttnUbank"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/ubank"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvMarcantil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="מרכנתיל"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvTfahot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="22dp"
+                    android:text="מזרחי טפחות"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvUbank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="22dp"
+                    android:text="יובנק"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:id="@+id/bttnCitiBank"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/citibank"/>
+
+                <ImageButton
+                    android:id="@+id/bttnMasad"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/masad"/>
+
+                <ImageButton
+                    android:id="@+id/bttnSalika"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/salika"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvCitiBank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="26dp"
+                    android:text="Citibank"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvMasad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="27dp"
+                    android:text="בנק מסד"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvSalika"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="סליקה בנקאי"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:id="@+id/bttnIgud"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/igud"/>
+
+                <ImageButton
+                    android:id="@+id/bttnYahav"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/yahav"/>
+
+                <ImageButton
+                    android:id="@+id/bttnOtzar"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/otzar_hahayal"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvIgud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="בנק איגוד"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvYahv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:text="בנק יהב"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvOtzar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="אוצר החייל"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvMarcantil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="28dp"
-                android:text="מרכנתיל"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tvTfahot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="22dp"
-                android:text="מזרחי טפחות"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tvUbank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="22dp"
-                android:text="יובנק"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/bttnCitiBank"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/citibank"/>
-
-            <ImageButton
-                android:id="@+id/bttnMasad"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/masad"/>
-
-            <ImageButton
-                android:id="@+id/bttnSalika"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginRight="17dp"
-                android:background="@drawable/salika"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvCitiBank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="26dp"
-                android:text="Citibank"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tvMasad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="27dp"
-                android:text="בנק מסד"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tvSalika"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="28dp"
-                android:text="סליקה בנקאי"
-                android:textSize="22dp"
-                tools:textColor="@color/colorAccent" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

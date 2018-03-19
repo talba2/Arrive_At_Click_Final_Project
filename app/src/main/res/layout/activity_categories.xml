@@ -99,7 +99,15 @@
                 android:layout_height="90dp"
                 android:layout_marginRight="17dp"
                 android:background="@drawable/postal_service"
-                android:onClick="OnClickPPostal" />
+                android:onClick="OnClickPostal" />
+
+            <ImageButton
+                android:id="@+id/bttnHMO"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/hmo"
+                android:onClick="OnClickHMO" />
 
         </LinearLayout>
         <LinearLayout
@@ -125,6 +133,16 @@
                 android:text="שירותי דואר"
                 android:textSize="22dp"
                 tools:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tvHMO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="קופות חולים"
+                android:textSize="22dp"
+                tools:textColor="@color/colorAccent" />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
