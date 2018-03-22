@@ -35,14 +35,16 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/leumi"/>
+                    android:background="@drawable/leumi"
+                    android:onClick="OnClickLeumi" />
 
                 <ImageButton
                     android:id="@+id/bttnPoalim"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/poalim"/>
+                    android:background="@drawable/poalim"
+                    android:onClick="OnClickPoalim" />
 
                 <ImageButton
                     android:id="@+id/bttnDiskont"
