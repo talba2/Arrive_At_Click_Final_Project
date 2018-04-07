@@ -1,3 +1,4 @@
+package com.example.arrive_at_click;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +15,7 @@ import java.sql.Statement;
 import  com.example.arrive_at_click.*;
 import javax.sql.RowSetReader;
 import javax.sql.RowSetWriter;
+
 public class ConnectionClass {
 
     String ip,db,un,password;
@@ -40,6 +42,7 @@ public class ConnectionClass {
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());
         }
+
         return conn;
     }
 
@@ -53,7 +56,7 @@ public class ConnectionClass {
     public int CountRecords(String table, String term)
     {
         int count = 0;
-       Connection conn = null;
+        Connection conn = null;
         try {
 
             String myIp= "10.0.0.7";

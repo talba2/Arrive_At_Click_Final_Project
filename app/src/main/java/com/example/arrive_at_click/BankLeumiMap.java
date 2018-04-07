@@ -11,19 +11,26 @@ import com.google.android.gms.maps.model.LatLng;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.util.Log;
 import java.sql.Connection;
 
 public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
+    private Marker[] placeMarkers;
+    private int num;
+    private MarkerOptions[] places;
+    public LatLng myCurrentLoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,8 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        ConnectionClass con = new ConnectionClass();
+
 
     }
 
@@ -61,11 +70,14 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
-        addBankLeumiPoints();
+        try {
+            addBankLeumiPoints();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void addBankLeumiPoints()
-    {
+    private void addBankLeumiPoints() throws JSONException {
         LatLng lat1=new LatLng(32.063722, 34.76962);
         mMap.addMarker(new MarkerOptions().position(lat1).title("אחד העם 9"));
 
@@ -73,6 +85,22 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(lat1).title("דיזינגוף 55 מגדל על"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lat2));
+
+        ConnectionClass con = new ConnectionClass();
+        con.CONN();
+        num = con.CountRecords("Sites", " name LIKE '%בנק לאומי%'");
+        placeMarkers = new Marker[num];
+        JSONObject resultObject = new JSONObject();
+        JSONArray placesArray = resultObject.getJSONArray("resualts");
+        places = new MarkerOptions[num];
+        //loop through places
+        for (int p=0; p<placesArray.length(); p++) {
+            //parse each place
+        }
+
+
+
+
     }
 
     private void enableMyLocationIfPermitted() {
