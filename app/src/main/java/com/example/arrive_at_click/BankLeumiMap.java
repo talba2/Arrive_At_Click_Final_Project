@@ -41,7 +41,7 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        ConnectionClass con = new ConnectionClass();
+        //ConnectionClass con = new ConnectionClass();
 
 
     }
@@ -65,10 +65,6 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setMinZoomPreference(11);
-        // Add a marker in Sydney and move the camera
-        /*LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
         try {
             addBankLeumiPoints();
@@ -84,21 +80,24 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         LatLng lat2=new LatLng(32.075108, 34.775822);
         mMap.addMarker(new MarkerOptions().position(lat1).title("דיזינגוף 55 מגדל על"));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lat2));
+       mMap.moveCamera(CameraUpdateFactory.newLatLng(lat2));
 
-        ConnectionClass con = new ConnectionClass();
-        con.CONN();
-        num = con.CountRecords("Sites", " name LIKE '%בנק לאומי%'");
+
+        num = MainActivity.con.CountRecords("Sites", " name LIKE '%בנק לאומי%'");
         placeMarkers = new Marker[num];
         JSONObject resultObject = new JSONObject();
-        JSONArray placesArray = resultObject.getJSONArray("resualts");
+        JSONArray placesArray = resultObject.getJSONArray("results");
         places = new MarkerOptions[num];
+
+        LatLng lat3=new LatLng(30.0, 35.0);
+        String tmp= String.valueOf(num);
+        mMap.addMarker(new MarkerOptions().position(lat3).title(tmp));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lat3));
+
         //loop through places
         for (int p=0; p<placesArray.length(); p++) {
             //parse each place
         }
-
-
 
 
     }
@@ -167,7 +166,6 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
                     mMap.addCircle(circleOptions);*/
 
                     LatLng myCurrentLoc = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.clear();
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(myCurrentLoc));
                     mMap.addMarker(new MarkerOptions().position(myCurrentLoc).title("My current position"));
                 }

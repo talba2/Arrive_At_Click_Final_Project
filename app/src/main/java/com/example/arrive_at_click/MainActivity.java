@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity{
-
+    public static ConnectionClass con = new ConnectionClass();
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
