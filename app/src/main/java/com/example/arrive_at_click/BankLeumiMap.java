@@ -23,6 +23,10 @@ import org.json.JSONObject;
 import android.util.Log;
 import java.sql.Connection;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -31,6 +35,8 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
     private int num;
     private MarkerOptions[] places;
     public LatLng myCurrentLoc;
+    private MarkerOptions banksOptions = new MarkerOptions();
+    private ArrayList<LatLng> banksPoints = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +47,6 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //ConnectionClass con = new ConnectionClass();
-
 
     }
 
@@ -74,13 +78,13 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void addBankLeumiPoints() throws JSONException {
-        LatLng lat1=new LatLng(32.063722, 34.76962);
+        /*LatLng lat1=new LatLng(32.063722, 34.76962);
         mMap.addMarker(new MarkerOptions().position(lat1).title("אחד העם 9"));
 
         LatLng lat2=new LatLng(32.075108, 34.775822);
         mMap.addMarker(new MarkerOptions().position(lat1).title("דיזינגוף 55 מגדל על"));
 
-       mMap.moveCamera(CameraUpdateFactory.newLatLng(lat2));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lat2));
 
 
         num = MainActivity.con.CountRecords("Sites", " name LIKE '%בנק לאומי%'");
@@ -97,9 +101,9 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         //loop through places
         for (int p=0; p<placesArray.length(); p++) {
             //parse each place
-        }
+        }*/
 
-
+        ResultSet bankLeumiTable=MainActivity.con.getData("Sites", " name LIKE '%בנק לאומי%'");
     }
 
     private void enableMyLocationIfPermitted() {

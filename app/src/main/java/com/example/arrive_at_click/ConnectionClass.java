@@ -22,12 +22,12 @@ public class ConnectionClass {
 
     String ip,db,un,password;
     String classs = "ConnectionClass";
-    static String  connString;
+    static String connString;
     //private static ConnectionClass obj;
     private Connection con;
 
     @SuppressLint("NewApi")
-    public  ConnectionClass(){
+    public ConnectionClass(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -71,8 +71,7 @@ public class ConnectionClass {
         try {
             String driver = "net.sourceforge.jtds.jdbc.Driver";
             Class.forName(driver).newInstance();
-            con= DriverManager.getConnection(connString);
-
+            con = DriverManager.getConnection(connString);
         }
 
      catch (Exception e)
@@ -103,6 +102,24 @@ public class ConnectionClass {
         //*****need to continue here******//
 
         return arr;
+    }
+
+    public ResultSet getData(String table, String where)
+    {
+        ResultSet reset=null;
+        try {
+
+            openConn();
+            Statement stmt = con.createStatement();
+            reset = stmt.executeQuery("select * from " + table + " where" + where );
+
+            closeConn();
+        }
+        catch (Exception e) {
+            Log.w("Error connection", "" + e.getMessage());
+        }
+
+        return reset;
     }
 
     public int CountRecords(String table, String term) throws NoSuchElementException
