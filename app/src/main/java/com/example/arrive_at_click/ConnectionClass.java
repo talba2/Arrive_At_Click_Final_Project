@@ -104,14 +104,14 @@ public class ConnectionClass {
         return arr;
     }
 
-    public ResultSet getData(String table, String where)
+    public ResultSet getTable(String select, String table, String where)
     {
-        ResultSet reset=null;
+        ResultSet rs=null;
         try {
 
             openConn();
             Statement stmt = con.createStatement();
-            reset = stmt.executeQuery("select * from " + table + " where" + where );
+            rs = stmt.executeQuery("select " + select + " from " + table + " where" + where );
 
             closeConn();
         }
@@ -119,13 +119,12 @@ public class ConnectionClass {
             Log.w("Error connection", "" + e.getMessage());
         }
 
-        return reset;
+        return rs;
     }
 
     public int CountRecords(String table, String term) throws NoSuchElementException
     {
         int count = 0;
-        //Connection conn = null;
         try {
 
             openConn();

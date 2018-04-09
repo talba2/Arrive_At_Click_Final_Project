@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.SQLException;
 
 public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback {
 
@@ -72,12 +73,12 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
 
         try {
             addBankLeumiPoints();
-        } catch (JSONException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void addBankLeumiPoints() throws JSONException {
+    private void addBankLeumiPoints() throws SQLException {
         /*LatLng lat1=new LatLng(32.063722, 34.76962);
         mMap.addMarker(new MarkerOptions().position(lat1).title("אחד העם 9"));
 
@@ -103,7 +104,24 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
             //parse each place
         }*/
 
-        ResultSet bankLeumiTable=MainActivity.con.getData("Sites", " name LIKE '%בנק לאומי%'");
+        /*
+        ResultSet bankLeumiTable=MainActivity.con.getTable("addSite, coorA, coorB","Sites", " name LIKE '%בנק לאומי%'");
+        try {
+            while (bankLeumiTable.next())
+            {
+                String address=bankLeumiTable.getString("addSite");
+                float latitude=bankLeumiTable.getFloat("coorA");
+                float longitude=bankLeumiTable.getFloat("coorB");
+                LatLng lt=new LatLng(latitude,longitude);
+                //banksPoints.add(lt);
+                banksOptions.position(lt);
+                banksOptions.title(address);
+                mMap.addMarker(banksOptions);
+            }
+        }
+        catch (SQLException e ) {
+             e.printStackTrace();
+         }*/
     }
 
     private void enableMyLocationIfPermitted() {
