@@ -21,7 +21,6 @@ import javax.sql.RowSetWriter;
 public class ConnectionClass {
 
     String ip,db,un,password;
-    String classs = "ConnectionClass";
     static String connString;
     //private static ConnectionClass obj;
     private Connection con;
@@ -71,7 +70,9 @@ public class ConnectionClass {
         try {
             String driver = "net.sourceforge.jtds.jdbc.Driver";
             Class.forName(driver).newInstance();
+            connString=talConn();
             con = DriverManager.getConnection(connString);
+            Log.w("Connection","open");
         }
 
      catch (Exception e)
@@ -166,7 +167,7 @@ public class ConnectionClass {
         un="talba2";
         password="talmusai147";
         String serverName="DESKTOP-7AT3KOA\\TAL";
-        return "jdbc:jtds:sqlserver://"+ip+";"+"databaseName="+db+";user="+un+";password="+password+";";
+        return "jdbc:jtds:sqlserver://"+ip+";"+"instanceName="+serverName +";databaseName"+ db +";user="+un+";password="+password+";";
     }
 
 }

@@ -32,10 +32,10 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
-    private Marker[] placeMarkers;
+    //private Marker[] placeMarkers;
     private int num;
-    private MarkerOptions[] places;
-    public LatLng myCurrentLoc;
+    //private MarkerOptions[] places;
+    //public LatLng myCurrentLoc;
     private MarkerOptions banksOptions = new MarkerOptions();
     private ArrayList<LatLng> banksPoints = new ArrayList<>();
 
@@ -104,7 +104,7 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
             //parse each place
         }*/
 
-        /*
+
         ResultSet bankLeumiTable=MainActivity.con.getTable("addSite, coorA, coorB","Sites", " name LIKE '%בנק לאומי%'");
         try {
             while (bankLeumiTable.next())
@@ -120,8 +120,9 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
             }
         }
         catch (SQLException e ) {
-             e.printStackTrace();
-         }*/
+            e.printStackTrace();
+        }
+
     }
 
     private void enableMyLocationIfPermitted() {
