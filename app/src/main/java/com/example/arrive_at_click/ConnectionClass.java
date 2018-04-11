@@ -6,15 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
-import java.lang.Object;
 import android.annotation.SuppressLint;
 import android.os.StrictMode;
 import android.util.Log;
-import java.lang.Object.*;
 import java.sql.Statement;
 import java.util.NoSuchElementException;
 
-import  com.example.arrive_at_click.*;
 import javax.sql.RowSetReader;
 import javax.sql.RowSetWriter;
 
@@ -22,14 +19,13 @@ public class ConnectionClass {
 
     String ip,db,un,password;
     static String connString;
-    //private static ConnectionClass obj;
-    private Connection con;
+    //private Connection con;
 
     @SuppressLint("NewApi")
     public ConnectionClass(){
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        StrictMode.setThreadPolicy(policy);*/
         //Connection conn = null;
         //String ConnURL = null;
         /*try {
@@ -47,7 +43,7 @@ public class ConnectionClass {
 
         return conn;
         */
-        init();
+        //init();
     }
 
     public  void init()
@@ -56,44 +52,60 @@ public class ConnectionClass {
         //connString=sapirConn();
     }
 
-    /*
-    public  ConnectionClass Check()
+    @SuppressLint("NewApi")
+    public Connection openConn()
     {
-        if (obj == null)
-            obj = new ConnectionClass();
-        return obj;
-    }*/
-
-    public  void openConn()
-    {
-        con=null;
+        Connection conn=null;
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         try {
             String driver = "net.sourceforge.jtds.jdbc.Driver";
             Class.forName(driver).newInstance();
             connString=talConn();
-            con = DriverManager.getConnection(connString);
+            conn = DriverManager.getConnection(connString);
             Log.w("Connection","open");
         }
-
-     catch (Exception e)
-        {
-        Log.w("Error connection", "" + e.getMessage());
+        catch (SQLException se) {
+            Log.e("ERROR", se.getMessage());
+        } catch (ClassNotFoundException e) {
+            Log.e("ERROR", e.getMessage());
+        } catch (Exception e) {
+            Log.e("ERROR", e.getMessage());
         }
-
+        return conn;
     }
 
+    private String sapirConn()
+    {
+        ip="10.0.0.7";
+        db="Final_Project";
+        un="sapirbu";
+        password="";
+        return "jdbc:jtds:sqlserver://"+ip+";"+"databaseName="+db+";user="+un+";password="+password+";";
+    }
+
+    private String talConn()
+    {
+        ip="localhost";
+        db="Arrive_At_Click";
+        //un="talba2";
+        //db="DESKTOP-7AT3KOA\\TAL";
+        //password="talmusai147";
+        return "jdbc:jtds:sqlserver://"+ip +";"+"databaseName="+ db +";"+"integratedSecurity=true;";
+        //return "jdbc:jtds:sqlserver://"+ip +"/"+ db +";user="+un+";password="+password+";instance="+"TAL";
+    }
+
+    /*
     public void closeConn()
     {
         try {
-            con.close();
-        }
+            con.close(); }
 
-        catch (Exception e)
-        {
+        catch (Exception e) {
             Log.w("Error connection", "" + e.getMessage());
         }
-
-    }
+    }*/
 
     public String[] read(SQLInput stream, String typeName,int numOfRows)
     {
@@ -110,11 +122,11 @@ public class ConnectionClass {
         ResultSet rs=null;
         try {
 
-            openConn();
-            Statement stmt = con.createStatement();
+            Connection conn=openConn();
+            Statement stmt = conn.createStatement();
             rs = stmt.executeQuery("select " + select + " from " + table + " where" + where );
 
-            closeConn();
+            conn.close();
         }
         catch (Exception e) {
             Log.w("Error connection", "" + e.getMessage());
@@ -127,22 +139,15 @@ public class ConnectionClass {
     {
         int count = 0;
         try {
-
-            openConn();
-           // String driver = "net.sourceforge.jtds.jdbc.Driver";
-            //Class.forName(driver).newInstance();
-            //String connString =talConn();
-
-           // conn = DriverManager.getConnection(connString);
-            Statement stmt = con.createStatement();
+            Connection conn=openConn();
+            Statement stmt = conn.createStatement();
             ResultSet reset = stmt.executeQuery("select * from " + table + " where" + term );
 
             while (reset.next()) {
                 count++;
             }
 
-           closeConn();
-
+           conn.close();
 
         } catch (Exception e) {
             Log.w("Error connection", "" + e.getMessage());
@@ -150,24 +155,5 @@ public class ConnectionClass {
 
         return count;
     }
-
-    private String sapirConn()
-    {
-        ip="10.0.0.7";
-        db="Final_Project";
-        un="sapirbu";
-        password="";
-        return "jdbc:jtds:sqlserver://"+ip+";"+"databaseName="+db+";user="+un+";password="+password+";";
-    }
-
-    private String talConn()
-    {
-        ip="192.168.1.2";
-        db="Arrive_At_Click";
-        un="talba2";
-        password="talmusai147";
-        String serverName="DESKTOP-7AT3KOA\\TAL";
-        return "jdbc:jtds:sqlserver://"+ip+";"+"instanceName="+serverName +";databaseName"+ db +";user="+un+";password="+password+";";
-    }
-
 }
+
