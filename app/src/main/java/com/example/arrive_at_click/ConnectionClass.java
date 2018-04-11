@@ -78,11 +78,11 @@ public class ConnectionClass {
 
     private String sapirConn()
     {
-        ip="10.0.0.7";
-        db="Final_Project";
-        un="sapirbu";
-        password="";
-        return "jdbc:jtds:sqlserver://"+ip+";"+"databaseName="+db+";user="+un+";password="+password+";";
+        //ip="10.0.0.7";
+        //db="Final_Project";
+        //un="sapirbu";
+        //password="";
+        return "jdbc:sqlserver://localhost;user=sapirbu;password=;";
     }
 
     private String talConn()
