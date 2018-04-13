@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
@@ -24,6 +23,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        customDebugType {
+            debuggable true
+        }
+
     }
     externalNativeBuild {
         cmake {
