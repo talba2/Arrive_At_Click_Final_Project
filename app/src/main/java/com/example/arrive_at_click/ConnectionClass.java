@@ -48,8 +48,8 @@ public class ConnectionClass {
 
     public  void init()
     {
-        connString = talConn();
-        //connString=sapirConn();
+        //connString = talConn();
+        connString=sapirConn();
     }
 
     @SuppressLint("NewApi")
@@ -62,7 +62,7 @@ public class ConnectionClass {
         try {
             String driver = "net.sourceforge.jtds.jdbc.Driver";
             Class.forName(driver).newInstance();
-            connString=talConn();
+            connString=sapirConn();
             conn = DriverManager.getConnection(connString);
             Log.w("Connection","open");
         }
@@ -82,7 +82,7 @@ public class ConnectionClass {
         //db="Final_Project";
         //un="sapirbu";
         //password="";
-        return "jdbc:sqlserver://localhost;user=sapirbu;password=;";
+        return "jdbc:sqlserver://localhost:1433;user=sapirSql;password=sapir123;";
     }
 
     private String talConn()
