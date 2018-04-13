@@ -94,7 +94,7 @@ public class ConnectionClass {
         //password="talmusai147";
         //return "jdbc:jtds:sqlserver://"+ip +";"+"databaseName="+ db +";"+"integratedSecurity=true;";
         //return "jdbc:jtds:sqlserver://"+ip +"/"+ db +";user="+un+";password="+password+";instance="+"TAL";
-        return "jdbc:jtds:sqlserver://localhost;user=talba2;password=tmusai147;";
+        return "jdbc:jtds:sqlserver://localhost:1433/Arrive_At_Click;user=talSql;password=tal123;";
     }
 
     /*
