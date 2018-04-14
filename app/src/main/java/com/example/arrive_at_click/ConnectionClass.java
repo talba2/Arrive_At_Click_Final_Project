@@ -62,7 +62,8 @@ public class ConnectionClass {
         try {
             String driver = "net.sourceforge.jtds.jdbc.Driver";
             Class.forName(driver).newInstance();
-            connString=talConn();
+            //connString=talConn();
+            connString=sapirConn();
             conn = DriverManager.getConnection(connString);
             Log.w("Connection","open");
         }
