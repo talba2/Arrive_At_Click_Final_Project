@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         TextView tvWelcome = (TextView) findViewById(R.id.tvWelcome);
-        //set the font size 50
+        //set the font size 60
         tvWelcome.setTextSize(60);
 
         TextView bttnCategory = (TextView) findViewById(R.id.bttnCategory);
@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity{
 
     public void OnClickCategory(View v)
     {
-        Intent i = new Intent(MainActivity.this,Categories.class);
+        /*Intent i = new Intent(MainActivity.this,Categories.class);
+        startActivity(i);*/
+
+         Intent i = new Intent(MainActivity.this,Information.class);
         startActivity(i);
     }
 
