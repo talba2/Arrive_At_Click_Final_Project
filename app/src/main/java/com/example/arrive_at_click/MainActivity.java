@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity{
 
     public void OnClickCategory(View v)
     {
-        /*Intent i = new Intent(MainActivity.this,Categories.class);
-        startActivity(i);*/
-
-         Intent i = new Intent(MainActivity.this,Information.class);
+        Intent i = new Intent(MainActivity.this,Categories.class);
         startActivity(i);
+
+         /*Intent i = new Intent(MainActivity.this,Information.class);
+        startActivity(i);*/
     }
 
     /**

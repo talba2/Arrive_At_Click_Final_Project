@@ -46,7 +46,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/yellow_star" />
         </LinearLayout>
 
@@ -189,8 +189,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:weightSum="2">
 
@@ -199,25 +199,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="right"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvAvailLevel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginTop="5dp"
-                        android:text="רמת נגישות(1-4): "
+
+                        android:text="רמת נגישות: "
                         android:textColor="@android:color/black"
                         android:textSize="22sp"
                         android:textStyle="bold" />
+
+                    <SeekBar
+                        android:id="@+id/seekBar1"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:enabled="false"
+                        android:max="4" />
+
 
                     <EditText
                         android:id="@+id/etAvailLevel"
                         android:layout_width="58dp"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
+                        android:enabled="false"
                         android:inputType="text" />
 
                 </LinearLayout>
@@ -226,9 +235,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
                     <TextView
                         android:id="@+id/tvAvailClientLevel"
@@ -236,10 +245,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginTop="5dp"
-                        android:text="דירוג גולשים(1-4): "
+                        android:text="דירוג גולשים: "
                         android:textColor="@android:color/black"
                         android:textSize="22sp"
                         android:textStyle="bold" />
+
+                    <SeekBar
+                        android:id="@+id/seekBar2"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:enabled="false"
+                        android:max="4" />
 
                     <EditText
                         android:id="@+id/etAvailClientLevel"
@@ -263,7 +280,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:text="נגישות: "
+                    android:text="פרטי נגישות: "
                     android:textColor="@android:color/black"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -312,6 +329,111 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="דרג בעצמך:  "
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="4"
+                        android:stepSize="1.0"
+                        android:rating="3.0" />
+
+                    <Button
+                        android:id="@+id/bttnSend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/categorybttn"
+                        android:backgroundTint="@color/colorAccent"
+                        android:text="דרג"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvOpinion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="5dp"
+                    android:text="חוות דעת:"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tvClientName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:text="שם: "
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etClientName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:inputType="text" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|right"
+                    android:inputType="textMultiLine"
+                    android:lines="8"
+                    android:maxLines="10"
+                    android:minLines="6"
+                    android:background="#F0F8FF"
+                    android:hint="הקלד חוות דעת..."
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
