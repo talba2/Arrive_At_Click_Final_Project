@@ -1,10 +1,18 @@
 package com.example.arrive_at_click;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
 import android.widget.TextView;
+
+import com.example.arrive_at_click.database.DatabaseHelper;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity{
     public static ConnectionClass con = new ConnectionClass();

@@ -1,8 +1,12 @@
 package com.example.arrive_at_click;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.arrive_at_click.adapter.ListSiteAdapter;
+import com.example.arrive_at_click.database.DatabaseHelper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,41 +18,106 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.util.Log;
-import java.sql.Connection;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import com.example.arrive_at_click.model.Site;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import java.io.File;
 
 public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
+    private MarkerOptions banksOptions = new MarkerOptions();
+    private ArrayList<Site> bankList;
+    private Spinner bankLeumiSpinner;
+    private ListSiteAdapter adapter;
+    private DatabaseHelper DBHelper;
+    public static String itemSelected;
+
     //private Marker[] placeMarkers;
-    private int num;
+    //private int num;
     //private MarkerOptions[] places;
     //public LatLng myCurrentLoc;
-    private MarkerOptions banksOptions = new MarkerOptions();
-    private ArrayList<LatLng> banksPoints = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_leumi_map);
 
+        Button bttnGO = (Button)findViewById(R.id.bttnGo);
+        bttnGO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickGO(v);
+            }
+        });
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        bankLeumiSpinner=(Spinner)findViewById(R.id.spLeumi);
+        DBHelper= new DatabaseHelper(this);
+
+        //checks exists database
+        File database=getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
+        if(database.exists()==false){
+            DBHelper.getReadableDatabase();
+            //copy db
+            if(copyDatabase(this))
+                Toast.makeText(this,"copy db successfully",Toast.LENGTH_SHORT).show();
+            else
+            {
+                Toast.makeText(this,"copy db error",Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        //get site list from db
+        bankList  = DBHelper.getListSites();
+        //init adapter
+        adapter = new ListSiteAdapter(this,bankList);
+        //set adapter for spinner
+        //bankLeumiSpinner.setAdapter(adapter);
+
+        int length=adapter.getCount();
+        String[] bankAddress=new String[length];
+        for(int i=0;i<length;++i)
+            bankAddress[i]=bankList.get(i).getAddSite();
+
+        ArrayAdapter<String> bankAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,bankAddress);
+        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bankLeumiSpinner.setAdapter(bankAdapter);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        itemSelected=parent.getSelectedItem().toString();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
+    public void OnClickGO(View v)
+    {
+        Intent i = new Intent(this,Information.class);
+        startActivity(i);
     }
 
     /**
@@ -78,51 +147,39 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void addBankLeumiPoints() throws SQLException {
-        /*LatLng lat1=new LatLng(32.063722, 34.76962);
-        mMap.addMarker(new MarkerOptions().position(lat1).title("אחד העם 9"));
-
-        LatLng lat2=new LatLng(32.075108, 34.775822);
-        mMap.addMarker(new MarkerOptions().position(lat1).title("דיזינגוף 55 מגדל על"));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lat2));
-
-
-        num = MainActivity.con.CountRecords("Sites", " name LIKE '%בנק לאומי%'");
-        placeMarkers = new Marker[num];
-        JSONObject resultObject = new JSONObject();
-        JSONArray placesArray = resultObject.getJSONArray("results");
-        places = new MarkerOptions[num];
-
-        LatLng lat3=new LatLng(30.0, 35.0);
-        String tmp= String.valueOf(num);
-        mMap.addMarker(new MarkerOptions().position(lat3).title(tmp));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lat3));
-
-        //loop through places
-        for (int p=0; p<placesArray.length(); p++) {
-            //parse each place
-        }*/
-
-
-        ResultSet bankLeumiTable=MainActivity.con.getTable("addSite, coorA, coorB","Sites", " name LIKE '%בנק לאומי%'");
-        try {
-            while (bankLeumiTable.next())
-            {
-                String address=bankLeumiTable.getString("addSite");
-                float latitude=bankLeumiTable.getFloat("coorA");
-                float longitude=bankLeumiTable.getFloat("coorB");
-                LatLng lt=new LatLng(latitude,longitude);
-                //banksPoints.add(lt);
-                banksOptions.position(lt);
-                banksOptions.title(address);
-                mMap.addMarker(banksOptions);
-            }
+    private boolean copyDatabase(Context context)
+    {
+        try{
+            InputStream inputStream=context.getAssets().open(DatabaseHelper.DBNAME);
+            String OutFileName=DatabaseHelper.DBLOCATION + DatabaseHelper.DBNAME;
+            OutputStream outputStream=new FileOutputStream(OutFileName);
+            byte[]buff=new byte[1024];
+            int length=0;
+            while((length=inputStream.read(buff))>0)
+                outputStream.write(buff,0,length);
+            outputStream.flush();
+            outputStream.close();
+            Log.w("BankLeumiMap","DB copied");
+            return true;
         }
-        catch (SQLException e ) {
+        catch (Exception e){
             e.printStackTrace();
+            return false;
         }
+    }
 
+    private void addBankLeumiPoints() throws SQLException {
+
+        LatLng lt=null;
+
+        for(int i=0;i<adapter.getCount();++i)
+        {
+            lt=new LatLng(bankList.get(i).getLatitude(),bankList.get(i).getLongitude());
+            banksOptions.position(lt);
+            banksOptions.title(bankList.get(i).getAddSite());
+            mMap.addMarker(banksOptions);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
+        }
     }
 
     private void enableMyLocationIfPermitted() {
@@ -193,4 +250,6 @@ public class BankLeumiMap extends FragmentActivity implements OnMapReadyCallback
                     mMap.addMarker(new MarkerOptions().position(myCurrentLoc).title("My current position"));
                 }
             };
+
+
 }

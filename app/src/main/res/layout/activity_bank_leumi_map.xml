@@ -16,21 +16,20 @@
 
         <Spinner
             android:id="@+id/spLeumi"
-            android:layout_width="261dp"
+            android:layout_width="230dp"
             android:layout_height="60dp"
             android:layout_gravity="right"
-            android:background="@drawable/spinner_border"
-            android:text="בחר סניף בנק לאומי" />
+            android:background="@drawable/spinner_border"/>
 
         <Button
             android:id="@+id/bttnGo"
             android:layout_width="107dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/categorybttn"
             android:backgroundTint="@color/colorAccent"
             android:text="GO"
+            android:onClick="OnClickGO"
             android:textColor="@android:color/background_light"
             android:textStyle="bold" />
 
