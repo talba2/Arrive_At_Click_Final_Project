@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class Municipality extends AppCompatActivity {
 
+    public static String MunicipalityWasClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

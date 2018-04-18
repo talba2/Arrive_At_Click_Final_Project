@@ -36,7 +36,7 @@
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
                     android:background="@drawable/leumi"
-                    android:onClick="OnClickLeumi" />
+                    android:onClick="OnClickBank" />
 
                 <ImageButton
                     android:id="@+id/bttnPoalim"
@@ -44,14 +44,15 @@
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
                     android:background="@drawable/poalim"
-                    android:onClick="OnClickPoalim" />
+                    android:onClick="OnClickBank" />
 
                 <ImageButton
                     android:id="@+id/bttnDiskont"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/diskont"/>
+                    android:background="@drawable/diskont"
+                    android:onClick="OnClickBank"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,21 +101,24 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/marcantil"/>
+                    android:background="@drawable/marcantil"
+                    android:onClick="OnClickBank"/>
 
                 <ImageButton
                     android:id="@+id/bttnTfahot"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/tfahot"/>
+                    android:background="@drawable/tfahot"
+                    android:onClick="OnClickBank"/>
 
                 <ImageButton
                     android:id="@+id/bttnUbank"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/ubank"/>
+                    android:background="@drawable/ubank"
+                    android:onClick="OnClickBank"/>
 
             </LinearLayout>
             <LinearLayout
@@ -165,21 +169,24 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/citibank"/>
+                    android:background="@drawable/citibank"
+                    android:onClick="OnClickBank"/>
 
                 <ImageButton
                     android:id="@+id/bttnMasad"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/masad"/>
+                    android:background="@drawable/masad"
+                    android:onClick="OnClickBank"/>
 
                 <ImageButton
                     android:id="@+id/bttnSalika"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/salika"/>
+                    android:background="@drawable/salika"
+                    android:onClick="OnClickBank"/>
 
             </LinearLayout>
             <LinearLayout
@@ -229,21 +236,24 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/igud"/>
+                    android:background="@drawable/igud"
+                    android:onClick="OnClickBank"/>
 
                 <ImageButton
                     android:id="@+id/bttnYahav"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/yahav"/>
+                    android:background="@drawable/yahav"
+                    android:onClick="OnClickBank"/>
 
                 <ImageButton
                     android:id="@+id/bttnOtzar"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
-                    android:background="@drawable/otzar_hahayal"/>
+                    android:background="@drawable/otzar_hahayal"
+                    android:onClick="OnClickBank"/>
 
             </LinearLayout>
             <LinearLayout
@@ -281,6 +291,110 @@
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
 
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:weightSum="3">
+
+            <ImageButton
+                android:id="@+id/bttnHaleumi"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/bank"
+                android:onClick="OnClickBank"/>
+
+            <ImageButton
+                android:id="@+id/bttnPoaleAguda"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/bank"
+                android:onClick="OnClickBank"/>
+
+            <ImageButton
+                android:id="@+id/bttnDeksia"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/bank"
+                android:onClick="OnClickBank"/>
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvHaleumi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="הבנק הלאומי"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvPoaleAguda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:text="פועלי אגודת ישראל"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/tvDeksia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="בנק דקסיה"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:weightSum="1">
+
+                <ImageButton
+                    android:id="@+id/bttnOtomat"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginRight="17dp"
+                    android:background="@drawable/bank"
+                    android:onClick="OnClickBank"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tvOtomat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="28dp"
+                    android:text="שירותי בנק אוטומטיים"
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class Hospitals extends AppCompatActivity {
+    public static String HospitalsWasClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

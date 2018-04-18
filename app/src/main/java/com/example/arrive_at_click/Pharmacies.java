@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class Pharmacies extends AppCompatActivity {
 
+    public static String PharmaciesWasClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

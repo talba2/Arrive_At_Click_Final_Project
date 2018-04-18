@@ -22,6 +22,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,10 +49,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".BankLeumiMap"
-            android:label="@string/title_activity_bank_leumi_map" />
-        <activity android:name=".Information"></activity>
+        <activity android:name=".Information" />
+        <activity android:name=".MapPage"></activity>
     </application>
 
 </manifest>

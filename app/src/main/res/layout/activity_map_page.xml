@@ -1,21 +1,21 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:gravity="fill_horizontal"
+
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#FFFFFF">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/spLeumi"
+            android:id="@+id/AddressSpinner"
+            android:spinnerMode="dialog"
             android:layout_width="230dp"
             android:layout_height="60dp"
             android:layout_gravity="right"
@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/bttnGo"
-            android:layout_width="107dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="@drawable/categorybttn"
@@ -43,6 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        tools:context="com.example.arrive_at_click.BankLeumiMap" />
+        tools:context="com.example.arrive_at_click.MapPage" />
 
 </LinearLayout>

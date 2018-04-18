@@ -1,10 +1,32 @@
 package com.example.arrive_at_click;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.content.Intent;
+
+import com.example.arrive_at_click.adapter.ListSiteAdapter;
+import com.example.arrive_at_click.database.DatabaseHelper;
+import com.example.arrive_at_click.model.Site;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Map;
 
 public class Information extends AppCompatActivity {
+
+    String siteAddress;
+    private ArrayList<Site> siteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,25 +36,87 @@ public class Information extends AppCompatActivity {
         TextView tvTitle = (TextView) findViewById(R.id.tvDetails);
         tvTitle.setTextSize(30);
 
-        /*TextView tvName = (TextView) findViewById(R.id.tvName);
-        tvTitle.setTextSize(20);
+        SeekBar sbWeb = (SeekBar) findViewById(R.id.seekBarWeb);
+        sbWeb.setEnabled(false);
 
-        TextView tvAddress = (TextView) findViewById(R.id.tvAddress);
-        tvTitle.setTextSize(20);
+        SeekBar sbClient = (SeekBar) findViewById(R.id.seekBarClient);
+        sbClient.setEnabled(false);
 
-        TextView tvPhone = (TextView) findViewById(R.id.tvPhone);
-        tvTitle.setTextSize(20);
+        siteAddress = MapPage.itemSelected; //keep spinner selection
 
-        TextView tvFax = (TextView) findViewById(R.id.tvFax);
-        tvTitle.setTextSize(20);
+        ConnectionClass.DBHelper = new DatabaseHelper(this);
 
-        TextView tvAvailability = (TextView) findViewById(R.id.tvAvailability);
-        tvAvailability.setTextSize(20);
+        //checks exists database
+        File database = getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
+        if (database.exists() == false) {
+            ConnectionClass.DBHelper.getReadableDatabase();
+            //copy db
+            ConnectionClass con = new ConnectionClass();
+            if (con.copyDatabase(this))
+                Toast.makeText(this, "copy db successfully", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(this, "copy db error", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
-        TextView tvAvailLevel = (TextView) findViewById(R.id.tvAvailLevel);
-        tvAvailLevel.setTextSize(20);
+        //get bank leumi list from db
+        siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
 
-        TextView tvAvailClientLevel = (TextView) findViewById(R.id.tvAvailClientLevel);
-        tvAvailClientLevel.setTextSize(20);*/
+        //set values of a specific site
+        EditText siteName = (EditText) findViewById(R.id.etName);
+        siteName.setText(siteList.get(0).getName());
+
+        EditText siteAdd = (EditText) findViewById(R.id.etAddress);
+        siteAdd.setText(siteList.get(0).getAddSite());
+
+        EditText sitePhone = (EditText) findViewById(R.id.etPhone);
+        String phone = siteList.get(0).getPhoneNum();
+        if (phone == null)
+            sitePhone.setText("נתון חסר");
+            //sitePhone.setTextColor(8421504); //gray color
+        else
+            sitePhone.setText(phone);
+
+        //fax number??
+
+        EditText siteOpenHour = (EditText) findViewById(R.id.etOpenHours);
+        String hours = siteList.get(0).getDesSite();
+        if (hours == null)
+            siteOpenHour.setText("נתון חסר");
+            //siteOpenHour.setTextColor(8421504); //gray color
+        else
+            siteOpenHour.setText(hours);
+
+
+        EditText siteAvailWeb =(EditText)findViewById(R.id.etAvailLevel);
+        int AccessWeb=siteList.get(0).getAccessByWeb();
+        siteAvailWeb.setText(String.valueOf(AccessWeb)+"/4");
+        sbWeb.setProgress(AccessWeb);
+
+        EditText siteAvailClient =(EditText)findViewById(R.id.etAvailClientLevel);
+        int AccessClient=siteList.get(0).getAccessByUser();
+        siteAvailClient.setText(String.valueOf(AccessClient)+"/4");
+        sbClient.setProgress(AccessClient);
+
+        //update facilities access
+
+        //set bttnGo listener
+        ImageButton bttnNavigate = (ImageButton)findViewById(R.id.bttnNavigate);
+        bttnNavigate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickNavigate(v);
+            }
+        });
     }
+
+    public void OnClickNavigate(View v)
+    {
+        String uri = String.format(Locale.ENGLISH, "geo:%f,%f", siteList.get(0).getLatitude(),  siteList.get(0).getLongitude());
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
+    }
+
 }

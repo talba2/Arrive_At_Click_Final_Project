@@ -42,11 +42,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mDatabase.close();
     }
 
-    public ArrayList<Site> getListSites(){
+    public ArrayList<Site> getListSites(String select, String where){
         Site site=null;
         ArrayList<Site> siteList=new ArrayList<>();
         openDatabase();
-        Cursor cursor= mDatabase.rawQuery("SELECT * FROM Sites WHERE name LIKE '%בנק לאומי%'",null);
+        Cursor cursor;
+        if (where==null)
+            cursor= mDatabase.rawQuery("SELECT " + select + " FROM Sites",null);
+        else
+            cursor= mDatabase.rawQuery("SELECT * FROM Sites WHERE "+ where,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             site=new Site(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(6),cursor.getInt(7),cursor.getInt(8),cursor.getFloat(9),cursor.getFloat(10));
@@ -57,4 +61,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         closeDatabase();
         return siteList;
     }
+
 }

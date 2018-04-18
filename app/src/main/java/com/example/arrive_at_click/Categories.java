@@ -9,6 +9,8 @@ import android.content.Context;
 
 public class Categories extends AppCompatActivity {
 
+    public static String categoryName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,36 +67,42 @@ public class Categories extends AppCompatActivity {
 
     public void OnClickBanks(View v)
     {
+        categoryName="Banks";
         Intent i = new Intent(this,Banks.class);
         startActivity(i);
     }
 
     public void OnClickPharmacies(View v)
     {
+        categoryName="Pharmacies";
         Intent i = new Intent(Categories.this,Pharmacies.class);
         startActivity(i);
     }
 
     public void OnClickPostal(View v)
     {
+        categoryName="Postal";
         Intent i = new Intent(Categories.this,Postal_Services.class);
         startActivity(i);
     }
 
     public void OnClickMunicipality(View v)
     {
+        categoryName="Municipality";
         Intent i = new Intent(Categories.this,Municipality.class);
         startActivity(i);
     }
 
     public void OnClickHospitals(View v)
     {
+        categoryName="Hospitals";
         Intent i = new Intent(Categories.this,Hospitals.class);
         startActivity(i);
     }
 
     public void OnClickHMO(View v)
     {
+        categoryName="HMO";
         Intent i = new Intent(Categories.this,HMO.class);
         startActivity(i);
     }
