@@ -5,13 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.arrive_at_click.database.DatabaseHelper;
+import com.example.arrive_at_click.model.Site;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity{
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
         TextView tvSearch = (TextView) findViewById(R.id.tvSearch);
         //set the font size 20
         tvSearch.setTextSize(20);
+
     }
 
     public void OnClickCategory(View v)
@@ -48,6 +53,23 @@ public class MainActivity extends AppCompatActivity{
         startActivity(i);*/
     }
 
+    public void OnClickSearch(View v)
+    {
+        EditText txtVal = (EditText)findViewById(R.id.etSearch);
+        searchResults.searchvalue = txtVal.getText().toString();
+
+        Intent i = new Intent(this,searchResults.class);
+
+        startActivity(i);
+
+    }
+
+
+    public void OnClickAdmin(View v)
+    {
+        Intent i = new Intent(this,AdminPage.class);
+        startActivity(i);
+    }
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.

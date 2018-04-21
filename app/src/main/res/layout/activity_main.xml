@@ -12,12 +12,23 @@
         tools:layout_editor_absoluteX="143dp"
         tools:layout_editor_absoluteY="0dp">
 
+    <Button
+        android:id="@+id/bttnAdmin"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/adminImage"
+        android:onClick="OnClickAdmin"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="Welcome!"
             android:textColor="@color/colorAccent"
             android:textStyle="bold|italic" />
@@ -40,26 +51,42 @@
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_gravity="right"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="חיפוש אתר באופן חופשי"
         tools:textColor="@color/colorAccent" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
         <EditText
             android:id="@+id/etSearch"
-            android:layout_width="258dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
             android:gravity="top"
             android:background="@drawable/search_et"
             android:inputType="text" />
 
+        <ImageButton
+            android:id="@+id/bttnSearch"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/imageSearch"
+            android:onClick="OnClickSearch"/>
+    </LinearLayout>
+
     <ImageView
-        android:layout_width="262dp"
-        android:layout_height="85dp"
+        android:layout_width="220dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/background" />
 
 
