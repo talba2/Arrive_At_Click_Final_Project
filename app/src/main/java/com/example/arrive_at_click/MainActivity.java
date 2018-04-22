@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity{
     {
         Intent i = new Intent(MainActivity.this,Categories.class);
         startActivity(i);
-
-         /*Intent i = new Intent(MainActivity.this,Information.class);
-        startActivity(i);*/
     }
 
     public void OnClickSearch(View v)

@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.File;
 import java.util.ArrayList;
-/*
+
 public class searchResults extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -37,11 +37,12 @@ public class searchResults extends FragmentActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_page);
 
+        /*
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    /*
+
         //set bttnGo listener
         Button bttnGO = (Button) findViewById(R.id.bttnGo);
         bttnGO.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +69,8 @@ public class searchResults extends FragmentActivity implements OnMapReadyCallbac
         }
 
         siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + searchvalue + "%' OR name LIKE '%" + searchvalue + "%' OR category LIKE '%"+ searchvalue + "%'" );
-
-
-    }
-/*
+*/
+        }
     private void OnClickGO(View v) {
         //itemSelected=AddressSpinner.getSelectedItem().toString();
         Intent i = new Intent(this,Information.class);
@@ -123,4 +122,4 @@ public class searchResults extends FragmentActivity implements OnMapReadyCallbac
             mMap.setMinZoomPreference(15);
 
         }
-}*/
+}

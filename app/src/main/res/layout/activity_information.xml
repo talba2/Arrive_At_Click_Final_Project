@@ -271,11 +271,11 @@
                     android:textSize="18sp" />
 
                 <CheckBox
-                    android:id="@+id/cbElevator"
+                    android:id="@+id/cbRailing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="מעלית"
+                    android:text="מעקה"
                     android:clickable="false"
                     android:textSize="18sp" />
 
@@ -416,7 +416,7 @@
                         android:stepSize="1.0" />
 
                     <Button
-                        android:id="@+id/bttnSend"
+                        android:id="@+id/bttnVote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
@@ -474,18 +474,92 @@
 
                 </LinearLayout>
 
-                <EditText
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|right"
-                    android:inputType="textMultiLine"
-                    android:lines="8"
-                    android:maxLines="10"
-                    android:minLines="6"
-                    android:background="#F0F8FF"
-                    android:hint="הקלד חוות דעת..."
-                    android:layout_marginTop="10dp"
-                    android:scrollbars="vertical" />
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|right"
+                        android:inputType="textMultiLine"
+                        android:lines="8"
+                        android:maxLines="10"
+                        android:minLines="6"
+                        android:background="#F0F8FF"
+                        android:hint="הקלד חוות דעת..."
+                        android:layout_marginTop="10dp"
+                        android:scrollbars="vertical" />
+
+                    <Button
+                        android:id="@+id/bttnSend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@drawable/categorybttn"
+                        android:backgroundTint="@color/colorAccent"
+                        android:text="שלח"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvOpinions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="חוות דעת קיימות: "
+                    android:textSize="22dp"
+                    tools:textColor="@color/colorAccent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+
+
+                    <ListView
+                        android:id="@+id/lvOpinion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </ListView>
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="13dp"
+                        android:text="תאריך: "
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:id="@+id/tvScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="13dp"
+                        android:text="דירוג: "
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:id="@+id/tvPersonOpinion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="13dp"
+                        android:text="חוות דעת: "
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

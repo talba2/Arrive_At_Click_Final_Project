@@ -5,9 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 
+import com.example.arrive_at_click.model.Opinion;
 import com.example.arrive_at_click.model.Site;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DBNAME="sqLite.db";
@@ -42,18 +44,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mDatabase.close();
     }
 
-    public ArrayList<Site> getListSites(String select, String where){
-        Site site=null;
-        ArrayList<Site> siteList=new ArrayList<>();
+    public ArrayList<Site> getListSites(String select, String where) {
+        Site site = null;
+        ArrayList<Site> siteList = new ArrayList<>();
         openDatabase();
         Cursor cursor;
-        if (where==null)
-            cursor= mDatabase.rawQuery("SELECT " + select + " FROM Sites",null);
+        if (where == null)
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Sites", null);
         else
-            cursor= mDatabase.rawQuery("SELECT * FROM Sites WHERE "+ where,null);
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Sites WHERE " + where, null);
+
         cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
-            site=new Site(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(6),cursor.getInt(7),cursor.getInt(8),cursor.getFloat(9),cursor.getFloat(10));
+        while (!cursor.isAfterLast()) {
+            site = new Site(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(6), cursor.getInt(7), cursor.getInt(8), cursor.getFloat(9), cursor.getFloat(10));
             siteList.add(site);
             cursor.moveToNext();
         }
@@ -62,4 +65,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return siteList;
     }
 
+    public ArrayList<Opinion> getListOpinions(String select, String where) {
+        Opinion opinion = null;
+        ArrayList<Opinion> opinionList = new ArrayList<>();
+        openDatabase();
+        Cursor cursor;
+        if (where == null)
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion", null);
+        else
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion WHERE " + where, null);
+
+        cursor.moveToFirst();
+        if(select=="*")
+        {
+            while (!cursor.isAfterLast()) {
+                opinion = new Opinion(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), new Date(cursor.getLong(4)*1000));
+                opinionList.add(opinion);
+                cursor.moveToNext();
+            }
+        }
+        else
+        {
+            while (!cursor.isAfterLast()) {
+                opinion = new Opinion(new Date(cursor.getLong(4)*1000), cursor.getInt(3), cursor.getString(2));
+                opinionList.add(opinion);
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        closeDatabase();
+        return opinionList;
+    }
 }

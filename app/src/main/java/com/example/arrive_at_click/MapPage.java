@@ -34,13 +34,15 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
-    private MarkerOptions banksOptions = new MarkerOptions();
+    private MarkerOptions Options = new MarkerOptions();
     private ArrayList<Site> SitesList;
     private Spinner AddressSpinner;
     private ListSiteAdapter adapter;
     public static String itemSelected;
     public static String SiteName;
     public static LatLng myCurrentLoc;
+    public int NumOfSites;
+    public static int IdSite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +114,9 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             //init adapter
             adapter = new ListSiteAdapter(this,SitesList);
 
-            int length=adapter.getCount();
-            String[] sitesAddress=new String[length];
-            for(int i=0;i<length;++i)
+            NumOfSites=adapter.getCount();
+            String[] sitesAddress=new String[NumOfSites];
+            for(int i=0;i<NumOfSites;++i)
                 sitesAddress[i]=SitesList.get(i).getAddSite();
 
             ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
@@ -126,8 +128,23 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
     public void OnClickGO(View v)
     {
         itemSelected=AddressSpinner.getSelectedItem().toString();
+        IdSite= getIdSite(); //get id of site that selected
         Intent i = new Intent(this,Information.class);
         startActivity(i);
+    }
+
+    public int getIdSite()
+    {
+        int id=-1;
+        for(int i=0; i<NumOfSites; i++)
+        {
+            if((SitesList.get(i).getAddSite().equals(itemSelected)&&((SitesList.get(i).getName().indexOf(SiteName))>0)))
+            {
+                id=SitesList.get(i).getIdSite();
+                i=NumOfSites;
+            }
+        }
+        return id;
     }
 
     /**
@@ -150,22 +167,22 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
         mMap.setMinZoomPreference(11);
 
         try {
-            addBankLeumiPoints();
+            addSitesPoints();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void addBankLeumiPoints() throws SQLException {
+    private void addSitesPoints() throws SQLException {
 
         LatLng lt=null;
 
         for(int i=0;i<adapter.getCount();++i)
         {
             lt=new LatLng(SitesList.get(i).getLatitude(),SitesList.get(i).getLongitude());
-            banksOptions.position(lt);
-            banksOptions.title(SitesList.get(i).getAddSite());
-            mMap.addMarker(banksOptions);
+            Options.position(lt);
+            Options.title(SitesList.get(i).getAddSite());
+            mMap.addMarker(Options);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
         }
     }
