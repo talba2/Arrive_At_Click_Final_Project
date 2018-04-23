@@ -35,6 +35,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
+                    android:onClick="OnClickPharamacies"
                     android:background="@drawable/super_pharme"/>
 
                 <ImageButton
@@ -42,6 +43,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
+                    android:onClick="OnClickPharamacies"
                     android:background="@drawable/new_pharme"/>
 
                 <ImageButton
@@ -49,6 +51,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
+                    android:onClick="OnClickPharamacies"
                     android:background="@drawable/bet_merkahat"/>
             </LinearLayout>
             <LinearLayout
@@ -62,7 +65,7 @@
                     android:id="@+id/tvSuperPharme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
+                    android:layout_marginRight="10dp"
                     android:text="סופר-פארם"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
@@ -71,7 +74,7 @@
                     android:id="@+id/tvNewPharme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="12dp"
                     android:text="ניו-פארם"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
@@ -80,10 +83,11 @@
                     android:id="@+id/tvBetMerkahat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="22dp"
+                    android:layout_marginRight="15dp"
                     android:text="בתי מרקחת"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

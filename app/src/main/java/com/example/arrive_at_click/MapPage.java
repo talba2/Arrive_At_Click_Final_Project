@@ -43,6 +43,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
     public static LatLng myCurrentLoc;
     public int NumOfSites;
     public static int IdSite;
+    public static String FieldName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_map_page);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         //set bttnGo listener
@@ -63,7 +63,9 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             }
         });
 
-        //checks exists database
+        AddressSpinner=(Spinner)findViewById(R.id.AddressSpinner);
+
+        //check if the database exists
         ConnectionClass.DBHelper= new DatabaseHelper(this);
 
         File database=getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
@@ -80,37 +82,42 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             }
         }
 
-        AddressSpinner=(Spinner)findViewById(R.id.AddressSpinner);
-
-        //get bank leumi list from db
+        //update which category waw chosen
         switch(Categories.categoryName)
         {
             case "Banks":
                 SiteName=Banks.BankWasClicked;
+                FieldName="name";
                 break;
             case "Pharmacies":
                 SiteName=Pharmacies.PharmaciesWasClicked;
+                FieldName="name";
                 break;
             case "Postal":
-                SiteName=Postal_Services.PostalWasClicked;
+                SiteName="סניף דואר";
+                FieldName="category";
                 break;
             case "Municipality":
                 SiteName=Municipality.MunicipalityWasClicked;
+                FieldName="category";
                 break;
             case "Hospitals":
                 SiteName=Hospitals.HospitalsWasClicked;
+                FieldName="category";
                 break;
             case "HMO":
                 SiteName=HMO.HmoWasClicked;
+                FieldName="name";
                 break;
             default:
                 SiteName=null;
                 break;
         }
 
+        //update spinner list
         if(SiteName!=null)
         {
-            SitesList  = ConnectionClass.DBHelper.getListSites("*","name LIKE '%" + SiteName + "%'");
+            SitesList  = ConnectionClass.DBHelper.getListSites("*",FieldName+" LIKE '%" + SiteName + "%'");
             //init adapter
             adapter = new ListSiteAdapter(this,SitesList);
 
@@ -123,6 +130,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             AddressSpinner.setAdapter(SpinnerAdapter);
         }
+
     }
 
     public void OnClickGO(View v)
@@ -228,7 +236,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
                 public boolean onMyLocationButtonClick() {
-                    mMap.setMinZoomPreference(15);
+                    mMap.setMinZoomPreference(20);
                     return false;
                 }
             };
@@ -238,13 +246,13 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
                 @Override
                 public void onMyLocationClick(@NonNull Location location) {
 
-                    mMap.setMinZoomPreference(12);
-
+                    mMap.setMinZoomPreference(20);
                     myCurrentLoc = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(myCurrentLoc));
                     mMap.addMarker(new MarkerOptions().position(myCurrentLoc).title("My current position"));
                 }
             };
+
 
 
 }

@@ -25,17 +25,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.File;
 import java.util.ArrayList;
 
-public class searchResults extends FragmentActivity implements OnMapReadyCallback {
+public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    public static String searchvalue;
+    public static String searchValue;
     private ArrayList<Site> siteList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_page);
+        setContentView(R.layout.activity_results_of_search);
 
         /*
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -70,7 +70,7 @@ public class searchResults extends FragmentActivity implements OnMapReadyCallbac
 
         siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + searchvalue + "%' OR name LIKE '%" + searchvalue + "%' OR category LIKE '%"+ searchvalue + "%'" );
 */
-        }
+    }
     private void OnClickGO(View v) {
         //itemSelected=AddressSpinner.getSelectedItem().toString();
         Intent i = new Intent(this,Information.class);
@@ -110,16 +110,16 @@ public class searchResults extends FragmentActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
     }
-        @Override
-        public void onMapReady (GoogleMap googleMap){
-            mMap = googleMap;
+    @Override
+    public void onMapReady (GoogleMap googleMap){
+        mMap = googleMap;
 
-            mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
-            mMap.setOnMyLocationClickListener(onMyLocationClickListener);
-            enableMyLocationIfPermitted();
+        mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
+        mMap.setOnMyLocationClickListener(onMyLocationClickListener);
+        enableMyLocationIfPermitted();
 
-            mMap.getUiSettings().setZoomControlsEnabled(true);
-            mMap.setMinZoomPreference(15);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setMinZoomPreference(15);
 
-        }
+    }
 }

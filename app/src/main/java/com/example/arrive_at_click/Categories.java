@@ -82,7 +82,7 @@ public class Categories extends AppCompatActivity {
     public void OnClickPostal(View v)
     {
         categoryName="Postal";
-        Intent i = new Intent(Categories.this,Postal_Services.class);
+        Intent i = new Intent(Categories.this,MapPage.class);
         startActivity(i);
     }
 

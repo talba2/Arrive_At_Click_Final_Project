@@ -10,6 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
@@ -30,9 +35,11 @@
         <activity android:name=".Hospitals" />
         <activity android:name=".Banks" />
         <activity android:name=".Pharmacies" />
-        <activity android:name=".Postal_Services" />
         <activity android:name=".Municipality" />
         <activity android:name=".HMO" />
+        <activity android:name=".Information" />
+        <activity android:name=".MapPage" />
+        <activity android:name=".LoginPage" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -49,8 +56,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Information" />
-        <activity android:name=".MapPage"></activity>
+        <activity android:name=".AdminPage" />
+        <activity android:name=".ResultsOfSearch"></activity>
     </application>
 
 </manifest>

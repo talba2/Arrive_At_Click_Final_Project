@@ -42,8 +42,37 @@ public class Information extends AppCompatActivity {
 
         siteAddress = MapPage.itemSelected; //keep spinner selection
 
-        //**************** initialize lists *****************************//
 
+        //**************** initialize lists *****************************//
+        initializeLists();
+
+        //*********************** fill fields ***************************//
+        fillFields();
+
+        //******************** add opinions ***************************//
+        addOpinions();
+
+        //set bttnGo listener
+        ImageButton bttnNavigate = (ImageButton)findViewById(R.id.bttnNavigate);
+        bttnNavigate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickNavigate(v);
+            }
+        });
+
+    }
+
+    public void OnClickNavigate(View v)
+    {
+        Uri gmmIntentUri=Uri.parse("google.navigation:q="+siteAddress);
+        Intent intent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
+    }
+
+    private void initializeLists()
+    {
         ConnectionClass.DBHelper = new DatabaseHelper(this);
 
         //checks exists database
@@ -63,10 +92,10 @@ public class Information extends AppCompatActivity {
         siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
         OpinionsList = ConnectionClass.DBHelper.getListOpinions("DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
 
-        //************************************************************//
+    }
 
-        //*********************** fill fields ************************//
-
+    private void fillFields()
+    {
         //set values of a specific site
         EditText siteName = (EditText) findViewById(R.id.etName);
         siteName.setText(siteList.get(0).getName());
@@ -113,11 +142,10 @@ public class Information extends AppCompatActivity {
         sbClient.setProgress(AccessClient);
 
         //update facilities access
+    }
 
-        //*************************************************//
-
-        //******************** add opinions *****************//
-
+    private void addOpinions()
+    {
         //init adapter
         OpinionAdapter = new ListOpinionAdapter(this,OpinionsList);
         lvOpinion=(ListView)findViewById(R.id.lvOpinion);
@@ -126,30 +154,6 @@ public class Information extends AppCompatActivity {
             TextView tvEmpty=(TextView)findViewById(R.id.empty);
             tvEmpty.setText("אין עדיין חוות דעת לאתר זה.");
         */
-
-
-
-
-
-        //*************************************************//
-
-        //set bttnGo listener
-        ImageButton bttnNavigate = (ImageButton)findViewById(R.id.bttnNavigate);
-        bttnNavigate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnClickNavigate(v);
-            }
-        });
-
-    }
-
-    public void OnClickNavigate(View v)
-    {
-        Uri gmmIntentUri=Uri.parse("google.navigation:q="+siteAddress);
-        Intent intent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        intent.setPackage("com.google.android.apps.maps");
-        startActivity(intent);
     }
 
 }

@@ -36,7 +36,7 @@
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
                     android:background="@drawable/municipality_telaviv"
-                    android:onClick="OnClickLeumi" />
+                    android:onClick="OnClickMunicipality" />
 
                 <ImageButton
                     android:id="@+id/bttnOldAge"
@@ -44,13 +44,14 @@
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
                     android:background="@drawable/old_home_age"
-                    android:onClick="OnClickPoalim" />
+                    android:onClick="OnClickMunicipality" />
 
                 <ImageButton
                     android:id="@+id/bttnDayCare"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
+                    android:onClick="OnClickMunicipality"
                     android:background="@drawable/day_care"/>
             </LinearLayout>
             <LinearLayout
@@ -64,7 +65,7 @@
                     android:id="@+id/tvMunicipality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="13dp"
+                    android:layout_marginRight="40dp"
                     android:text="עירייה"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
@@ -73,7 +74,7 @@
                     android:id="@+id/tvOldAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="23dp"
                     android:text="בתי אבות"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
@@ -100,6 +101,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
+                    android:onClick="OnClickMunicipality"
                     android:background="@drawable/social_welfare"/>
 
                 <ImageButton
@@ -107,6 +109,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginRight="17dp"
+                    android:onClick="OnClickMunicipality"
                     android:background="@drawable/nursing_home"/>
 
             </LinearLayout>
@@ -121,7 +124,7 @@
                     android:id="@+id/tvSocialWelfare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="28dp"
+                    android:layout_marginRight="5dp"
                     android:text="מוסדות רווחה"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
@@ -130,8 +133,8 @@
                     android:id="@+id/tvNursingHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="28dp"
-                    android:text="מוסדות סיעוד"
+                    android:layout_marginRight="10dp"
+                    android:text="מוסדות n\סיעוד"
                     android:textSize="22dp"
                     tools:textColor="@color/colorAccent" />
 

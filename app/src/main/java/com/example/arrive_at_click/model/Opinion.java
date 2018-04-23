@@ -4,26 +4,31 @@ import java.util.Date;
 
 public class Opinion {
 
+    private String name;
     private int IdOpinion;
     private int IdSite;
     private String textOpinion;
     private int score;
     private Date DateOfOpinion;
 
-    public Opinion(Date dateOfOpinion,int score, String textOpinion ) {
+    public Opinion(String name,Date dateOfOpinion,int score, String textOpinion ) {
+        this.name=name;
         DateOfOpinion = dateOfOpinion;
         this.score = score;
         this.textOpinion = textOpinion;
     }
 
-    public Opinion(int idOpinion, int idSite, String textOpinion, int score, Date dateOfOpinion) {
+    public Opinion(String name,int idOpinion, int idSite, String textOpinion, int score, Date dateOfOpinion) {
         IdOpinion = idOpinion;
         IdSite = idSite;
         this.textOpinion = textOpinion;
         this.score = score;
         DateOfOpinion = dateOfOpinion;
+        this.name=name;
     }
 
+
+    public String getName() { return name; }
 
     public int getIdOpinion() {
         return IdOpinion;
@@ -43,6 +48,10 @@ public class Opinion {
 
     public Date getDateOfOpinion() {
         return DateOfOpinion;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setIdOpinion(int idOpinion) {

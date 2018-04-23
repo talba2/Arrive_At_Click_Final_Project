@@ -121,6 +121,51 @@ public class Banks extends AppCompatActivity {
                 OnClickBank(v);
             }
         });
+
+        ImageButton bttnHabenleumi = (ImageButton)findViewById(R.id.bttnHabenleumi);
+        bttnOtzar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BankWasClicked="הבנק הבינלאומי";
+                OnClickBank(v);
+            }
+        });
+
+        ImageButton bttnJerusalem = (ImageButton)findViewById(R.id.bttnJerusalem);
+        bttnJerusalem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BankWasClicked="בנק ירושלים";
+                OnClickBank(v);
+            }
+        });
+
+        ImageButton bttnPoaleAguda = (ImageButton)findViewById(R.id.bttnPoaleAguda);
+        bttnPoaleAguda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BankWasClicked="בנק פועלי אגודת ישראל";
+                OnClickBank(v);
+            }
+        });
+
+        ImageButton bttnOtomat = (ImageButton)findViewById(R.id.bttnOtomat);
+        bttnOtomat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BankWasClicked="שירותי בנק אוטומטיים";
+                OnClickBank(v);
+            }
+        });
+
+        ImageButton bttnDeksia = (ImageButton)findViewById(R.id.bttnDeksia);
+        bttnDeksia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BankWasClicked="בנק דקסיה";
+                OnClickBank(v);
+            }
+        });
     }
 
     public void OnClickBank(View v)

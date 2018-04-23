@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(select=="*")
         {
             while (!cursor.isAfterLast()) {
-                opinion = new Opinion(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), new Date(cursor.getLong(4)*1000));
+                opinion = new Opinion(cursor.getString(5),cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), new Date(cursor.getLong(4)*1000));
                 opinionList.add(opinion);
                 cursor.moveToNext();
             }
@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
         {
             while (!cursor.isAfterLast()) {
-                opinion = new Opinion(new Date(cursor.getLong(4)*1000), cursor.getInt(3), cursor.getString(2));
+                opinion = new Opinion(cursor.getString(5),new Date(cursor.getLong(4)*1000), cursor.getInt(3), cursor.getString(2));
                 opinionList.add(opinion);
                 cursor.moveToNext();
             }

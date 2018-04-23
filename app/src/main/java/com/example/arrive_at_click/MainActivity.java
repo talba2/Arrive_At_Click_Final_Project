@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity{
     public void OnClickSearch(View v)
     {
         EditText txtVal = (EditText)findViewById(R.id.etSearch);
-        searchResults.searchvalue = txtVal.getText().toString();
+        ResultsOfSearch.searchValue = txtVal.getText().toString();
 
-        Intent i = new Intent(this,searchResults.class);
+        Intent i = new Intent(this,ResultsOfSearch.class);
 
         startActivity(i);
 
