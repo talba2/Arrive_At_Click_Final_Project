@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 
+import com.example.arrive_at_click.model.Facilities;
 import com.example.arrive_at_click.model.Opinion;
 import com.example.arrive_at_click.model.Site;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite.db";
+    public static final String DBNAME="sqLite_final.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -76,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion WHERE " + where, null);
 
         cursor.moveToFirst();
-        if(select=="*")
+        if(select.equals("*"))
         {
             while (!cursor.isAfterLast()) {
                 opinion = new Opinion(cursor.getString(5),cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), new Date(cursor.getLong(4)*1000));
@@ -96,5 +97,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         closeDatabase();
         return opinionList;
+    }
+
+    public ArrayList<Facilities> getListFacilities(String select, String where) {
+        Facilities facilities = null;
+        ArrayList<Facilities> facilitiesList = new ArrayList<>();
+        openDatabase();
+        Cursor cursor;
+        if (where == null)
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Facilities", null);
+        else
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Facilities WHERE " + where, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            facilities = new Facilities(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4));
+            facilitiesList.add(facilities);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        closeDatabase();
+        return facilitiesList;
     }
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 
 import com.example.arrive_at_click.adapter.ListOpinionAdapter;
 import com.example.arrive_at_click.database.DatabaseHelper;
+import com.example.arrive_at_click.model.Facilities;
 import com.example.arrive_at_click.model.Opinion;
 import com.example.arrive_at_click.model.Site;
 
@@ -34,6 +36,7 @@ public class Information extends AppCompatActivity {
     private ArrayList<Opinion> OpinionsList=null;
     private ListOpinionAdapter OpinionAdapter;
     private ListView lvOpinion;
+    private ArrayList<Facilities> FacilitiesList=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class Information extends AppCompatActivity {
 
         siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
         OpinionsList = ConnectionClass.DBHelper.getListOpinions("DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
-
+        FacilitiesList = ConnectionClass.DBHelper.getListFacilities("*", "IdSite=" + MapPage.IdSite);
     }
 
     private void fillFields()
@@ -130,7 +133,6 @@ public class Information extends AppCompatActivity {
         SeekBar sbClient = (SeekBar) findViewById(R.id.seekBarClient);
         sbClient.setEnabled(false);
 
-
         EditText siteAvailWeb =(EditText)findViewById(R.id.etAvailLevel);
         int AccessWeb=siteList.get(0).getAccessByWeb();
         siteAvailWeb.setText(String.valueOf(AccessWeb)+"/4");
@@ -141,7 +143,33 @@ public class Information extends AppCompatActivity {
         siteAvailClient.setText(String.valueOf(AccessClient)+"/4");
         sbClient.setProgress(AccessClient);
 
-        //update facilities access
+        int ramp=FacilitiesList.get(0).isRamp();
+        CheckBox cbRamp=(CheckBox)findViewById(R.id.cbRamp);
+        if(ramp==1)
+            cbRamp.setChecked(true);
+        else
+            cbRamp.setChecked(false);
+
+        int handicappedToillets=FacilitiesList.get(0).isHandicapedToillets();
+        CheckBox cbToillets=(CheckBox)findViewById(R.id.cbToilet);
+        if(handicappedToillets==1)
+            cbToillets.setChecked(true);
+        else
+            cbToillets.setChecked(false);
+
+        int handicappedParking=FacilitiesList.get(0).isHandicappedParking();
+        CheckBox cbParking=(CheckBox)findViewById(R.id.cbParking);
+        if(handicappedParking==1)
+            cbParking.setChecked(true);
+        else
+            cbParking.setChecked(false);
+
+        int railing=FacilitiesList.get(0).isRailing();
+        CheckBox cbRailing=(CheckBox)findViewById(R.id.cbRailing);
+        if(railing==1)
+            cbRailing.setChecked(true);
+        else
+            cbRailing.setChecked(false);
     }
 
     private void addOpinions()

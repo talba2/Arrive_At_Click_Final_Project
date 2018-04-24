@@ -20,6 +20,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import android.widget.ArrayAdapter;
 import java.io.File;
 import java.util.Locale;
 
-public class MapPage extends FragmentActivity implements OnMapReadyCallback {
+public class MapPage extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
@@ -40,10 +42,11 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
     private ListSiteAdapter adapter;
     public static String itemSelected;
     public static String SiteName;
-    public static LatLng myCurrentLoc;
-    public int NumOfSites;
     public static int IdSite;
     public static String FieldName;
+    public static LatLng myCurrentLoc;
+    public int NumOfSites;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,17 +143,36 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
         Intent i = new Intent(this,Information.class);
         startActivity(i);
     }
+    public void OnClickMarker(String title)
+    {
+        itemSelected = title;
+        IdSite= getIdSite(); //get id of site that selected
+        Intent i = new Intent(this,Information.class);
+        startActivity(i);
+    }
 
     public int getIdSite()
     {
         int id=-1;
         for(int i=0; i<NumOfSites; i++)
         {
-            if((SitesList.get(i).getAddSite().equals(itemSelected)&&((SitesList.get(i).getName().indexOf(SiteName))>0)))
+            if(FieldName.equals("name"))
             {
-                id=SitesList.get(i).getIdSite();
-                i=NumOfSites;
+                if((SitesList.get(i).getAddSite().equals(itemSelected)&&((SitesList.get(i).getName().indexOf(SiteName))>0)))
+                {
+                    id=SitesList.get(i).getIdSite();
+                    i=NumOfSites;
+                }
             }
+            else
+            {
+                if((SitesList.get(i).getAddSite().equals(itemSelected)&&((SitesList.get(i).getCategory().indexOf(SiteName))>0)))
+                {
+                    id=SitesList.get(i).getIdSite();
+                    i=NumOfSites;
+                }
+            }
+
         }
         return id;
     }
@@ -172,7 +194,8 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
         enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(11);
+        mMap.setMinZoomPreference(20);
+        mMap.setOnInfoWindowClickListener(this);
 
         try {
             addSitesPoints();
@@ -180,6 +203,12 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        this.OnClickMarker(marker.getTitle());
+    }
+
 
     private void addSitesPoints() throws SQLException {
 
@@ -191,8 +220,8 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback {
             Options.position(lt);
             Options.title(SitesList.get(i).getAddSite());
             mMap.addMarker(Options);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
         }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
     }
 
     private void enableMyLocationIfPermitted() {

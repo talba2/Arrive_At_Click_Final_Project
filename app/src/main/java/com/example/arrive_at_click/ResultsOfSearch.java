@@ -10,9 +10,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.arrive_at_click.adapter.ListSiteAdapter;
 import com.example.arrive_at_click.database.DatabaseHelper;
 import com.example.arrive_at_click.model.Site;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,24 +23,34 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallback {
+public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
-    int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     public static String searchValue;
-    private ArrayList<Site> siteList;
+    private ArrayList<Site> sitesList;
+    private ListSiteAdapter adapter;
+    private MarkerOptions Options = new MarkerOptions();
+    private Spinner resultSpinner;
+    public int NumOfSites;
+    public static String itemSelected;
+    public static String SiteName;
+    public static int IdSite;
+    public static String FieldName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results_of_search);
 
-        /*
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -48,9 +61,11 @@ public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallb
         bttnGO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onClickGo(v);
+                OnClickGO(v);
             }
         });
+
+        resultSpinner=(Spinner)findViewById(R.id.AddressSpinner);
 
         //checks exists database
         ConnectionClass.DBHelper = new DatabaseHelper(this);
@@ -68,11 +83,57 @@ public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallb
             }
         }
 
-        siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + searchvalue + "%' OR name LIKE '%" + searchvalue + "%' OR category LIKE '%"+ searchvalue + "%'" );
-*/
+        sitesList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + searchValue + "%' OR name LIKE '%" + searchValue + "%' OR category LIKE '%"+ searchValue + "%'" );
+
+        //init adapter
+        adapter = new ListSiteAdapter(this,sitesList);
+
+        NumOfSites=adapter.getCount();
+        String[] sitesName=new String[NumOfSites];
+        for(int i=0;i<NumOfSites;++i)
+            sitesName[i]=sitesList.get(i).getName();
+
+        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesName);
+        SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        resultSpinner.setAdapter(SpinnerAdapter);
     }
     private void OnClickGO(View v) {
-        //itemSelected=AddressSpinner.getSelectedItem().toString();
+        itemSelected=resultSpinner.getSelectedItem().toString();
+        IdSite= getIdSite(); //get id of site that selected
+        Intent i = new Intent(this,Information.class);
+        startActivity(i);
+    }
+
+    public int getIdSite()
+    {
+        int id=-1;
+        for(int i=0; i<NumOfSites; i++)
+        {
+            if(FieldName.equals("name"))
+            {
+                if((sitesList.get(i).getAddSite().equals(itemSelected)&&((sitesList.get(i).getName().indexOf(SiteName))>0)))
+                {
+                    id=sitesList.get(i).getIdSite();
+                    i=NumOfSites;
+                }
+            }
+            else
+            {
+                if((sitesList.get(i).getAddSite().equals(itemSelected)&&((sitesList.get(i).getCategory().indexOf(SiteName))>0)))
+                {
+                    id=sitesList.get(i).getIdSite();
+                    i=NumOfSites;
+                }
+            }
+
+        }
+        return id;
+    }
+
+    public void OnClickMarker(String title)
+    {
+        itemSelected = title;
+        IdSite= getIdSite(); //get id of site that selected
         Intent i = new Intent(this,Information.class);
         startActivity(i);
     }
@@ -119,7 +180,58 @@ public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallb
         enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(15);
+        mMap.setMinZoomPreference(11);
+        mMap.setOnInfoWindowClickListener(this);
 
+        try {
+            addSitesPoints();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        this.OnClickMarker(marker.getTitle());
+    }
+
+
+    private void showDefaultLocation() {
+        Toast.makeText(this, "Location permission not granted, " +
+                        "showing default location",
+                Toast.LENGTH_SHORT).show();
+        LatLng redmond = new LatLng(32.080880, 34.780570);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    enableMyLocationIfPermitted();
+                } else {
+                    showDefaultLocation();
+                }
+                return;
+            }
+        }
+    }
+
+    private void addSitesPoints() throws SQLException {
+
+        LatLng lt=null;
+
+        for(int i=0;i<adapter.getCount();++i)
+        {
+            lt=new LatLng(sitesList.get(i).getLatitude(),sitesList.get(i).getLongitude());
+            Options.position(lt);
+            Options.title(sitesList.get(i).getAddSite());
+            mMap.addMarker(Options);
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
     }
 }
