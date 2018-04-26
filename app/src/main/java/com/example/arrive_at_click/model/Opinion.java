@@ -19,7 +19,6 @@ public class Opinion extends AppCompatActivity {
     private String textOpinion;
     private int score;
     private Date DateOfOpinion;
-    private ArrayList<Integer> OpinionsList=null;
 
     public Opinion(String name,Date dateOfOpinion,int score, String textOpinion) {
         this.name=name;
@@ -29,26 +28,6 @@ public class Opinion extends AppCompatActivity {
     }
 
     public Opinion(String name,int idOpinion, int idSite, String textOpinion, int score, Date dateOfOpinion) {
-
-        ConnectionClass.DBHelper = new DatabaseHelper(this);
-
-        //checks exists database
-        File database = getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
-        if (database.exists() == false) {
-            ConnectionClass.DBHelper.getReadableDatabase();
-            //copy db
-            ConnectionClass con = new ConnectionClass();
-            if (con.copyDatabase(this))
-                Toast.makeText(this, "copy db successfully", Toast.LENGTH_SHORT).show();
-            else {
-                Toast.makeText(this, "copy db error", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-
-        //OpinionsList = ConnectionClass.DBHelper.getListOpinions("count(*)", null);
-        
-        //IdOpinion =;
         IdSite = idSite;
         this.textOpinion = textOpinion;
         this.score = score;

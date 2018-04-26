@@ -146,37 +146,6 @@
             android:weightSum="2">
 
             <TextView
-                android:id="@+id/tvFax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="5dp"
-                android:text="פקס: "
-                android:textColor="@android:color/black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etFax"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:enabled="false"
-                android:inputType="text"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
                 android:id="@+id/tvOpenHours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -382,51 +351,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="דרג בעצמך:  "
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <RatingBar
-                        android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="4"
-                        android:rating="3.0"
-                        android:progressTint="#CFB53B"
-                        android:stepSize="1.0" />
-
-                    <Button
-                        android:id="@+id/bttnVote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/categorybttn"
-                        android:backgroundTint="@color/colorAccent"
-                        android:text="דרג"
-                        android:textColor="@android:color/background_light"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -441,10 +365,40 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="5dp"
-                    android:text="חוות דעת:"
+                    android:text="חוות דעת"
                     android:textColor="@android:color/black"
                     android:textSize="22sp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="דירוג:  "
+                        android:layout_marginTop="15dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="4"
+                        android:rating="3.0"
+                        android:layout_marginRight="10dp"
+                        android:progressTint="#CFB53B"
+                        android:stepSize="1.0" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

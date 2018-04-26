@@ -1,7 +1,9 @@
 package com.example.arrive_at_click;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Path;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,10 @@ import com.example.arrive_at_click.model.Opinion;
 import com.example.arrive_at_click.model.Site;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -37,6 +43,11 @@ public class Information extends AppCompatActivity {
     private ListOpinionAdapter OpinionAdapter;
     private ListView lvOpinion;
     private ArrayList<Facilities> FacilitiesList=null;
+    private RatingBar rate;
+    private TextView tvOpinion;
+    private EditText etClientName;
+    private  File database;
+    private int AccessClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,8 @@ public class Information extends AppCompatActivity {
 
         siteAddress = MapPage.itemSelected; //keep spinner selection
 
+        ConnectionClass.DBHelper = new DatabaseHelper(this);
+        database = getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
 
         //**************** initialize lists *****************************//
         initializeLists();
@@ -55,7 +68,7 @@ public class Information extends AppCompatActivity {
         //******************** add opinions ***************************//
         addOpinions();
 
-        //set bttnGo listener
+        //set bttnNavigate listener
         ImageButton bttnNavigate = (ImageButton)findViewById(R.id.bttnNavigate);
         bttnNavigate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +76,48 @@ public class Information extends AppCompatActivity {
                 OnClickNavigate(v);
             }
         });
+
+        Button bttnSend = (Button)findViewById(R.id.bttnSend);
+        bttnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnClickSend(v);
+            }
+        });
+
+        rate=(RatingBar)findViewById(R.id.ratingBar);
+        tvOpinion=(TextView)findViewById(R.id.tvOpinion);
+        etClientName=(EditText)findViewById(R.id.etClientName);
+    }
+
+    public void OnClickSend(View v)
+    {
+        int id=MapPage.IdSite;
+        int count;
+
+        if(isDatabaseExists())
+        {
+            count=ConnectionClass.DBHelper.numOfRows("Opinion");
+            ++count;
+        }
+        else
+            count=-1;
+
+
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
+
+        //add opinion to database
+        String query="INSERT INTO Opinion (IdOpinion,IdSite,textOpinion,score,DateOfOpinion,name) VALUES('"+count+"','"+id+"','"+String.valueOf(tvOpinion.getText())+"','" + rate.getRating()+"','"+df.format(c)+"','"+String.valueOf(etClientName.getText())+"')";
+        ConnectionClass.DBHelper.insertValues(query);
+
+        //update score by users
+        query="SELECT SUM(score) as Total FROM Opinion";
+        int sum=ConnectionClass.DBHelper.sumColumn(query);
+
+        ContentValues cv = new ContentValues();
+        cv.put("AccessibilityLevelByUsers",sum/count);
+        ConnectionClass.DBHelper.update(cv,"Sites",id);
 
     }
 
@@ -76,25 +131,12 @@ public class Information extends AppCompatActivity {
 
     private void initializeLists()
     {
-        ConnectionClass.DBHelper = new DatabaseHelper(this);
-
-        //checks exists database
-        File database = getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
-        if (database.exists() == false) {
-            ConnectionClass.DBHelper.getReadableDatabase();
-            //copy db
-            ConnectionClass con = new ConnectionClass();
-            if (con.copyDatabase(this))
-                Toast.makeText(this, "copy db successfully", Toast.LENGTH_SHORT).show();
-            else {
-                Toast.makeText(this, "copy db error", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if(isDatabaseExists())
+        {
+            siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
+            OpinionsList = ConnectionClass.DBHelper.getListOpinions("DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
+            FacilitiesList = ConnectionClass.DBHelper.getListFacilities("*", "IdSite=" + MapPage.IdSite);
         }
-
-        siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
-        OpinionsList = ConnectionClass.DBHelper.getListOpinions("DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
-        FacilitiesList = ConnectionClass.DBHelper.getListFacilities("*", "IdSite=" + MapPage.IdSite);
     }
 
     private void fillFields()
@@ -110,17 +152,13 @@ public class Information extends AppCompatActivity {
         String phone = siteList.get(0).getPhoneNum();
         if (phone == null)
             sitePhone.setText("נתון חסר");
-            //sitePhone.setTextColor(8421504); //gray color
         else
             sitePhone.setText(phone);
-
-        //fax number??
 
         EditText siteOpenHour = (EditText) findViewById(R.id.etOpenHours);
         String hours = siteList.get(0).getDesSite();
         if (hours == null)
             siteOpenHour.setText("נתון חסר");
-            //siteOpenHour.setTextColor(8421504); //gray color
         else
             siteOpenHour.setText(hours);
 
@@ -139,7 +177,7 @@ public class Information extends AppCompatActivity {
         sbWeb.setProgress(AccessWeb);
 
         EditText siteAvailClient =(EditText)findViewById(R.id.etAvailClientLevel);
-        int AccessClient=siteList.get(0).getAccessByUser();
+        AccessClient=siteList.get(0).getAccessByUser();
         siteAvailClient.setText(String.valueOf(AccessClient)+"/4");
         sbClient.setProgress(AccessClient);
 
@@ -182,6 +220,18 @@ public class Information extends AppCompatActivity {
             TextView tvEmpty=(TextView)findViewById(R.id.empty);
             tvEmpty.setText("אין עדיין חוות דעת לאתר זה.");
         */
+    }
+
+    private boolean isDatabaseExists()
+    {
+        if (database.exists() == false) {
+            ConnectionClass.DBHelper.getReadableDatabase();
+            //copy db
+            ConnectionClass con = new ConnectionClass();
+            if (!con.copyDatabase(this))
+                return false;
+        }
+        return true;
     }
 
 }

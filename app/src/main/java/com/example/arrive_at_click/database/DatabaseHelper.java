@@ -1,5 +1,6 @@
 package com.example.arrive_at_click.database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -118,5 +119,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         closeDatabase();
         return facilitiesList;
+    }
+
+    public int numOfRows(String table)
+    {
+        openDatabase();
+        Cursor cursor= mDatabase.rawQuery("SELECT *  FROM " + table, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    public void insertValues(String query)
+    {
+        openDatabase();
+        mDatabase.execSQL(query);
+    }
+
+    public int sumColumn(String query)
+    {
+        Cursor cursor = mDatabase.rawQuery(query, null);
+        int total=0;
+        if (cursor.moveToFirst())
+            total = cursor.getInt(cursor.getColumnIndex("Total"));// get final total
+        return total;
+    }
+
+    public void update(ContentValues cv,String table,int id)
+    {
+        mDatabase.update(table, cv, "id="+id, null);
     }
 }

@@ -194,7 +194,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(20);
+        mMap.setMinZoomPreference(11);
         mMap.setOnInfoWindowClickListener(this);
 
         try {
@@ -265,7 +265,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
                 public boolean onMyLocationButtonClick() {
-                    mMap.setMinZoomPreference(20);
+                    mMap.setMinZoomPreference(11);
                     return false;
                 }
             };
@@ -275,7 +275,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                 @Override
                 public void onMyLocationClick(@NonNull Location location) {
 
-                    mMap.setMinZoomPreference(20);
+                    mMap.setMinZoomPreference(11);
                     myCurrentLoc = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(myCurrentLoc));
                     mMap.addMarker(new MarkerOptions().position(myCurrentLoc).title("My current position"));
