@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite_final.db";
+    public static final String DBNAME="sqLite3.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -68,36 +68,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Opinion> getListOpinions(String select, String where) {
-        Opinion opinion = null;
-        ArrayList<Opinion> opinionList = new ArrayList<>();
-        openDatabase();
-        Cursor cursor;
-        if (where == null)
-            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion", null);
-        else
-            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion WHERE " + where, null);
-
-        cursor.moveToFirst();
-        if(select.equals("*"))
+        if(numOfRows("Opinion",where)==0)
         {
-            while (!cursor.isAfterLast()) {
-                opinion = new Opinion(cursor.getString(5),cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), new Date(cursor.getLong(4)*1000));
-                opinionList.add(opinion);
-                cursor.moveToNext();
-            }
+            return null;
         }
         else
         {
-            while (!cursor.isAfterLast()) {
-                opinion = new Opinion(cursor.getString(5),new Date(cursor.getLong(4)*1000), cursor.getInt(3), cursor.getString(2));
-                opinionList.add(opinion);
-                cursor.moveToNext();
-            }
-        }
+            Opinion opinion = null;
+            ArrayList<Opinion> opinionList = new ArrayList<>();
+            openDatabase();
+            Cursor cursor;
+            if (where.matches(""))
+                cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion", null);
+            else
+                cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion WHERE " + where, null);
 
-        cursor.close();
-        closeDatabase();
-        return opinionList;
+            cursor.moveToFirst();
+            if(select.equals("*"))
+            {
+                while (!cursor.isAfterLast()) {
+                    opinion = new Opinion(cursor.getString(5),cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), new Date(cursor.getLong(4)*1000));
+                    opinionList.add(opinion);
+                    cursor.moveToNext();
+                }
+            }
+            else
+            {
+                while (!cursor.isAfterLast()) {
+                    opinion = new Opinion(cursor.getString(5),new Date(cursor.getLong(4)*1000), cursor.getInt(3), cursor.getString(2));
+                    opinionList.add(opinion);
+                    cursor.moveToNext();
+                }
+            }
+
+            cursor.close();
+            closeDatabase();
+            return opinionList;
+        }
     }
 
     public ArrayList<Facilities> getListFacilities(String select, String where) {
@@ -121,13 +128,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return facilitiesList;
     }
 
-    public int numOfRows(String table)
+    public int numOfRows(String table, String where)
     {
         openDatabase();
-        Cursor cursor= mDatabase.rawQuery("SELECT *  FROM " + table, null);
-        int count = cursor.getCount();
+        Cursor cursor;
+        int count;
+        if(where.matches(""))
+        {
+            cursor= mDatabase.rawQuery("SELECT *  FROM " + table, null);
+            count = cursor.getCount();
+        }
+        else
+        {
+            cursor= mDatabase.rawQuery("SELECT *  FROM " + table + " WHERE " + where, null);
+            count = cursor.getCount();
+        }
         cursor.close();
         return count;
+
     }
 
     public void insertValues(String query)
@@ -145,8 +163,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return total;
     }
 
-    public void update(ContentValues cv,String table,int id)
+    public void update(ContentValues cv,String table,String where)
     {
-        mDatabase.update(table, cv, "id="+id, null);
+        mDatabase.update(table, cv, where, null);
     }
 }

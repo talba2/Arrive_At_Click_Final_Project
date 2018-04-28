@@ -66,7 +66,8 @@ public class Information extends AppCompatActivity {
         fillFields();
 
         //******************** add opinions ***************************//
-        addOpinions();
+        if(!OpinionsList.equals(null))
+            addOpinions();
 
         //set bttnNavigate listener
         ImageButton bttnNavigate = (ImageButton)findViewById(R.id.bttnNavigate);
@@ -97,7 +98,7 @@ public class Information extends AppCompatActivity {
 
         if(isDatabaseExists())
         {
-            count=ConnectionClass.DBHelper.numOfRows("Opinion");
+            count=ConnectionClass.DBHelper.numOfRows("Opinion",null);
             ++count;
         }
         else
@@ -107,18 +108,27 @@ public class Information extends AppCompatActivity {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
 
-        //add opinion to database
-        String query="INSERT INTO Opinion (IdOpinion,IdSite,textOpinion,score,DateOfOpinion,name) VALUES('"+count+"','"+id+"','"+String.valueOf(tvOpinion.getText())+"','" + rate.getRating()+"','"+df.format(c)+"','"+String.valueOf(etClientName.getText())+"')";
-        ConnectionClass.DBHelper.insertValues(query);
+        String name=etClientName.getText().toString();
+        if(name.matches(""))
+        {
+            Toast.makeText(this, "You did not enter a username", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            //add opinion to database
+            String query="INSERT INTO Opinion (IdOpinion,IdSite,textOpinion,score,DateOfOpinion,name) VALUES('"+count+"','"+id+"','"+String.valueOf(tvOpinion.getText())+"','" + rate.getRating()+"','"+df.format(c)+"','"+String.valueOf(etClientName.getText())+"')";
+            ConnectionClass.DBHelper.insertValues(query);
 
-        //update score by users
-        query="SELECT SUM(score) as Total FROM Opinion";
-        int sum=ConnectionClass.DBHelper.sumColumn(query);
+            //update score by users
+            query="SELECT SUM(score) as Total FROM Opinion";
+            int sum=ConnectionClass.DBHelper.sumColumn(query);
 
-        ContentValues cv = new ContentValues();
-        cv.put("AccessibilityLevelByUsers",sum/count);
-        ConnectionClass.DBHelper.update(cv,"Sites",id);
+            ContentValues cv = new ContentValues();
+            cv.put("AccessibilityLevelByUsers",sum/count);
+            ConnectionClass.DBHelper.update(cv,"Sites","idSite="+id);
 
+            Toast.makeText(this, "thanks for sharing your opinion!!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void OnClickNavigate(View v)

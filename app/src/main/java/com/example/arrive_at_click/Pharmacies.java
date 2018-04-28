@@ -33,8 +33,8 @@ public class Pharmacies extends AppCompatActivity {
             }
         });
 
-        ImageButton bttnPharmacy = (ImageButton)findViewById(R.id.bttnPharmacy);
-        bttnPharmacy.setOnClickListener(new View.OnClickListener() {
+        ImageButton bttnBetMerkahat = (ImageButton)findViewById(R.id.bttnBetMerkahat);
+        bttnBetMerkahat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PharmaciesWasClicked="בית מרקחת";
