@@ -1,12 +1,16 @@
 package com.example.arrive_at_click.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.view.LayoutInflater;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.arrive_at_click.R;
 import com.example.arrive_at_click.model.Opinion;
-import com.example.arrive_at_click.model.Site;
 
 import java.util.List;
 
@@ -38,10 +42,24 @@ public class ListOpinionAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v=null; //convertView.inflate(mContext, R.layout,null);
+        if( convertView == null ){
+            //We must create a View:
+            LayoutInflater lInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            convertView = lInflater.inflate(R.layout.activity_information, parent, false);
+        }
 
-        ///need to add something
+        TextView name=(TextView)convertView.findViewById(R.id.tvNamePerson);
+        TextView date=(TextView)convertView.findViewById(R.id.tvDate);
+        TextView score=(TextView)convertView.findViewById(R.id.tvScore);
+        TextView opinion=(TextView)convertView.findViewById(R.id.tvPersonOpinion);
 
-        return v;
+        Opinion opinion_position=mOpinionList.get(position);
+
+        name.setText(opinion_position.getName());
+        date.setText((String.valueOf(opinion_position.getDateOfOpinion())));
+        score.setText(Integer.toString(opinion_position.getScore()));
+        opinion.setText(opinion_position.getTextOpinion());
+
+        return convertView;
     }
 }

@@ -66,7 +66,7 @@ public class Information extends AppCompatActivity {
         fillFields();
 
         //******************** add opinions ***************************//
-        if(!OpinionsList.equals(null))
+        if(OpinionsList!=null)
             addOpinions();
 
         //set bttnNavigate listener
@@ -105,19 +105,27 @@ public class Information extends AppCompatActivity {
             count=-1;
 
 
-        Date c = Calendar.getInstance().getTime();
+        Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
 
         String name=etClientName.getText().toString();
-        if(name.matches(""))
-        {
-            Toast.makeText(this, "You did not enter a username", Toast.LENGTH_LONG).show();
-        }
+        if(name==null)
+            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_LONG).show();
         else
         {
+            String query;
             //add opinion to database
-            String query="INSERT INTO Opinion (IdOpinion,IdSite,textOpinion,score,DateOfOpinion,name) VALUES('"+count+"','"+id+"','"+String.valueOf(tvOpinion.getText())+"','" + rate.getRating()+"','"+df.format(c)+"','"+String.valueOf(etClientName.getText())+"')";
-            ConnectionClass.DBHelper.insertValues(query);
+            /*String query="INSERT INTO Opinion (IdOpinion,IdSite,textOpinion,score,DateOfOpinion,name) VALUES ('"+count+"','"+id+"','"+String.valueOf(tvOpinion.getText())+"','" + rate.getRating()+"','"+df.format(date)+"','"+String.valueOf(etClientName.getText())+"')";
+            ConnectionClass.DBHelper.insertValues(query);*/
+
+            ContentValues initialValues = new ContentValues();
+            initialValues.put("IdOpinion",count);
+            initialValues.put("IdSite",id);
+            initialValues.put("textOpinion",String.valueOf(tvOpinion.getText()));
+            initialValues.put("score",rate.getRating());
+            initialValues.put("DateOfOpinion",df.format(date));
+            initialValues.put("name",String.valueOf(etClientName.getText()));
+            ConnectionClass.DBHelper.insertValues("Opinion",initialValues);
 
             //update score by users
             query="SELECT SUM(score) as Total FROM Opinion";
@@ -125,7 +133,7 @@ public class Information extends AppCompatActivity {
 
             ContentValues cv = new ContentValues();
             cv.put("AccessibilityLevelByUsers",sum/count);
-            ConnectionClass.DBHelper.update(cv,"Sites","idSite="+id);
+            boolean affected=ConnectionClass.DBHelper.update(cv,"Sites","idSite="+id);
 
             Toast.makeText(this, "thanks for sharing your opinion!!", Toast.LENGTH_LONG).show();
         }
@@ -144,7 +152,7 @@ public class Information extends AppCompatActivity {
         if(isDatabaseExists())
         {
             siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
-            OpinionsList = ConnectionClass.DBHelper.getListOpinions("DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
+            OpinionsList = ConnectionClass.DBHelper.getListOpinions("name,DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
             FacilitiesList = ConnectionClass.DBHelper.getListFacilities("*", "IdSite=" + MapPage.IdSite);
         }
     }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite3.db";
+    public static final String DBNAME="sqLite2.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -78,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ArrayList<Opinion> opinionList = new ArrayList<>();
             openDatabase();
             Cursor cursor;
-            if (where.matches(""))
+            if (where==null)
                 cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion", null);
             else
                 cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion WHERE " + where, null);
@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             else
             {
                 while (!cursor.isAfterLast()) {
-                    opinion = new Opinion(cursor.getString(5),new Date(cursor.getLong(4)*1000), cursor.getInt(3), cursor.getString(2));
+                    opinion = new Opinion(cursor.getString(0),new Date(cursor.getLong(1)*1000), cursor.getInt(2), cursor.getString(3));
                     opinionList.add(opinion);
                     cursor.moveToNext();
                 }
@@ -131,40 +131,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int numOfRows(String table, String where)
     {
         openDatabase();
-        Cursor cursor;
-        int count;
-        if(where.matches(""))
-        {
-            cursor= mDatabase.rawQuery("SELECT *  FROM " + table, null);
-            count = cursor.getCount();
-        }
+        Cursor cursor=null;
+        int count=0;
+        if(where==null)
+            cursor= mDatabase.rawQuery("SELECT Count(*) FROM " + table, null);
         else
+            cursor= mDatabase.rawQuery("SELECT Count(*) FROM " + table + " WHERE " + where, null);
+        if(cursor!=null)
         {
-            cursor= mDatabase.rawQuery("SELECT *  FROM " + table + " WHERE " + where, null);
-            count = cursor.getCount();
+            cursor.moveToFirst();
+            count=cursor.getInt(0);
+            cursor.close();
         }
-        cursor.close();
+        closeDatabase();
         return count;
 
     }
 
-    public void insertValues(String query)
+    public long insertValues(String table,ContentValues cv)
     {
         openDatabase();
-        mDatabase.execSQL(query);
+        //mDatabase.execSQL(query);
+        long added=mDatabase.insert(table,null,cv);
+        closeDatabase();
+        return added;
     }
 
     public int sumColumn(String query)
     {
+        openDatabase();
         Cursor cursor = mDatabase.rawQuery(query, null);
         int total=0;
         if (cursor.moveToFirst())
             total = cursor.getInt(cursor.getColumnIndex("Total"));// get final total
+        closeDatabase();
         return total;
     }
 
-    public void update(ContentValues cv,String table,String where)
+    public boolean update(ContentValues cv,String table,String where)
     {
-        mDatabase.update(table, cv, where, null);
+        openDatabase();
+        int affectedRows=mDatabase.update(table, cv, where, null);
+        closeDatabase();
+        return affectedRows>0;
     }
 }
