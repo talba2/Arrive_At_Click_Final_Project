@@ -442,7 +442,6 @@
                         android:inputType="textMultiLine"
                         android:lines="8"
                         android:maxLines="10"
-                        android:minLines="6"
                         android:background="#F0F8FF"
                         android:hint="הקלד חוות דעת..."
                         android:layout_marginTop="10dp"
@@ -481,45 +480,10 @@
                     <ListView
                         android:id="@+id/lvOpinion"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
                     </ListView>
 
-                    <TextView
-                        android:id="@+id/tvNamePerson"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:text="שם: "
-                        android:textSize="15dp"
-                        tools:textColor="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/tvDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:text="תאריך: "
-                        android:textSize="15dp"
-                        tools:textColor="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/tvScore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:text="דירוג: "
-                        android:textSize="15dp"
-                        tools:textColor="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/tvPersonOpinion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:text="חוות דעת: "
-                        android:textSize="15dp"
-                        tools:textColor="@color/colorAccent" />
                 </LinearLayout>
 
             </LinearLayout>

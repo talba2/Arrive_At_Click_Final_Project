@@ -1,27 +1,32 @@
 package com.example.arrive_at_click.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.view.LayoutInflater;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.example.arrive_at_click.R;
 import com.example.arrive_at_click.model.Opinion;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 
 public class ListOpinionAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Opinion> mOpinionList;
+    private ArrayList<Opinion> mOpinionList;
+    private static LayoutInflater inflater=null;
 
-    public ListOpinionAdapter(Context mContext, List<Opinion> mOpinionList) {
-        this.mContext = mContext;
-        this.mOpinionList = mOpinionList;
+    public ListOpinionAdapter(ArrayList<Opinion> opinions,Context context)
+    {
+        this.mContext=context;
+        this.mOpinionList=opinions;
+        inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -30,7 +35,7 @@ public class ListOpinionAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Opinion getItem(int position) {
         return mOpinionList.get(position);
     }
 
@@ -39,27 +44,36 @@ public class ListOpinionAdapter extends BaseAdapter {
         return mOpinionList.get(position).getIdSite();
     }
 
+    public class Holder
+    {
+        EditText name;
+        EditText date;
+        EditText score;
+        EditText opinion;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if( convertView == null ){
-            //We must create a View:
-            LayoutInflater lInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = lInflater.inflate(R.layout.activity_information, parent, false);
-        }
 
-        TextView name=(TextView)convertView.findViewById(R.id.tvNamePerson);
-        TextView date=(TextView)convertView.findViewById(R.id.tvDate);
-        TextView score=(TextView)convertView.findViewById(R.id.tvScore);
-        TextView opinion=(TextView)convertView.findViewById(R.id.tvPersonOpinion);
+        Holder holder=new Holder();
 
-        Opinion opinion_position=mOpinionList.get(position);
+        // Get the data item for this position
+        Opinion opinion_position = mOpinionList.get(position);
 
-        name.setText(opinion_position.getName());
-        date.setText((String.valueOf(opinion_position.getDateOfOpinion())));
-        score.setText(Integer.toString(opinion_position.getScore()));
-        opinion.setText(opinion_position.getTextOpinion());
+        View rowView = inflater.inflate(R.layout.listview_item, parent, false);
 
-        return convertView;
+        holder.name= (EditText) rowView.findViewById(R.id.etName);
+        holder.date = (EditText) rowView.findViewById(R.id.etDate);
+        holder.score = (EditText) rowView.findViewById(R.id.etScore);
+        holder.opinion = (EditText) rowView.findViewById(R.id.etExistOpinion);
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+        holder.name.setText(opinion_position.getName());
+        holder.date.setText(df.format(opinion_position.getDateOfOpinion()));
+        holder.score.setText(Integer.toString(opinion_position.getScore()));
+        holder.opinion.setText(opinion_position.getTextOpinion());
+
+        return rowView;
     }
 }

@@ -105,8 +105,8 @@ public class Information extends AppCompatActivity {
             count=-1;
 
 
-        Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
         String name=etClientName.getText().toString();
         if(name==null)
@@ -114,14 +114,11 @@ public class Information extends AppCompatActivity {
         else
         {
             String query;
-            //add opinion to database
-            /*String query="INSERT INTO Opinion (IdOpinion,IdSite,textOpinion,score,DateOfOpinion,name) VALUES ('"+count+"','"+id+"','"+String.valueOf(tvOpinion.getText())+"','" + rate.getRating()+"','"+df.format(date)+"','"+String.valueOf(etClientName.getText())+"')";
-            ConnectionClass.DBHelper.insertValues(query);*/
 
             ContentValues initialValues = new ContentValues();
             initialValues.put("IdOpinion",count);
             initialValues.put("IdSite",id);
-            initialValues.put("textOpinion",String.valueOf(tvOpinion.getText()));
+            initialValues.put("textOpinion",tvOpinion.getText().toString());
             initialValues.put("score",rate.getRating());
             initialValues.put("DateOfOpinion",df.format(date));
             initialValues.put("name",String.valueOf(etClientName.getText()));
@@ -231,7 +228,7 @@ public class Information extends AppCompatActivity {
     private void addOpinions()
     {
         //init adapter
-        OpinionAdapter = new ListOpinionAdapter(this,OpinionsList);
+        OpinionAdapter = new ListOpinionAdapter(OpinionsList,this);
         lvOpinion=(ListView)findViewById(R.id.lvOpinion);
         lvOpinion.setAdapter(OpinionAdapter);
         /*
