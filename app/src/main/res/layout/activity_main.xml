@@ -12,16 +12,16 @@
         tools:layout_editor_absoluteX="143dp"
         tools:layout_editor_absoluteY="0dp">
 
-    <Button
-        android:id="@+id/bttnAdmin"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="left"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/admin_image"
-        android:onClick="OnClickAdmin"
-        android:textColor="@android:color/background_light"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/bttnAdmin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/admin_image"
+            android:onClick="OnClickAdmin"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvWelcome"
@@ -33,69 +33,58 @@
             android:textColor="@color/colorAccent"
             android:textStyle="bold|italic" />
 
-    <Button
-        android:id="@+id/bttnCategory"
-        android:layout_width="176dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/categorybttn"
-        android:backgroundTint="@color/colorAccent"
-        android:onClick="OnClickCategory"
-        android:text="בחר קטגוריה"
-        android:textColor="@android:color/background_light"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="40dp"
-        android:text="חיפוש אתר באופן חופשי"
-        tools:textColor="@color/colorAccent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="265dp"
+        <TextView
+            android:id="@+id/tvLanguage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/search_et"
-            android:gravity="top"
-            android:hint="הקלד כאן..."
-            android:inputType="text" />
+            android:layout_gravity="left"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:text="Language:"
+            android:textStyle="bold"
+            tools:textColor="@color/colorAccent" />
 
-        <ImageButton
-            android:id="@+id/bttnSearch"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/image_search"
-            android:onClick="OnClickSearch" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/bttnOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categorybttn"
+                android:backgroundTint="@color/colorAccent"
+                android:text="OK"
+                android:onClick="OnClickOk"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
-        <ImageView
+            <Spinner
+                android:id="@+id/LanguageSpinner"
+                android:spinnerMode="dialog"
+                android:layout_width="230dp"
+                android:layout_height="60dp"
+                android:entries="@array/language_arrays"
+                android:background="@drawable/langsp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/background" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/background" />
 
-
+        </LinearLayout>
 </LinearLayout>
 
 
