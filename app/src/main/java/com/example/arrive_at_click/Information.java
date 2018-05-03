@@ -46,6 +46,7 @@ public class Information extends AppCompatActivity {
     private RatingBar rate;
     private TextView tvOpinion;
     private EditText etClientName;
+    private EditText etOpinion;
     private  File database;
     private int AccessClient;
 
@@ -89,6 +90,7 @@ public class Information extends AppCompatActivity {
         rate=(RatingBar)findViewById(R.id.ratingBar);
         tvOpinion=(TextView)findViewById(R.id.tvOpinion);
         etClientName=(EditText)findViewById(R.id.etClientName);
+        etOpinion=(EditText)findViewById(R.id.etOpinion);
     }
 
     public void OnClickSend(View v)
@@ -104,12 +106,13 @@ public class Information extends AppCompatActivity {
         else
             count=-1;
 
-
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
+        String today=df.format(date);
         String name=etClientName.getText().toString();
-        if(name==null)
+        String opinion=etOpinion.getText().toString();
+
+        if(name.matches(""))
             Toast.makeText(this, "You did not enter a name", Toast.LENGTH_LONG).show();
         else
         {
@@ -118,10 +121,10 @@ public class Information extends AppCompatActivity {
             ContentValues initialValues = new ContentValues();
             initialValues.put("IdOpinion",count);
             initialValues.put("IdSite",id);
-            initialValues.put("textOpinion",tvOpinion.getText().toString());
+            initialValues.put("textOpinion",opinion);
             initialValues.put("score",rate.getRating());
-            initialValues.put("DateOfOpinion",df.format(date));
-            initialValues.put("name",String.valueOf(etClientName.getText()));
+            initialValues.put("DateOfOpinion",today);
+            initialValues.put("name",name);
             ConnectionClass.DBHelper.insertValues("Opinion",initialValues);
 
             //update score by users
@@ -231,10 +234,7 @@ public class Information extends AppCompatActivity {
         OpinionAdapter = new ListOpinionAdapter(OpinionsList,this);
         lvOpinion=(ListView)findViewById(R.id.lvOpinion);
         lvOpinion.setAdapter(OpinionAdapter);
-        /*
-            TextView tvEmpty=(TextView)findViewById(R.id.empty);
-            tvEmpty.setText("אין עדיין חוות דעת לאתר זה.");
-        */
+        lvOpinion.setFastScrollEnabled(true);
     }
 
     private boolean isDatabaseExists()

@@ -67,10 +67,8 @@ public class ListOpinionAdapter extends BaseAdapter {
         holder.score = (EditText) rowView.findViewById(R.id.etScore);
         holder.opinion = (EditText) rowView.findViewById(R.id.etExistOpinion);
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
         holder.name.setText(opinion_position.getName());
-        holder.date.setText(df.format(opinion_position.getDateOfOpinion()));
+        holder.date.setText(opinion_position.getDateOfOpinion());
         holder.score.setText(Integer.toString(opinion_position.getScore()));
         holder.opinion.setText(opinion_position.getTextOpinion());
 

@@ -34,33 +34,17 @@ public class MainActivity extends AppCompatActivity{
         //set the font size 60
         tvWelcome.setTextSize(60);
 
-        TextView bttnCategory = (TextView) findViewById(R.id.bttnCategory);
-        //set the font size 25
-        bttnCategory.setTextSize(25);
-
-        TextView tvSearch = (TextView) findViewById(R.id.tvSearch);
-        //set the font size 20
-        tvSearch.setTextSize(20);
+        TextView tvLanguage = (TextView) findViewById(R.id.tvLanguage);
+        //set the font size 30
+        tvLanguage.setTextSize(30);
 
     }
 
-    public void OnClickCategory(View v)
+    public void OnClickOk(View v)
     {
-        Intent i = new Intent(MainActivity.this,Categories.class);
+        Intent i = new Intent(this,ChooseSearchMethod.class);
         startActivity(i);
     }
-
-    public void OnClickSearch(View v)
-    {
-        EditText txtVal = (EditText)findViewById(R.id.etSearch);
-        ResultsOfSearch.searchValue = txtVal.getText().toString();
-
-        Intent i = new Intent(this,ResultsOfSearch.class);
-
-        startActivity(i);
-
-    }
-
 
     public void OnClickAdmin(View v)
     {

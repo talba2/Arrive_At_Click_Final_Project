@@ -1,6 +1,10 @@
 package com.example.arrive_at_click;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -17,24 +21,42 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import com.example.arrive_at_click.model.Site;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
+
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class MapPage extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
     private GoogleMap mMap;
     private MarkerOptions Options = new MarkerOptions();
     private ArrayList<Site> SitesList;
@@ -46,6 +68,11 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
     public static String FieldName;
     public static LatLng myCurrentLoc;
     public int NumOfSites;
+    private LatLng dest;
+    private LocationManager mLocationManager;
+    private Location lastKnownLocation;
+    private EditText distance;
+    private Polyline currentPolyline;
 
 
     @Override
@@ -56,6 +83,8 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        distance=(EditText) findViewById(R.id.etDistance);
 
         //set bttnGo listener
         Button bttnGO = (Button)findViewById(R.id.bttnGo);
@@ -132,6 +161,35 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
             SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             AddressSpinner.setAdapter(SpinnerAdapter);
+            AddressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
+
+                    if(currentPolyline!=null)
+                        currentPolyline.remove();
+
+                    int position=AddressSpinner.getSelectedItemPosition();
+                    LatLng origin = myCurrentLoc;
+                    LatLng dest = new LatLng(SitesList.get(position).getLatitude(),SitesList.get(position).getLongitude());
+
+                    String url = getDirectionsUrl(origin, dest);
+                    DownloadTask downloadTask = new DownloadTask();
+                    downloadTask.execute(url);
+
+                    Location destLocation=new Location(LocationManager.GPS_PROVIDER);
+                    destLocation.setLatitude(dest.latitude);
+                    destLocation.setLongitude(dest.longitude);
+
+                    float dis = lastKnownLocation.distanceTo(destLocation);
+                    distance.setText(String.valueOf(dis/1000)+" קילומטר");
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView)
+                {
+
+                }
+            });
         }
 
     }
@@ -194,7 +252,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(11);
+        mMap.setMinZoomPreference(12);
         mMap.setOnInfoWindowClickListener(this);
 
         try {
@@ -202,6 +260,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -217,6 +276,8 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         for(int i=0;i<adapter.getCount();++i)
         {
             lt=new LatLng(SitesList.get(i).getLatitude(),SitesList.get(i).getLongitude());
+            if(i==0)
+                dest=lt;
             Options.position(lt);
             Options.title(SitesList.get(i).getAddSite());
             mMap.addMarker(Options);
@@ -224,26 +285,6 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
     }
 
-    private void enableMyLocationIfPermitted() {
-        //Checking if the user has granted location permission for this app
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-
-        }
-        else if (mMap != null) {
-            mMap.setMyLocationEnabled(true);
-        }
-    }
-
-    private void showDefaultLocation() {
-        Toast.makeText(this, "Location permission not granted, " +
-                        "showing default location",
-                Toast.LENGTH_SHORT).show();
-        LatLng redmond = new LatLng(32.080880, 34.780570);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -259,6 +300,33 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                 return;
             }
         }
+    }
+
+    private void enableMyLocationIfPermitted() {
+        //Checking if the user has granted location permission for this app
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+
+        }
+        else if (mMap != null) {
+            mMap.setMyLocationEnabled(true);
+            mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            lastKnownLocation=mLocationManager.getLastKnownLocation(mLocationManager.NETWORK_PROVIDER);
+            if(lastKnownLocation!=null)
+            {
+                myCurrentLoc=new LatLng(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude());
+            }
+        }
+    }
+
+    private void showDefaultLocation() {
+        Toast.makeText(this, "Location permission not granted, " +
+                        "showing default location",
+                Toast.LENGTH_SHORT).show();
+        LatLng redmond = new LatLng(32.080880, 34.780570);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
     }
 
     private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
@@ -283,6 +351,153 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             };
 
 
+    private String getDirectionsUrl(LatLng origin,LatLng dest){
+
+        // Origin of route
+        String str_origin = "origin="+origin.latitude+","+origin.longitude;
+
+        // Destination of route
+        String str_dest = "destination="+dest.latitude+","+dest.longitude;
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Building the parameters to the web service
+        String parameters = str_origin+"&"+str_dest+"&"+sensor;
+
+        // Output format
+        String output = "json";
+
+        String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
+
+        return url;
+    }
+
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try{
+            URL url = new URL(strUrl);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb  = new StringBuffer();
+
+            String line = "";
+            while( ( line = br.readLine())  != null){
+                sb.append(line);
+            }
+
+            data = sb.toString();
+
+            br.close();
+
+        }catch(Exception e){
+           e.printStackTrace();
+        }finally{
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    // Fetches data from url passed
+    private class DownloadTask extends AsyncTask<String, Void, String> {
+
+        // Downloading data in non-ui thread
+        @Override
+        protected String doInBackground(String... url) {
+
+            // For storing data from web service
+            String data = "";
+
+            try{
+                // Fetching the data from web service
+                data = downloadUrl(url[0]);
+            }catch(Exception e){
+                Log.d("Background Task",e.toString());
+            }
+            return data;
+        }
+
+        // Executes in UI thread, after the execution of
+        // doInBackground()
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            ParserTask parserTask = new ParserTask();
+
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
+        }
+    }
+
+
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>>>{
+
+        @Override
+        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+
+            JSONObject jObject;
+            List<List<HashMap<String, String>>> routes = null;
+
+            try{
+                jObject = new JSONObject(jsonData[0]);
+                DirectionsJSONParser parser = new DirectionsJSONParser();
+
+                // Starts parsing data
+                routes = parser.parse(jObject);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return routes;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+            ArrayList<LatLng> points = null;
+            PolylineOptions lineOptions = null;
+            MarkerOptions markerOptions = new MarkerOptions();
+
+            // Traversing through all the routes
+            for(int i=0;i<result.size();i++){
+                points = new ArrayList<LatLng>();
+                lineOptions = new PolylineOptions();
+
+                // Fetching i-th route
+                List<HashMap<String, String>> path = result.get(i);
+
+                // Fetching all the points in i-th route
+                for(int j=0;j<path.size();j++){
+                    HashMap<String,String> point = path.get(j);
+
+                    double lat = Double.parseDouble(point.get("lat"));
+                    double lng = Double.parseDouble(point.get("lng"));
+                    LatLng position = new LatLng(lat, lng);
+
+                    points.add(position);
+                }
+
+                // Adding all the points in the route to LineOptions
+                lineOptions.addAll(points);
+                lineOptions.width(10);
+                lineOptions.color(Color.RED);
+            }
+
+            // Drawing polyline in the Google Map for the i-th route
+            currentPolyline=mMap.addPolyline(lineOptions);
+        }
+    }
 
 }
 

@@ -18,16 +18,16 @@ public class Opinion extends AppCompatActivity {
     private int IdSite;
     private String textOpinion;
     private int score;
-    private Date DateOfOpinion;
+    private String DateOfOpinion;
 
-    public Opinion(String name,Date dateOfOpinion,int score, String textOpinion) {
+    public Opinion(String name,String dateOfOpinion,int score, String textOpinion) {
         this.name=name;
         DateOfOpinion = dateOfOpinion;
         this.score = score;
         this.textOpinion = textOpinion;
     }
 
-    public Opinion(String name,int idOpinion, int idSite, String textOpinion, int score, Date dateOfOpinion) {
+    public Opinion(String name,int idOpinion, int idSite, String textOpinion, int score, String dateOfOpinion) {
         IdSite = idSite;
         this.textOpinion = textOpinion;
         this.score = score;
@@ -53,7 +53,7 @@ public class Opinion extends AppCompatActivity {
         return score;
     }
 
-    public Date getDateOfOpinion() {
+    public String getDateOfOpinion() {
         return DateOfOpinion;
     }
 
@@ -77,7 +77,7 @@ public class Opinion extends AppCompatActivity {
         this.score = score;
     }
 
-    public void setDateOfOpinion(Date dateOfOpinion) {
+    public void setDateOfOpinion(String dateOfOpinion) {
         DateOfOpinion = dateOfOpinion;
     }
 }
