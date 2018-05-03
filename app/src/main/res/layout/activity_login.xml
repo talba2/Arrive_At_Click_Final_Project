@@ -12,6 +12,17 @@
     android:background="@drawable/background_image"
     tools:context=".LoginActivity">
 
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="משתמש רשום"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
+
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -19,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="10dp"
         android:visibility="gone" />
 
     <ScrollView
@@ -85,13 +97,37 @@
 
             <Button
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
+                android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="התחבר או הרשם"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvOr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="או"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/bttnOrdinary"
+                android:onClick="OnClickOrdinary"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="משתמש רגיל"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold" />
 
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

@@ -1,32 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminPage">
+    android:background="@drawable/background_image"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:layout_editor_absoluteX="143dp"
+    tools:layout_editor_absoluteY="0dp">
 
-    <Button
-        android:id="@+id/bttnSite"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:text="עדכן פרטי אתר"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="118dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/bttnOpnion"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:text="אשר חוות דעת"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="231dp" />
+        <Button
+            android:id="@+id/bttnSite"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="עדכן פרטי אתר"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="118dp" />
 
-    <Button
-        android:id="@+id/bttnMap"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:text="עדכן מפת שיפועים"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="352dp" />
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bttnOpnion"
+            android:gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="אשר חוות דעת"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="231dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bttnMap"
+            android:gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:text="עדכן מפת שיפועים"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="352dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
