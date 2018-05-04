@@ -63,7 +63,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".UpdateSite"></activity>
+        <activity android:name=".UpdateSite" />
+        <activity android:name=".Opninions"></activity>
     </application>
 
 </manifest>

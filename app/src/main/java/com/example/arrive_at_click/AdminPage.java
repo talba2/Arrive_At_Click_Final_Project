@@ -1,5 +1,6 @@
 package com.example.arrive_at_click;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,9 +20,6 @@ public class AdminPage extends AppCompatActivity {
             public void onClick(View v) {
                 OnClickSite(v);
             }
-
-            private void OnClickSite(View v) {
-            }
         });
 
         Button bttnOpnion= (Button)findViewById(R.id.bttnOpnion);
@@ -31,8 +29,6 @@ public class AdminPage extends AppCompatActivity {
                 OnClickOpnion(v);
             }
 
-            private void OnClickOpnion(View v) {
-            }
         });
 
         Button bttnMap= (Button)findViewById(R.id.bttnMap);
@@ -45,6 +41,25 @@ public class AdminPage extends AppCompatActivity {
             private void OnClickMap(View v) {
             }
         });
-        
+
     }
+
+    private void OnClickSite(View v) {
+
+        Intent i = new Intent(this, Information.class);
+        startActivity(i);
+    }
+
+    private void OnClickOpnion(View v) {
+        Intent i = new Intent(this, Opninions.class);
+        startActivity(i);
+
+    }
+
+    private void OnClickMap(View v) {
+        Intent i = new Intent(this, Opninions.class);
+        startActivity(i);
+
+    }
+
 }

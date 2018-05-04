@@ -23,6 +23,7 @@
             android:layout_height="60dp"
             android:text="עדכן פרטי אתר"
             android:gravity="center"
+            android:onClick="OnClickSite"
             tools:layout_editor_absoluteX="136dp"
             tools:layout_editor_absoluteY="118dp" />
 
@@ -41,6 +42,7 @@
             android:layout_width="120dp"
             android:layout_height="60dp"
             android:text="אשר חוות דעת"
+            android:onClick="OnClickOpinion"
             tools:layout_editor_absoluteX="136dp"
             tools:layout_editor_absoluteY="231dp" />
 
