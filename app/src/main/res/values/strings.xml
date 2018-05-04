@@ -24,5 +24,6 @@
     <string-array name="language_arrays">
         <item>Hebrew</item>
         <item>English</item>
-    </string-array>			
+    </string-array>
+    <string name="title_activity_update_site">UpdateSite</string>
 </resources>
