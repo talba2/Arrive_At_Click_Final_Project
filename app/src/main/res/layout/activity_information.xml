@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:weightSum="2">
 
             <TextView
@@ -162,8 +162,9 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:enabled="false"
-                android:inputType="text"
-                android:layout_marginTop="5dp"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:maxLines="6"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 

@@ -189,43 +189,57 @@ public class Information extends AppCompatActivity {
         SeekBar sbClient = (SeekBar) findViewById(R.id.seekBarClient);
         sbClient.setEnabled(false);
 
-        EditText siteAvailWeb =(EditText)findViewById(R.id.etAvailLevel);
-        int AccessWeb=siteList.get(0).getAccessByWeb();
-        siteAvailWeb.setText(String.valueOf(AccessWeb)+"/4");
-        sbWeb.setProgress(AccessWeb);
-
-        EditText siteAvailClient =(EditText)findViewById(R.id.etAvailClientLevel);
-        AccessClient=siteList.get(0).getAccessByUser();
-        siteAvailClient.setText(String.valueOf(AccessClient)+"/4");
-        sbClient.setProgress(AccessClient);
-
+        int count=0;
         int ramp=FacilitiesList.get(0).isRamp();
         CheckBox cbRamp=(CheckBox)findViewById(R.id.cbRamp);
         if(ramp==1)
+        {
             cbRamp.setChecked(true);
+            count++;
+        }
         else
             cbRamp.setChecked(false);
 
         int handicappedToillets=FacilitiesList.get(0).isHandicapedToillets();
         CheckBox cbToillets=(CheckBox)findViewById(R.id.cbToilet);
         if(handicappedToillets==1)
+        {
             cbToillets.setChecked(true);
+            count++;
+        }
         else
             cbToillets.setChecked(false);
 
         int handicappedParking=FacilitiesList.get(0).isHandicappedParking();
         CheckBox cbParking=(CheckBox)findViewById(R.id.cbParking);
         if(handicappedParking==1)
+        {
             cbParking.setChecked(true);
+            count++;
+        }
         else
             cbParking.setChecked(false);
 
         int railing=FacilitiesList.get(0).isRailing();
         CheckBox cbRailing=(CheckBox)findViewById(R.id.cbRailing);
         if(railing==1)
+        {
             cbRailing.setChecked(true);
+            count++;
+        }
         else
             cbRailing.setChecked(false);
+
+        EditText siteAvailWeb =(EditText)findViewById(R.id.etAvailLevel);
+        //int AccessWeb=siteList.get(0).getAccessByWeb();
+        siteAvailWeb.setText(String.valueOf(count)+"/4");
+        sbWeb.setProgress(count);
+
+        EditText siteAvailClient =(EditText)findViewById(R.id.etAvailClientLevel);
+        AccessClient=siteList.get(0).getAccessByUser();
+        siteAvailClient.setText(String.valueOf(AccessClient)+"/4");
+        sbClient.setProgress(AccessClient);
+
     }
 
     private void addOpinions()
