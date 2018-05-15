@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite4.0.db";
+    public static final String DBNAME="sqLite6.0.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
