@@ -33,7 +33,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Categories" />
-        <activity android:name=".Hospitals" />
         <activity android:name=".Banks" />
         <activity android:name=".Pharmacies" />
         <activity android:name=".Municipality" />
@@ -64,7 +63,9 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".UpdateSite" />
-        <activity android:name=".Opninions"></activity>
+        <activity android:name=".Opninions" />
+        <activity android:name=".EditSite" />
+        <activity android:name=".SlopeMap"></activity>
     </application>
 
 </manifest>

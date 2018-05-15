@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 public class AdminPage extends AppCompatActivity {
 
+    public static int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class AdminPage extends AppCompatActivity {
 
     private void OnClickSite(View v) {
 
-        Intent i = new Intent(this, Information.class);
+        Intent i = new Intent(this, EditSite.class);
         startActivity(i);
     }
 
@@ -57,7 +58,7 @@ public class AdminPage extends AppCompatActivity {
     }
 
     private void OnClickMap(View v) {
-        Intent i = new Intent(this, Opninions.class);
+        Intent i = new Intent(this, SlopeMap.class);
         startActivity(i);
 
     }

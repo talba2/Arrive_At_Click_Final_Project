@@ -96,7 +96,7 @@ public class Categories extends AppCompatActivity {
     public void OnClickHospitals(View v)
     {
         categoryName="Hospitals";
-        Intent i = new Intent(Categories.this,Hospitals.class);
+        Intent i = new Intent(Categories.this,MapPage.class);
         startActivity(i);
     }
 

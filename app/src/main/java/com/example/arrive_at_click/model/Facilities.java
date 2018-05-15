@@ -8,6 +8,7 @@ public class Facilities {
     int handicappedParking;
     int railing;
 
+
     public Facilities(int idSite, int ramp, int handicapedToillets, int handicappedParking, int railing) {
         IdSite = idSite;
         this.ramp = ramp;

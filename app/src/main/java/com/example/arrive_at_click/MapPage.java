@@ -134,7 +134,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                 FieldName="category";
                 break;
             case "Hospitals":
-                SiteName=Hospitals.HospitalsWasClicked;
+                SiteName="בית-חולים";
                 FieldName="category";
                 break;
             case "HMO":
