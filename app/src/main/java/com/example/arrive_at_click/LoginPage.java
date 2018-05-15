@@ -30,6 +30,7 @@ public class LoginPage extends AppCompatActivity {
 
     public void OnClickLogin(View v)
     {
+
         EditText pass = (EditText)findViewById(R.id.etPass);
         AdminPage.count++;
         if (pass.equals("AdminOnly"))
