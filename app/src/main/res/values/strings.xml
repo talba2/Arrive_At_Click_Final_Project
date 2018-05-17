@@ -25,5 +25,16 @@
         <item>Hebrew</item>
         <item>English</item>
     </string-array>
+
+    <string-array name="category_arrays">
+        <item>בחר קטגוריה...</item>
+        <item>סניף בנק</item>
+        <item>בית חולים</item>
+        <item>קופת חולים</item>
+        <item>סניף דואר</item>
+        <item>בית מרקחת</item>
+        <item>עירייה</item>
+    </string-array>
+
     <string name="title_activity_update_site">UpdateSite</string>
 </resources>

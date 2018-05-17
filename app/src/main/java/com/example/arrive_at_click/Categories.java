@@ -9,7 +9,7 @@ import android.content.Context;
 
 public class Categories extends AppCompatActivity {
 
-    public static String categoryName;
+    public static String categoryName=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,15 +1,11 @@
 package com.example.arrive_at_click;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Path;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -32,8 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
+
 
 public class Information extends AppCompatActivity {
 

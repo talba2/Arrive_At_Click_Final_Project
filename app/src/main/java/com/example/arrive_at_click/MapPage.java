@@ -114,7 +114,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             }
         }
 
-        //update which category waw chosen
+        //update which category was chosen
         switch(Categories.categoryName)
         {
             case "Banks":
@@ -143,55 +143,58 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                 break;
             default:
                 SiteName=null;
+                FieldName=null;
                 break;
+        }
+        if(SiteName==null && FieldName==null)
+        {
+            SiteName=ChooseSearchMethod.SiteName;
+            FieldName=ChooseSearchMethod.FieldName;
         }
 
         //update spinner list
-        if(SiteName!=null)
+
+        SitesList  = ConnectionClass.DBHelper.getListSites("*",FieldName+" LIKE '%" + SiteName + "%'");
+        //init adapter
+        adapter = new ListSiteAdapter(this,SitesList);
+
+        NumOfSites=adapter.getCount();
+        String[] sitesAddress=new String[NumOfSites];
+        for(int i=0;i<NumOfSites;++i)
+            sitesAddress[i]=SitesList.get(i).getAddSite();
+
+        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
+        SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        AddressSpinner.setAdapter(SpinnerAdapter);
+        AddressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            SitesList  = ConnectionClass.DBHelper.getListSites("*",FieldName+" LIKE '%" + SiteName + "%'");
-            //init adapter
-            adapter = new ListSiteAdapter(this,SitesList);
+            @Override
+            public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
 
-            NumOfSites=adapter.getCount();
-            String[] sitesAddress=new String[NumOfSites];
-            for(int i=0;i<NumOfSites;++i)
-                sitesAddress[i]=SitesList.get(i).getAddSite();
+                if(currentPolyline!=null)
+                    currentPolyline.remove();
 
-            ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
-            SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            AddressSpinner.setAdapter(SpinnerAdapter);
-            AddressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                int position=AddressSpinner.getSelectedItemPosition();
+                LatLng origin = myCurrentLoc;
+                LatLng dest = new LatLng(SitesList.get(position).getLatitude(),SitesList.get(position).getLongitude());
+
+                String url = getDirectionsUrl(origin, dest);
+                DownloadTask downloadTask = new DownloadTask();
+                downloadTask.execute(url);
+
+                Location destLocation=new Location(LocationManager.GPS_PROVIDER);
+                destLocation.setLatitude(dest.latitude);
+                destLocation.setLongitude(dest.longitude);
+
+                float dis = lastKnownLocation.distanceTo(destLocation);
+                distance.setText(String.valueOf(dis/1000)+" קילומטר");
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView)
             {
-                @Override
-                public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
 
-                    if(currentPolyline!=null)
-                        currentPolyline.remove();
-
-                    int position=AddressSpinner.getSelectedItemPosition();
-                    LatLng origin = myCurrentLoc;
-                    LatLng dest = new LatLng(SitesList.get(position).getLatitude(),SitesList.get(position).getLongitude());
-
-                    String url = getDirectionsUrl(origin, dest);
-                    DownloadTask downloadTask = new DownloadTask();
-                    downloadTask.execute(url);
-
-                    Location destLocation=new Location(LocationManager.GPS_PROVIDER);
-                    destLocation.setLatitude(dest.latitude);
-                    destLocation.setLongitude(dest.longitude);
-
-                    float dis = lastKnownLocation.distanceTo(destLocation);
-                    distance.setText(String.valueOf(dis/1000)+" קילומטר");
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView)
-                {
-
-                }
-            });
-        }
-
+            }
+        });
     }
 
     public void OnClickGO(View v)
