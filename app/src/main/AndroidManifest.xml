@@ -65,7 +65,8 @@
         <activity android:name=".UpdateSite" />
         <activity android:name=".Opninions" />
         <activity android:name=".EditSite" />
-        <activity android:name=".SlopeMap"></activity>
+        <activity android:name=".SlopeMap" />
+        <activity android:name=".SiteToUpdate"></activity>
     </application>
 
 </manifest>

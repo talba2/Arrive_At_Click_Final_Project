@@ -62,7 +62,7 @@
                 android:background="@drawable/categorybttn"
                 android:backgroundTint="@color/colorAccent"
                 android:text="CHOOSE"
-                android:onClick="OnClickCHOOSE1"
+                android:onClick="OnClickChoose"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:text="בחר תת קטגוריה(במידת הצורך):"
+                android:text="בחר סניף:"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -103,17 +103,6 @@
                 android:layout_gravity="right"
                 android:background="@drawable/spinner_border"/>
 
-            <Button
-                android:id="@+id/bttnSecondCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/categorybttn"
-                android:backgroundTint="@color/colorAccent"
-                android:text="CHOOSE"
-                android:onClick="OnClickCHOOSE2"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -171,7 +160,7 @@
                 android:background="@drawable/categorybttn"
                 android:backgroundTint="@color/colorAccent"
                 android:text="SEARCH"
-                android:onClick="OnClickSEARCH"
+                android:onClick="OnClickSearch"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
