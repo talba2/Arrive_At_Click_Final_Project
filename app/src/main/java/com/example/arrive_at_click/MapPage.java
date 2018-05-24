@@ -59,13 +59,13 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
 
     private GoogleMap mMap;
     private MarkerOptions Options = new MarkerOptions();
-    private ArrayList<Site> SitesList;
+    private ArrayList<Site> SitesList=null;
     private Spinner AddressSpinner;
     private ListSiteAdapter adapter;
     public static String itemSelected;
-    public static String SiteName;
+    public static String SiteName=null;
     public static int IdSite;
-    public static String FieldName;
+    public static String FieldName=null;
     public static LatLng myCurrentLoc;
     public int NumOfSites;
     private LatLng dest;
@@ -105,9 +105,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             ConnectionClass.DBHelper.getReadableDatabase();
             //copy db
             ConnectionClass con=new ConnectionClass();
-            if(con.copyDatabase(this))
-                Toast.makeText(this,"copy db successfully",Toast.LENGTH_SHORT).show();
-            else
+            if(!con.copyDatabase(this))
             {
                 Toast.makeText(this,"copy db error",Toast.LENGTH_SHORT).show();
                 return;
@@ -115,55 +113,74 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         }
 
         //update which category was chosen
-        switch(Categories.categoryName)
+        if(Categories.categoryName!=null)
         {
-            case "Banks":
-                SiteName=Banks.BankWasClicked;
-                FieldName="name";
-                break;
-            case "Pharmacies":
-                SiteName=Pharmacies.PharmaciesWasClicked;
-                FieldName="name";
-                break;
-            case "Postal":
-                SiteName="סניף דואר";
-                FieldName="category";
-                break;
-            case "Municipality":
-                SiteName=Municipality.MunicipalityWasClicked;
-                FieldName="category";
-                break;
-            case "Hospitals":
-                SiteName="בית-חולים";
-                FieldName="category";
-                break;
-            case "HMO":
-                SiteName=HMO.HmoWasClicked;
-                FieldName="name";
-                break;
-            default:
-                SiteName=null;
-                FieldName=null;
-                break;
+            switch(Categories.categoryName)
+            {
+                case "Banks":
+                    SiteName=Banks.BankWasClicked;
+                    FieldName="name";
+                    break;
+                case "Pharmacies":
+                    SiteName=Pharmacies.PharmaciesWasClicked;
+                    FieldName="name";
+                    break;
+                case "Postal":
+                    SiteName="סניף דואר";
+                    FieldName="category";
+                    break;
+                case "Municipality":
+                    SiteName=Municipality.MunicipalityWasClicked;
+                    FieldName="category";
+                    break;
+                case "Hospitals":
+                    SiteName="בית-חולים";
+                    FieldName="category";
+                    break;
+                case "HMO":
+                    SiteName=HMO.HmoWasClicked;
+                    FieldName="name";
+                    break;
+                default:
+                    break;
+            }
         }
+
+        ArrayAdapter<String> SpinnerAdapter=null;
+        //update spinner list
         if(SiteName==null && FieldName==null)
         {
             SiteName=ChooseSearchMethod.SiteName;
             FieldName=ChooseSearchMethod.FieldName;
+            String Address=ChooseSearchMethod.Address;
+            SitesList  = ConnectionClass.DBHelper.getListSites("*",FieldName+" LIKE '%" + SiteName + "%' AND addSite LIKE '%" + Address + "%'");
+            adapter = new ListSiteAdapter(this,SitesList);
+            NumOfSites=adapter.getCount();
+            String[] sitesAddress=new String[1];
+            sitesAddress[0]=SitesList.get(0).getAddSite();
+            SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
+        }
+        else
+        {
+            SitesList  = ConnectionClass.DBHelper.getListSites("*",FieldName+" LIKE '%" + SiteName + "%'");
+            if(SitesList!=null)
+            {
+                //init adapter
+                adapter = new ListSiteAdapter(this,SitesList);
+
+                NumOfSites=adapter.getCount();
+                String[] sitesAddress=new String[NumOfSites];
+                for(int i=0;i<NumOfSites;++i)
+                    sitesAddress[i]=SitesList.get(i).getAddSite();
+
+                SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
+            }
+            else
+                Toast.makeText(this, "לא נמצאו תוצאות מתאימות", Toast.LENGTH_LONG).show();
+
+
         }
 
-        //update spinner list
-
-        SitesList  = ConnectionClass.DBHelper.getListSites("*",FieldName+" LIKE '%" + SiteName + "%'");
-        //init adapter
-        adapter = new ListSiteAdapter(this,SitesList);
-
-        NumOfSites=adapter.getCount();
-        String[] sitesAddress=new String[NumOfSites];
-        for(int i=0;i<NumOfSites;++i)
-            sitesAddress[i]=SitesList.get(i).getAddSite();
-
-        ArrayAdapter<String> SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
         SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         AddressSpinner.setAdapter(SpinnerAdapter);
         AddressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -175,19 +192,22 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                     currentPolyline.remove();
 
                 int position=AddressSpinner.getSelectedItemPosition();
-                LatLng origin = myCurrentLoc;
-                LatLng dest = new LatLng(SitesList.get(position).getLatitude(),SitesList.get(position).getLongitude());
+                if(position!=-1)
+                {
+                    LatLng origin = myCurrentLoc;
+                    LatLng dest = new LatLng(SitesList.get(position).getLatitude(),SitesList.get(position).getLongitude());
 
-                String url = getDirectionsUrl(origin, dest);
-                DownloadTask downloadTask = new DownloadTask();
-                downloadTask.execute(url);
+                    String url = getDirectionsUrl(origin, dest);
+                    DownloadTask downloadTask = new DownloadTask();
+                    downloadTask.execute(url);
 
-                Location destLocation=new Location(LocationManager.GPS_PROVIDER);
-                destLocation.setLatitude(dest.latitude);
-                destLocation.setLongitude(dest.longitude);
+                    Location destLocation=new Location(LocationManager.GPS_PROVIDER);
+                    destLocation.setLatitude(dest.latitude);
+                    destLocation.setLongitude(dest.longitude);
 
-                float dis = lastKnownLocation.distanceTo(destLocation);
-                distance.setText(String.valueOf(dis/1000)+" קילומטר");
+                    float dis = lastKnownLocation.distanceTo(destLocation);
+                    distance.setText(String.valueOf(dis/1000)+" קילומטר");
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView)
@@ -200,9 +220,16 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
     public void OnClickGO(View v)
     {
         itemSelected=AddressSpinner.getSelectedItem().toString();
-        IdSite= getIdSite(); //get id of site that selected
-        Intent i = new Intent(this,Information.class);
-        startActivity(i);
+        if(!itemSelected.equals(""))
+        {
+            IdSite= getIdSite(); //get id of site that selected
+            Intent i = new Intent(this,Information.class);
+            startActivity(i);
+        }
+        else
+            Toast.makeText(this,"לא נמצא אתר לחיפוש",Toast.LENGTH_LONG).show();
+
+
     }
     public void OnClickMarker(String title)
     {
@@ -325,9 +352,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
     }
 
     private void showDefaultLocation() {
-        Toast.makeText(this, "Location permission not granted, " +
-                        "showing default location",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Location permission not granted, " + "showing default location", Toast.LENGTH_SHORT).show();
         LatLng redmond = new LatLng(32.080880, 34.780570);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
     }
@@ -349,7 +374,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                     mMap.setMinZoomPreference(11);
                     myCurrentLoc = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(myCurrentLoc));
-                    mMap.addMarker(new MarkerOptions().position(myCurrentLoc).title("My current position"));
+                    mMap.addMarker(new MarkerOptions().position(myCurrentLoc));
                 }
             };
 

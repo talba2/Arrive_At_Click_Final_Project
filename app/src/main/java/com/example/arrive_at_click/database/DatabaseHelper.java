@@ -3,24 +3,28 @@ package com.example.arrive_at_click.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 
 import com.example.arrive_at_click.model.Facilities;
 import com.example.arrive_at_click.model.Opinion;
 import com.example.arrive_at_click.model.Site;
+import com.example.arrive_at_click.model.Users;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite6.0.db";
+    public static final String DBNAME="sqLite7.0.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
+    private int version;
 
     public DatabaseHelper(Context context){
-        super(context,DBNAME,null,2);
+        super(context,DBNAME,null,3);
         this.mContext=context;
     }
     @Override
@@ -30,15 +34,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
-    public void openDatabase(){
-        String dbPath=mContext.getDatabasePath(DBNAME).getPath();
+    private void openDatabase() {
+        /*String dbPath=mContext.getDatabasePath(DBNAME).getPath();
         if(mDatabase!=null && mDatabase.isOpen()) {
             return;
         }
-        mDatabase=SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READWRITE);
+        mDatabase=SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READWRITE);*/
+
+        try {
+            this.mDatabase = SQLiteDatabase.openDatabase(mContext.getDatabasePath(DBNAME).getPath(),
+                    null,
+                    SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        }
     }
 
     public void closeDatabase(){
@@ -50,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Site site = null;
         ArrayList<Site> siteList = new ArrayList<>();
         openDatabase();
+        //mDatabase=this.getReadableDatabase();
         Cursor cursor;
         if (where == null)
             cursor = mDatabase.rawQuery("SELECT " + select + " FROM Sites", null);
@@ -69,14 +81,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Opinion> getListOpinions(String select, String where) {
         if(numOfRows("Opinion",where)==0)
-        {
             return null;
-        }
         else
         {
             Opinion opinion = null;
             ArrayList<Opinion> opinionList = new ArrayList<>();
             openDatabase();
+            //mDatabase=this.getReadableDatabase();
             Cursor cursor;
             if (where==null)
                 cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion", null);
@@ -87,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if(select.equals("*"))
             {
                 while (!cursor.isAfterLast()) {
-                    opinion = new Opinion(cursor.getString(5),cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+                    opinion = new Opinion(cursor.getString(5), cursor.getInt(1), cursor.getString(2), cursor.getInt(3),cursor.getString(4));
                     opinionList.add(opinion);
                     cursor.moveToNext();
                 }
@@ -95,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             else
             {
                 while (!cursor.isAfterLast()) {
-                    opinion = new Opinion(cursor.getString(0),cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+                    opinion = new Opinion(cursor.getString(0), cursor.getString(1), cursor.getInt(2),cursor.getString(3));
                     opinionList.add(opinion);
                     cursor.moveToNext();
                 }
@@ -111,6 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Facilities facilities = null;
         ArrayList<Facilities> facilitiesList = new ArrayList<>();
         openDatabase();
+        //mDatabase=this.getReadableDatabase();
         Cursor cursor;
         if (where == null)
             cursor = mDatabase.rawQuery("SELECT " + select + " FROM Facilities", null);
@@ -128,8 +140,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return facilitiesList;
     }
 
+    public ArrayList<Users> getListUsers(String select, String where) {
+        Users user = null;
+        ArrayList<Users> usersList = new ArrayList<>();
+        openDatabase();
+        //mDatabase=this.getReadableDatabase();
+        Cursor cursor;
+        if (where == null)
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Users", null);
+        else
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Users WHERE " + where, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            user = new Users(Integer.parseInt(cursor.getString(0)),cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            usersList.add(user);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        closeDatabase();
+        return usersList;
+    }
+
     public int numOfRows(String table, String where)
     {
+        //mDatabase=this.getReadableDatabase();
         openDatabase();
         Cursor cursor=null;
         int count=0;
@@ -151,7 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long insertValues(String table,ContentValues cv)
     {
         openDatabase();
-        //mDatabase.execSQL(query);
+        //mDatabase=this.getReadableDatabase();
         long added=mDatabase.insert(table,null,cv);
         closeDatabase();
         return added;
@@ -160,6 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int sumColumn(String query)
     {
         openDatabase();
+        //mDatabase=this.getReadableDatabase();
         Cursor cursor = mDatabase.rawQuery(query, null);
         int total=0;
         if (cursor.moveToFirst())
@@ -171,6 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean update(ContentValues cv,String table,String where)
     {
         openDatabase();
+        //mDatabase=this.getReadableDatabase();
         int affectedRows=mDatabase.update(table, cv, where, null);
         closeDatabase();
         return affectedRows>0;

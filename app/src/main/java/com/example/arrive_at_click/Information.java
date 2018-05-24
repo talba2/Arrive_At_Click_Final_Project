@@ -1,9 +1,17 @@
 package com.example.arrive_at_click;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -42,8 +50,11 @@ public class Information extends AppCompatActivity {
     private TextView tvOpinion;
     private EditText etClientName;
     private EditText etOpinion;
-    private  File database;
+    private File database;
     private int AccessClient;
+    private EditText sitePhone;
+    private String phone;
+    private int MY_PERMISSIONS_REQUEST_CALL_PHONE=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,12 +172,22 @@ public class Information extends AppCompatActivity {
         EditText siteAdd = (EditText) findViewById(R.id.etAddress);
         siteAdd.setText(siteList.get(0).getAddSite());
 
-        EditText sitePhone = (EditText) findViewById(R.id.etPhone);
-        String phone = siteList.get(0).getPhoneNum();
+        sitePhone = (EditText) findViewById(R.id.etPhone);
+        phone = siteList.get(0).getPhoneNum();
         if (phone == null)
             sitePhone.setText("נתון חסר");
         else
             sitePhone.setText(phone);
+
+        Button bttnCall=(Button) findViewById(R.id.bttnCall);
+
+        bttnCall.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                OnClickCall(v);
+            }
+        });
 
         EditText siteOpenHour = (EditText) findViewById(R.id.etOpenHours);
         String hours = siteList.get(0).getDesSite();
@@ -227,13 +248,34 @@ public class Information extends AppCompatActivity {
 
         EditText siteAvailWeb =(EditText)findViewById(R.id.etAvailLevel);
         //int AccessWeb=siteList.get(0).getAccessByWeb();
-        siteAvailWeb.setText(String.valueOf(count)+"/4");
+        siteAvailWeb.setText(String.valueOf(count)+"/6");
         sbWeb.setProgress(count);
 
         EditText siteAvailClient =(EditText)findViewById(R.id.etAvailClientLevel);
         AccessClient=siteList.get(0).getAccessByUser();
-        siteAvailClient.setText(String.valueOf(AccessClient)+"/4");
+        siteAvailClient.setText(String.valueOf(AccessClient)+"/6");
         sbClient.setProgress(AccessClient);
+
+    }
+
+    private void OnClickCall(View v)
+    {
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+phone));
+        TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CALL_PHONE)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            }
+        }
+        try {
+            startActivity(callIntent);
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -257,5 +299,4 @@ public class Information extends AppCompatActivity {
         }
         return true;
     }
-
 }

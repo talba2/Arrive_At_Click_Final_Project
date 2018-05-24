@@ -3,6 +3,7 @@ package com.example.arrive_at_click;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -29,7 +30,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.arrive_at_click.database.DatabaseHelper;
+import com.example.arrive_at_click.model.Users;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +50,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    private File database;
+    private ArrayList<Users> usersList=null;
+    public static int idUser=-1;
+    public static boolean isLogged=false;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -105,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void OnClickOrdinary(View v)
     {
+        isLogged=false;
         Intent i = new Intent(this,ChooseSearchMethod.class);
         startActivity(i);
     }
@@ -203,9 +214,66 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            Intent i = new Intent(this,ChooseSearchMethod.class);
-            startActivity(i);
+            ConnectionClass.DBHelper = new DatabaseHelper(this);
+            database = getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
+
+            EditText etName=(EditText)findViewById(R.id.etName);
+            String userName=etName.getText().toString();
+
+            if(isDatabaseExists())
+            {
+                usersList = ConnectionClass.DBHelper.getListUsers("*", "userName LIKE '%" + userName + "%'");
+                int numOfUsers=ConnectionClass.DBHelper.numOfRows("Users",null); //get num of users
+                if(usersList==null)//if the user doesn't exist, then create a new one
+                {
+                    idUser=numOfUsers; //starts from 0
+
+                    String query;
+
+                    ContentValues initialValues = new ContentValues();
+                    initialValues.put("idUser",idUser);
+                    initialValues.put("userName",userName);
+                    initialValues.put("mail",email);
+                    initialValues.put("userPass",password);
+                    ConnectionClass.DBHelper.insertValues("Users",initialValues);
+
+                    //go to registration form
+                    Intent i = new Intent(this,Registration.class);
+                    startActivity(i);
+                }
+                else
+                {
+                    //idUser=getIdUser(numOfUsers,userName);
+                    idUser=usersList.get(0).getIdUser();
+                    if(usersList.get(0).getUserPass().equals(password))
+                    {
+                        finish();
+                        isLogged=true;
+                        Intent i = new Intent(this,Categories.class);
+                        startActivity(i);
+                    }
+                    else
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
+                }
+            }
+
+
         }
+    }
+
+    public int getIdUser(int count, String userName)
+    {
+        int id=-1;
+        for(int i=0; i<count; i++)
+        {
+            if(usersList.get(i).getUserName().equals(userName))
+            {
+                id=usersList.get(i).getIdUser();
+                i=count;
+            }
+        }
+        return id;
     }
 
     private boolean isEmailValid(String email) {
@@ -308,6 +376,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    private boolean isDatabaseExists()
+    {
+        if (database.exists() == false) {
+            ConnectionClass.DBHelper.getReadableDatabase();
+            //copy db
+            ConnectionClass con = new ConnectionClass();
+            if (!con.copyDatabase(this))
+                return false;
+        }
+        return true;
+    }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -344,6 +424,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: register the new account here.
             return true;
         }
+
+
 
         @Override
         protected void onPostExecute(final Boolean success) {

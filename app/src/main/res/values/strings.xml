@@ -33,7 +33,17 @@
         <item>קופת חולים</item>
         <item>סניף דואר</item>
         <item>בית מרקחת</item>
-        <item>עירייה</item>
+        <item>מחלקת-רווחה</item>
+		<item>בית אבות</item>
+		<item>מוסד סיעוד גריאטרי</item>
+		<item>מרפאה כירורגית</item>
+    </string-array>
+	
+	<string-array name="disability_arrays">
+        <item>בחר לקות...</item>
+        <item>נכה</item>
+        <item>לקוי שמיעה</item>
+        <item>לקוי ראייה</item>
     </string-array>
 
     <string name="title_activity_update_site">UpdateSite</string>

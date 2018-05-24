@@ -1,7 +1,6 @@
 package com.example.arrive_at_click.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,9 +9,6 @@ import android.widget.EditText;
 
 import com.example.arrive_at_click.R;
 import com.example.arrive_at_click.model.Opinion;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 

@@ -18,13 +18,14 @@ public class Users {
     private String userPass;
     private static int count=0;
 
-    public Users (String name, String userPass , String mail)
+    public Users (int idUser,String name, String userPass , String mail)
     {
+        this.idUser=idUser;
         this.userName=name;
         this.userPass = userPass;
         this.mail = mail;
-        count ++;
-        this.idUser= count ;
+        //count ++;
+        //this.idUser= count ;
     }
 
     public Users (String name, String userPass)
@@ -32,8 +33,8 @@ public class Users {
         this.userName=name;
         this.userPass = userPass;
         this.mail = "";
-        count ++;
-        this.idUser= count ;
+        //count ++;
+        //this.idUser= count ;
     }
 
     public String getUserName() {return this.userName;}

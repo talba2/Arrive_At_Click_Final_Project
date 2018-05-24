@@ -36,7 +36,7 @@ public class AdminPage extends AppCompatActivity {
             }
         });
 
-        Button bttnOpnion= (Button)findViewById(R.id.bttnOpnion);
+        Button bttnOpnion= (Button)findViewById(R.id.bttnOpinion);
         bttnOpnion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +45,7 @@ public class AdminPage extends AppCompatActivity {
 
         });
 
-        Button bttnMap= (Button)findViewById(R.id.bttnMap);
+        Button bttnMap= (Button)findViewById(R.id.bttnSecondCategory);
         bttnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

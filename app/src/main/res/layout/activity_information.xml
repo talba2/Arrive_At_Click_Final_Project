@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TextView
                 android:id="@+id/tvPhone"
@@ -127,14 +127,25 @@
 
             <EditText
                 android:id="@+id/etPhone"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:enabled="false"
+                android:background="@android:color/transparent"
                 android:inputType="text"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/bttnCall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/categorybttn"
+                android:backgroundTint="@color/colorAccent"
+                android:layout_marginRight="10dp"
+                android:text="חייג"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:onClick="OnClickCall"/>
 
         </LinearLayout>
 
@@ -219,8 +230,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:weightSum="4">
+                android:orientation="vertical">
 
                 <CheckBox
                     android:id="@+id/cbParking"
@@ -255,6 +265,24 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:text="רמפה"
+                    android:clickable="false"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/cbHearing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="מכשיר ללקויי שמיעה"
+                    android:clickable="false"
+                    android:textSize="18sp" />
+
+                <CheckBox
+                    android:id="@+id/cbAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="הכנסת בעל חיים"
                     android:clickable="false"
                     android:textSize="18sp" />
 
@@ -295,7 +323,7 @@
                     android:maxHeight="3dp"
                     android:minHeight="3dp"
                     android:progressDrawable="@drawable/seekbar_web"
-                    android:max="4" />
+                    android:max="6" />
 
                 <EditText
                     android:id="@+id/etAvailLevel"
@@ -336,7 +364,7 @@
                     android:maxHeight="3dp"
                     android:minHeight="3dp"
                     android:progressDrawable="@drawable/seekbar"
-                    android:max="4" />
+                    android:max="6" />
 
                 <EditText
                     android:id="@+id/etAvailClientLevel"
@@ -391,13 +419,13 @@
 
                     <RatingBar
                         android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:numStars="4"
-                        android:rating="3.0"
+                        android:numStars="6"
+                        android:rating="1.0"
                         android:layout_marginRight="10dp"
                         android:progressTint="#CFB53B"
-                        android:stepSize="1.0" />
+                        android:stepSize="1" />
 
                 </LinearLayout>
 

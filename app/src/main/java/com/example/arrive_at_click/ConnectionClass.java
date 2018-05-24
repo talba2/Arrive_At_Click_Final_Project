@@ -24,7 +24,6 @@ public class ConnectionClass {
                 outputStream.write(buff,0,length);
             outputStream.flush();
             outputStream.close();
-            Log.w("MapPage","DB copied");
             return true;
         }
         catch (Exception e){

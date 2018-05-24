@@ -106,7 +106,7 @@
             tools:textColor="@color/colorAccent" />
 
         <Spinner
-            android:id="@+id/LanguageSpinner"
+            android:id="@+id/AddressSpinner"
             android:layout_width="230dp"
             android:layout_height="50dp"
             android:background="@drawable/spinner_border"

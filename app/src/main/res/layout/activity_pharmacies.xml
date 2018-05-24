@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="25dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="25dp"
     android:background="@drawable/background_image"
     android:orientation="vertical">
 
@@ -19,75 +23,85 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/bttnSuperPharme"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="17dp"
-                    android:onClick="OnClickPharamacies"
-                    android:background="@drawable/super_pharme"/>
-
-                <ImageButton
-                    android:id="@+id/bttnNewPharme"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="17dp"
-                    android:onClick="OnClickPharamacies"
-                    android:background="@drawable/new_pharme"/>
-
-                <ImageButton
-                    android:id="@+id/bttnBetMerkahat"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="17dp"
-                    android:onClick="OnClickPharamacies"
-                    android:background="@drawable/bet_merkahat"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:id="@+id/tvSuperPharme"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="סופר-פארם"
-                    android:textSize="22dp"
-                    tools:textColor="@color/colorAccent" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvNewPharme"
+                    <ImageButton
+                        android:id="@+id/bttnSuperPharme"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:onClick="OnClickPharamacies"
+                        android:background="@drawable/super_pharme"/>
+
+                    <TextView
+                        android:id="@+id/tvSuperPharme"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="סופר-פארם"
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
-                    android:text="ניו-פארם"
-                    android:textSize="22dp"
-                    tools:textColor="@color/colorAccent" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvBetMerkahat"
+                    <ImageButton
+                        android:id="@+id/bttnNewPharme"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:onClick="OnClickPharamacies"
+                        android:background="@drawable/new_pharme"/>
+
+                    <TextView
+                        android:id="@+id/tvNewPharme"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="ניו-פארם"
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:text="בתי מרקחת"
-                    android:textSize="22dp"
-                    tools:textColor="@color/colorAccent" />
+                    android:orientation="vertical">
 
+                    <ImageButton
+                        android:id="@+id/bttnBetMerkahat"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:onClick="OnClickPharamacies"
+                        android:background="@drawable/bet_merkahat"/>
+
+                    <TextView
+                        android:id="@+id/tvBetMerkahat"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="בתי מרקחת"
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

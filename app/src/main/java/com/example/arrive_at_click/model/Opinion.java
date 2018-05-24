@@ -29,7 +29,7 @@ public class Opinion extends AppCompatActivity {
         this.approved =0;
     }
 
-    public Opinion(String name,int idOpinion, int idSite, String textOpinion, int score, String dateOfOpinion) {
+    public Opinion(String name, int idSite, String textOpinion, int score, String dateOfOpinion) {
         IdSite = idSite;
         this.textOpinion = textOpinion;
         this.score = score;
