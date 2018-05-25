@@ -6,16 +6,14 @@
     android:background="@drawable/background_image"
     android:orientation="vertical">
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
-        android:fillViewport="true"
         android:layout_height="match_parent"
-        android:gravity="center" >
+        android:fillViewport="true"
+        android:gravity="center">
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -67,9 +65,9 @@
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
                     android:enabled="false"
-                    android:layout_marginTop="5dp"
                     android:inputType="text"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
@@ -98,11 +96,11 @@
                     android:id="@+id/etAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:inputType="text"
                     android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="5dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -129,10 +127,10 @@
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:inputType="text"
-                    android:layout_marginTop="5dp"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -173,8 +171,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_marginTop="15dp"
+                android:gravity="right"
                 android:orientation="vertical">
 
                 <TextView
@@ -190,8 +188,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
                     android:layout_marginTop="10dp"
+                    android:gravity="right"
                     android:orientation="vertical"
                     android:weightSum="4">
 
@@ -199,36 +197,63 @@
                         android:id="@+id/cbParking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:gravity="right"
                         android:text="חניית נכים"
-                        android:clickable="false"
                         android:textSize="18sp" />
 
                     <CheckBox
                         android:id="@+id/cbToilet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:gravity="right"
                         android:text="שירותי נכים"
-                        android:clickable="false"
                         android:textSize="18sp" />
 
                     <CheckBox
                         android:id="@+id/cbRailing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:gravity="right"
                         android:text="מעקה"
-                        android:clickable="false"
                         android:textSize="18sp" />
 
                     <CheckBox
                         android:id="@+id/cbRamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:gravity="right"
                         android:text="רמפה"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/cbAnimal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:clickable="false"
+                        android:gravity="right"
+                        android:text="הכנסת כלבי נחייה"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/cbHearing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:gravity="right"
+                        android:text="מתקן ללקוי שמיעה"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/cbStand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:gravity="right"
+                        android:text="עמדה ללקוי ראיה"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -249,32 +274,33 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/categorybttn"
                     android:backgroundTint="@color/colorAccent"
-                    android:text="Delete site from list"
                     android:onClick="OnClickDelete"
+                    android:text="Delete site from list"
                     android:textColor="@android:color/background_light"
                     android:textStyle="bold" />
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/bttnSave"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/categorybttn"
-                android:backgroundTint="@color/colorAccent"
-                android:text="SAVE"
-                android:onClick="OnClickSave"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold" />
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/bttnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/categorybttn"
+                    android:backgroundTint="@color/colorAccent"
+                    android:onClick="OnClickSave"
+                    android:text="SAVE"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -249,7 +249,10 @@ public class ChooseSearchMethod extends AppCompatActivity {
         else
         {
             Address =AddressSpinner.getSelectedItem().toString();
-            Intent i = new Intent(ChooseSearchMethod.this,MapPage.class);
+            SiteToUpdate.address = AddressSpinner.getSelectedItem().toString();
+            SiteToUpdate.fieldName = FieldName;
+            SiteToUpdate.siteName = SiteName;
+            Intent i = new Intent(ChooseSearchMethod.this,SiteToUpdate.class);
             startActivity(i);
         }
     }

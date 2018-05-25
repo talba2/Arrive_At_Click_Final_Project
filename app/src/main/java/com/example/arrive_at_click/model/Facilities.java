@@ -7,6 +7,9 @@ public class Facilities {
     int handicapedToillets;
     int handicappedParking;
     int railing;
+    int hearingAid;
+    int entryToAnimals;
+    int standForVisionImpaired;
 
 
     public Facilities(int idSite, int ramp, int handicapedToillets, int handicappedParking, int railing) {
@@ -55,5 +58,23 @@ public class Facilities {
 
     public void setRailing(int railing) {
         this.railing = railing;
+    }
+
+    public int getStandForVisionImpaired(){return standForVisionImpaired ;}
+
+    public void setStandForVisionImpaired (int standForVisionImpaired) {
+        this.standForVisionImpaired = standForVisionImpaired;
+    }
+
+    public int isHearingAid(){ return hearingAid;}
+
+    public void setHearingAid(int hearingAid){
+        this.hearingAid = hearingAid;
+    }
+
+    public int isEntryToAnimal() { return  entryToAnimals; }
+
+    public void setEntryToAnimals( int entryToAnimals) {
+        this.entryToAnimals = entryToAnimals;
     }
 }
