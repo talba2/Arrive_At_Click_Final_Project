@@ -56,8 +56,8 @@ public class Categories extends AppCompatActivity {
             }
         });
 
-        ImageButton bttnHMOospitals = (ImageButton)findViewById(R.id.bttnHMO);
-        bttnHospitals.setOnClickListener(new View.OnClickListener() {
+        ImageButton bttnHMO = (ImageButton)findViewById(R.id.bttnHMO);
+        bttnHMO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OnClickHMO(v);

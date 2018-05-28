@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite7.0.db";
+    public static final String DBNAME="sqLite8.0.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -37,19 +37,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void openDatabase() {
-        /*String dbPath=mContext.getDatabasePath(DBNAME).getPath();
+        String dbPath=mContext.getDatabasePath(DBNAME).getPath();
         if(mDatabase!=null && mDatabase.isOpen()) {
             return;
         }
-        mDatabase=SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READWRITE);*/
-
-        try {
-            this.mDatabase = SQLiteDatabase.openDatabase(mContext.getDatabasePath(DBNAME).getPath(),
-                    null,
-                    SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-        } catch (SQLiteException e) {
-            e.printStackTrace();
-        }
+        mDatabase=SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READWRITE);
     }
 
     public void closeDatabase(){
@@ -57,16 +49,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mDatabase.close();
     }
 
-    public ArrayList<Site> getListSites(String select, String where) {
+    public ArrayList<Site> getListSites(String select, String from, String where) {
         Site site = null;
         ArrayList<Site> siteList = new ArrayList<>();
         openDatabase();
-        //mDatabase=this.getReadableDatabase();
         Cursor cursor;
         if (where == null)
-            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Sites", null);
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM "+ from, null);
         else
-            cursor = mDatabase.rawQuery("SELECT " + select + " FROM Sites WHERE " + where, null);
+            cursor = mDatabase.rawQuery("SELECT " + select + " FROM "+from+" WHERE " + where, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -87,7 +78,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Opinion opinion = null;
             ArrayList<Opinion> opinionList = new ArrayList<>();
             openDatabase();
-            //mDatabase=this.getReadableDatabase();
             Cursor cursor;
             if (where==null)
                 cursor = mDatabase.rawQuery("SELECT " + select + " FROM Opinion", null);
@@ -122,7 +112,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Facilities facilities = null;
         ArrayList<Facilities> facilitiesList = new ArrayList<>();
         openDatabase();
-        //mDatabase=this.getReadableDatabase();
         Cursor cursor;
         if (where == null)
             cursor = mDatabase.rawQuery("SELECT " + select + " FROM Facilities", null);
@@ -131,7 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            facilities = new Facilities(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4));
+            facilities = new Facilities(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4),cursor.getInt(5),cursor.getInt(6),cursor.getInt(7));
             facilitiesList.add(facilities);
             cursor.moveToNext();
         }
@@ -144,7 +133,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Users user = null;
         ArrayList<Users> usersList = new ArrayList<>();
         openDatabase();
-        //mDatabase=this.getReadableDatabase();
         Cursor cursor;
         if (where == null)
             cursor = mDatabase.rawQuery("SELECT " + select + " FROM Users", null);
@@ -153,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            user = new Users(Integer.parseInt(cursor.getString(0)),cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            user = new Users(cursor.getString(0),cursor.getString(1), cursor.getString(3), cursor.getString(4),cursor.getInt(5),cursor.getInt(6),cursor.getInt(7));
             usersList.add(user);
             cursor.moveToNext();
         }
@@ -164,7 +152,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int numOfRows(String table, String where)
     {
-        //mDatabase=this.getReadableDatabase();
         openDatabase();
         Cursor cursor=null;
         int count=0;
@@ -186,7 +173,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long insertValues(String table,ContentValues cv)
     {
         openDatabase();
-        //mDatabase=this.getReadableDatabase();
         long added=mDatabase.insert(table,null,cv);
         closeDatabase();
         return added;
@@ -195,7 +181,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int sumColumn(String query)
     {
         openDatabase();
-        //mDatabase=this.getReadableDatabase();
         Cursor cursor = mDatabase.rawQuery(query, null);
         int total=0;
         if (cursor.moveToFirst())
@@ -207,7 +192,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean update(ContentValues cv,String table,String where)
     {
         openDatabase();
-        //mDatabase=this.getReadableDatabase();
         int affectedRows=mDatabase.update(table, cv, where, null);
         closeDatabase();
         return affectedRows>0;

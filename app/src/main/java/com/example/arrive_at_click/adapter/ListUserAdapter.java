@@ -32,9 +32,7 @@ public class ListUserAdapter extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int position) {
-        return mUsersList.get(position).getIdUser();
-    }
+    public long getItemId(int position) { return Integer.parseInt(mUsersList.get(position).getIdUser()); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

@@ -12,12 +12,15 @@ public class Facilities {
     int standForVisionImpaired;
 
 
-    public Facilities(int idSite, int ramp, int handicapedToillets, int handicappedParking, int railing) {
+    public Facilities(int idSite, int ramp, int handicapedToillets, int handicappedParking, int railing, int hearingAid, int entryToAnimals, int standForVisionImpaired) {
         IdSite = idSite;
         this.ramp = ramp;
         this.handicapedToillets = handicapedToillets;
         this.handicappedParking = handicappedParking;
         this.railing = railing;
+        this.hearingAid=hearingAid;
+        this.entryToAnimals=entryToAnimals;
+        this.standForVisionImpaired=standForVisionImpaired;
     }
 
     public int getIdSite() {
@@ -60,7 +63,9 @@ public class Facilities {
         this.railing = railing;
     }
 
-    public int getStandForVisionImpaired(){return standForVisionImpaired ;}
+    public int isStandForVisionImpaired() {
+        return standForVisionImpaired;
+    }
 
     public void setStandForVisionImpaired (int standForVisionImpaired) {
         this.standForVisionImpaired = standForVisionImpaired;

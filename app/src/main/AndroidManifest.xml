@@ -61,15 +61,14 @@
         <activity android:name=".AdminPage" />
         <activity android:name=".ResultsOfSearch" />
         <activity android:name=".ChooseSearchMethod" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
         <activity android:name=".UpdateSite" />
         <activity android:name=".Opninions" />
         <activity android:name=".EditSite" />
         <activity android:name=".SlopeMap" />
         <activity android:name=".SiteToUpdate" />
-        <activity android:name=".Registration"></activity>
+        <activity android:name=".Registration" />
+        <activity android:name=".RegistedSearch" />
+        <activity android:name=".SignIn" android:label="Sign In"></activity>
     </application>
 
 </manifest>

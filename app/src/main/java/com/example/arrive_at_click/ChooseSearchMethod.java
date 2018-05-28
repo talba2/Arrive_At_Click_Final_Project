@@ -30,7 +30,8 @@ public class ChooseSearchMethod extends AppCompatActivity {
     Spinner BranchSpinner;
     public static String SiteName;
     public static String FieldName;
-    public static String Address;
+    public static String Address=null;
+    public static int idSite=-1;
     private ArrayList<Site> SitesList;
     private ListSiteAdapter adapter;
 
@@ -218,7 +219,7 @@ public class ChooseSearchMethod extends AppCompatActivity {
                             break;
                     }
 
-                    SitesList = ConnectionClass.DBHelper.getListSites("*", FieldName + " LIKE '%" + SiteName + "%'");
+                    SitesList = ConnectionClass.DBHelper.getListSites("*", "Sites",FieldName + " LIKE '%" + SiteName + "%'");
                     //init adapter
                     adapter = new ListSiteAdapter(ChooseSearchMethod.this, SitesList);
 
@@ -245,14 +246,21 @@ public class ChooseSearchMethod extends AppCompatActivity {
     {
         String categorySelected=CategorySpinner.getSelectedItem().toString();
         if(categorySelected.equals("בחר קטגוריה..."))
+        {
+            Address=null;
             Toast.makeText(this, "לא בחרת מה אתה רוצה לחפש, נסה שנית", Toast.LENGTH_LONG).show();
+        }
         else
         {
+            MapPage.SiteName=null;
+            MapPage.FieldName=null;
+            Categories.categoryName=null;
+            idSite=SitesList.get(0).getIdSite();
             Address =AddressSpinner.getSelectedItem().toString();
             SiteToUpdate.address = AddressSpinner.getSelectedItem().toString();
             SiteToUpdate.fieldName = FieldName;
             SiteToUpdate.siteName = SiteName;
-            Intent i = new Intent(ChooseSearchMethod.this,SiteToUpdate.class);
+            Intent i = new Intent(ChooseSearchMethod.this,MapPage.class);
             startActivity(i);
         }
     }

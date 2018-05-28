@@ -55,7 +55,7 @@ public class EditSite extends AppCompatActivity {
         }
 
 
-        SitesList  = ConnectionClass.DBHelper.getListSites("distinct(category)","category IS NOT NULL" );
+        SitesList  = ConnectionClass.DBHelper.getListSites("distinct(category)","Sites","category IS NOT NULL" );
 
         //init adapter
         adapter = new ListSiteAdapter(this,SitesList);
@@ -223,7 +223,7 @@ public class EditSite extends AppCompatActivity {
                         break;
                 }
 
-                SitesList  = ConnectionClass.DBHelper.getListSites("*",field+" LIKE '%" + site + "%'");
+                SitesList  = ConnectionClass.DBHelper.getListSites("*","Sites",field+" LIKE '%" + site + "%'");
                 //init adapter
                 adapter = new ListSiteAdapter(EditSite.this,SitesList);
 

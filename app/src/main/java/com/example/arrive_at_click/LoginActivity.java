@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private ArrayList<Users> usersList=null;
     public static int idUser=-1;
     public static boolean isLogged=false;
+    public static String userName=null;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -218,38 +219,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             database = getApplicationContext().getDatabasePath(DatabaseHelper.DBNAME);
 
             EditText etName=(EditText)findViewById(R.id.etName);
-            String userName=etName.getText().toString();
+            userName=etName.getText().toString();
 
             if(isDatabaseExists())
             {
                 usersList = ConnectionClass.DBHelper.getListUsers("*", "userName LIKE '%" + userName + "%'");
                 int numOfUsers=ConnectionClass.DBHelper.numOfRows("Users",null); //get num of users
-                if(usersList==null)//if the user doesn't exist, then create a new one
+                if(usersList.size()==0)//if the userName doesn't exist
                 {
+                    usersList = ConnectionClass.DBHelper.getListUsers("*", "userPass LIKE '%"+password+"%'");
                     idUser=numOfUsers; //starts from 0
-
-                    String query;
-
-                    ContentValues initialValues = new ContentValues();
-                    initialValues.put("idUser",idUser);
-                    initialValues.put("userName",userName);
-                    initialValues.put("mail",email);
-                    initialValues.put("userPass",password);
-                    ConnectionClass.DBHelper.insertValues("Users",initialValues);
 
                     //go to registration form
                     Intent i = new Intent(this,Registration.class);
                     startActivity(i);
                 }
-                else
+                else // if the user exists already
                 {
                     //idUser=getIdUser(numOfUsers,userName);
-                    idUser=usersList.get(0).getIdUser();
+                    idUser=Integer.parseInt(usersList.get(0).getIdUser());
                     if(usersList.get(0).getUserPass().equals(password))
                     {
                         finish();
                         isLogged=true;
-                        Intent i = new Intent(this,Categories.class);
+                        Intent i = new Intent(this,RegistedSearch.class);
                         startActivity(i);
                     }
                     else
@@ -269,7 +262,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         {
             if(usersList.get(i).getUserName().equals(userName))
             {
-                id=usersList.get(i).getIdUser();
+                id=Integer.parseInt(usersList.get(i).getIdUser());
                 i=count;
             }
         }

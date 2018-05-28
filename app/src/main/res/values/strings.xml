@@ -18,6 +18,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="Underlined"><u>הירשם!</u></string>
     <string name="title_activity_login">Sign in</string>
 
 
@@ -34,12 +35,12 @@
         <item>סניף דואר</item>
         <item>בית מרקחת</item>
         <item>מחלקת-רווחה</item>
-		<item>בית אבות</item>
-		<item>מוסד סיעוד גריאטרי</item>
-		<item>מרפאה כירורגית</item>
+        <item>בית אבות</item>
+        <item>מוסד סיעוד גריאטרי</item>
+        <item>מרפאה כירורגית</item>
     </string-array>
-	
-	<string-array name="disability_arrays">
+
+    <string-array name="disability_arrays">
         <item>בחר לקות...</item>
         <item>נכה</item>
         <item>לקוי שמיעה</item>
@@ -47,4 +48,6 @@
     </string-array>
 
     <string name="title_activity_update_site">UpdateSite</string>
+
+
 </resources>

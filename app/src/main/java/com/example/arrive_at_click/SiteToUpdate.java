@@ -51,7 +51,7 @@ public class SiteToUpdate extends AppCompatActivity {
             //copy db
             ConnectionClass con = new ConnectionClass();
         }
-        siteProperties = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + address + "%' " + "AND " + fieldName + " LIKE '%" + siteName + "%'");
+        siteProperties = ConnectionClass.DBHelper.getListSites("*","Sites", "addSite LIKE '%" + address + "%' " + "AND " + fieldName + " LIKE '%" + siteName + "%'");
         arrFacilities = ConnectionClass.DBHelper.getListFacilities("*", "addSite=" + address + "%' " + "AND " + fieldName + " LIKE '%" + siteName + "%'");
 
         // fill the properties of the specific site

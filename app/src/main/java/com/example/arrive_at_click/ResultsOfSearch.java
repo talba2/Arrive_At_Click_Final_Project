@@ -83,7 +83,7 @@ public class ResultsOfSearch extends FragmentActivity implements OnMapReadyCallb
             }
         }
 
-        sitesList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + searchValue + "%' OR name LIKE '%" + searchValue + "%' OR category LIKE '%"+ searchValue + "%'" );
+        sitesList = ConnectionClass.DBHelper.getListSites("*", "Sites","addSite LIKE '%" + searchValue + "%' OR name LIKE '%" + searchValue + "%' OR category LIKE '%"+ searchValue + "%'" );
 
         //init adapter
         adapter = new ListSiteAdapter(this,sitesList);

@@ -1,10 +1,12 @@
 package com.example.arrive_at_click;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -142,6 +145,10 @@ public class Information extends AppCompatActivity {
             boolean affected=ConnectionClass.DBHelper.update(cv,"Sites","idSite="+id);
 
             Toast.makeText(this, "thanks for sharing your opinion!!", Toast.LENGTH_LONG).show();
+
+            etClientName.setText("");
+            etOpinion.setText("");
+            addOpinions();
         }
     }
 
@@ -157,7 +164,7 @@ public class Information extends AppCompatActivity {
     {
         if(isDatabaseExists())
         {
-            siteList = ConnectionClass.DBHelper.getListSites("*", "addSite LIKE '%" + siteAddress + "%' " + "AND name LIKE '%" + MapPage.SiteName + "%'");
+            siteList = ConnectionClass.DBHelper.getListSites("*","Sites", "idSite=" + MapPage.IdSite);
             OpinionsList = ConnectionClass.DBHelper.getListOpinions("name,DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
             FacilitiesList = ConnectionClass.DBHelper.getListFacilities("*", "IdSite=" + MapPage.IdSite);
         }
@@ -246,16 +253,65 @@ public class Information extends AppCompatActivity {
         else
             cbRailing.setChecked(false);
 
+        int hearingAid=FacilitiesList.get(0).isHearingAid();
+        CheckBox cbHearing=(CheckBox)findViewById(R.id.cbHearing);
+        if(hearingAid==1)
+        {
+            cbHearing.setChecked(true);
+            count++;
+        }
+        else
+            cbHearing.setChecked(false);
+
+        int entryToAnimals=FacilitiesList.get(0).isEntryToAnimal();
+        CheckBox cbAnimal=(CheckBox)findViewById(R.id.cbAnimal);
+        if(entryToAnimals==1)
+        {
+            cbAnimal.setChecked(true);
+            count++;
+        }
+        else
+            cbAnimal.setChecked(false);
+
+        int Stand=FacilitiesList.get(0).isStandForVisionImpaired();
+        CheckBox cbStand=(CheckBox)findViewById(R.id.cbStand);
+        if(Stand==1)
+        {
+            cbStand.setChecked(true);
+            count++;
+        }
+        else
+            cbStand.setChecked(false);
+
         EditText siteAvailWeb =(EditText)findViewById(R.id.etAvailLevel);
         //int AccessWeb=siteList.get(0).getAccessByWeb();
-        siteAvailWeb.setText(String.valueOf(count)+"/6");
+        siteAvailWeb.setText(String.valueOf(count)+"/7");
         sbWeb.setProgress(count);
 
         EditText siteAvailClient =(EditText)findViewById(R.id.etAvailClientLevel);
         AccessClient=siteList.get(0).getAccessByUser();
-        siteAvailClient.setText(String.valueOf(AccessClient)+"/6");
+        siteAvailClient.setText(String.valueOf(AccessClient)+"/7");
         sbClient.setProgress(AccessClient);
 
+        Button bttnSlopeMap=(Button)findViewById(R.id.bttnSlopeMap);
+        bttnSlopeMap.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                OnClickSlopeMap(v);
+            }
+        });
+
+
+    }
+
+    private void OnClickSlopeMap(View v)
+    {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialogbrand_layout);
+        dialog.setTitle("Slope Map");
+        ImageView imSlopeMap = (ImageView)dialog.findViewById(R.id.iSlopeMap);
+        dialog.show();
     }
 
     private void OnClickCall(View v)
