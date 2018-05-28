@@ -33,9 +33,6 @@ public class RegistedSearch extends AppCompatActivity {
                 OnClickSuitable(v);
             }
         });
-
-        ArrayList<Users> users=ConnectionClass.DBHelper.getListUsers("*", "userName LIKE '%" + Registration.UserName + "%'");
-
     }
 
     private void OnClickOrdinary(View v)

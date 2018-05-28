@@ -186,10 +186,10 @@ public class Registration extends AppCompatActivity {
 
                             ContentValues initialValues = new ContentValues();
                             initialValues.put("idUser",numOfUsers);
-                            initialValues.put("userName",etName.toString());
-                            initialValues.put("userPass",etPassword.toString());
+                            initialValues.put("userName",etName.getText().toString());
+                            initialValues.put("userPass",etPassword.getText().toString());
                             initialValues.put("kind","לקוי שמיעה");
-                            initialValues.put("precent",etPercentage.toString());
+                            initialValues.put("precent",etPercentage.getText().toString());
                             initialValues.put("wheelchair",SignIn.isWheelchairWasClicked);
                             initialValues.put("walkingStick",-1);
 
@@ -220,10 +220,10 @@ public class Registration extends AppCompatActivity {
 
                             ContentValues initialValues = new ContentValues();
                             initialValues.put("idUser",numOfUsers);
-                            initialValues.put("userName",etName.toString());
-                            initialValues.put("userPass",etPassword.toString());
+                            initialValues.put("userName",etName.getText().toString());
+                            initialValues.put("userPass",etPassword.getText().toString());
                             initialValues.put("kind","לקוי ראייה");
-                            initialValues.put("precent",etPercentage.toString());
+                            initialValues.put("precent",etPercentage.getText().toString());
                             initialValues.put("wheelchair",SignIn.isWheelchairWasClicked);
                             initialValues.put("walkingStick",SignIn.isStickWasClicked);
 

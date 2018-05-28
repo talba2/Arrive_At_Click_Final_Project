@@ -149,7 +149,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             }
         }
         //update spinner list
-        else if(SiteName==null && FieldName==null) //we got from chooseSearchMethod
+        if(SiteName==null && FieldName==null) //we got from chooseSearchMethod
         {
             SiteName=ChooseSearchMethod.SiteName;
             FieldName=ChooseSearchMethod.FieldName;
@@ -161,6 +161,8 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                 String[] sitesAdd=new String[1];
                 sitesAdd[0]=SitesList.get(0).getAddSite();
                 SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAdd);
+                SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                AddressSpinner.setAdapter(SpinnerAdapter);
             }
         }
         else
@@ -206,6 +208,8 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                     sitesAddress[i]=SitesList.get(i).getAddSite();
 
                 SpinnerAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,sitesAddress);
+                SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                AddressSpinner.setAdapter(SpinnerAdapter);
             }
             else
                 Toast.makeText(this, "לא נמצאו תוצאות מתאימות", Toast.LENGTH_LONG).show();
@@ -213,8 +217,6 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
 
         }
 
-        SpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        AddressSpinner.setAdapter(SpinnerAdapter);
         AddressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -252,9 +254,9 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
 
     public void OnClickGO(View v)
     {
-        itemSelected=AddressSpinner.getSelectedItem().toString();
-        if(!itemSelected.equals("")&& index!=-1)
+        if(AddressSpinner.getSelectedItem()!=null && index!=-1)
         {
+            itemSelected=AddressSpinner.getSelectedItem().toString();
             IdSite= SitesList.get(index).getIdSite(); //get id of site that selected
             Intent i = new Intent(this,Information.class);
             startActivity(i);
