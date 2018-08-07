@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="אנא בחר אפשרות"
+                    android:textSize="25sp"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold|italic" />
 
@@ -43,18 +44,17 @@
                 android:layout_marginTop="50dp"
                 android:orientation="vertical">
 
-
             <Button
-                    android:id="@+id/bttnSite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/categorybttn"
-                    android:backgroundTint="@color/colorAccent"
-                    android:text="עריכת פרטי אתר"
-                    android:onClick="OnClickSite"
-                    android:textColor="@android:color/background_light"
-                    android:textStyle="bold" />
+                android:id="@+id/bttnSite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categorybttn"
+                android:backgroundTint="@color/colorAccent"
+                android:text="עריכת פרטי אתר"
+                android:textSize="22sp"
+                android:onClick="OnClickSite"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -67,20 +67,18 @@
                 android:orientation="vertical">
 
             <Button
-                    android:id="@+id/bttnOpinion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/categorybttn"
-                    android:backgroundTint="@color/colorAccent"
-                    android:text="אישור חוות דעת"
-                    android:onClick="OnClickOpnion"
-                    android:textColor="@android:color/background_light"
-                    android:textStyle="bold" />
+                android:id="@+id/bttnOpinion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categorybttn"
+                android:backgroundTint="@color/colorAccent"
+                android:text="אישור חוות דעת"
+                android:textSize="22sp"
+                android:onClick="OnClickOpinion"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,17 +86,16 @@
                 android:gravity="center"
                 android:layout_marginTop="50dp"
                 android:orientation="vertical">
-
 
                 <Button
                     android:id="@+id/bttnSecondCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:background="@drawable/categorybttn"
                     android:backgroundTint="@color/colorAccent"
                     android:text="עדכון מפת שיפועים"
                     android:onClick="OnClickMap"
+                    android:textSize="22sp"
                     android:textColor="@android:color/background_light"
                     android:textStyle="bold" />
 

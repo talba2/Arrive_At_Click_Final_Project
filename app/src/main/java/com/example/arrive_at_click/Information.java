@@ -1,19 +1,13 @@
 package com.example.arrive_at_click;
 
-import android.Manifest;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -102,54 +96,56 @@ public class Information extends AppCompatActivity {
         etOpinion=(EditText)findViewById(R.id.etOpinion);
     }
 
-    public void OnClickSend(View v)
-    {
-        int id=MapPage.IdSite;
+    public void OnClickSend(View v) {
+        int id = MapPage.IdSite;
         int count;
 
-        if(isDatabaseExists())
-        {
-            count=ConnectionClass.DBHelper.numOfRows("Opinion",null);
+        if (isDatabaseExists()) {
+            count = ConnectionClass.DBHelper.numOfRows("Opinion", null);
             ++count;
-        }
-        else
-            count=-1;
+            Date date = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String today = df.format(date);
+            String name = etClientName.getText().toString();
+            String opinion = etOpinion.getText().toString();
 
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String today=df.format(date);
-        String name=etClientName.getText().toString();
-        String opinion=etOpinion.getText().toString();
+            if (name.matches(""))
+                name="אנונימי";
 
-        if(name.matches(""))
-            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_LONG).show();
-        else
-        {
             String query;
 
             ContentValues initialValues = new ContentValues();
-            initialValues.put("IdOpinion",count);
-            initialValues.put("IdSite",id);
-            initialValues.put("textOpinion",opinion);
-            initialValues.put("score",rate.getRating());
-            initialValues.put("DateOfOpinion",today);
-            initialValues.put("name",name);
-            ConnectionClass.DBHelper.insertValues("Opinion",initialValues);
+            initialValues.put("IdOpinion", count);
+            initialValues.put("IdSite", id);
+            initialValues.put("textOpinion", opinion);
+            initialValues.put("score", rate.getRating());
+            initialValues.put("DateOfOpinion", today);
+            initialValues.put("name", name);
+            ConnectionClass.DBHelper.insertValues("Opinion", initialValues);
 
             //update score by users
-            query="SELECT SUM(score) as Total FROM Opinion";
-            int sum=ConnectionClass.DBHelper.sumColumn(query);
+            query = "SELECT SUM(score) as Total FROM Opinion";
+            int sum = ConnectionClass.DBHelper.sumColumn(query);
 
             ContentValues cv = new ContentValues();
-            cv.put("AccessibilityLevelByUsers",sum/count);
-            boolean affected=ConnectionClass.DBHelper.update(cv,"Sites","idSite="+id);
+            cv.put("AccessibilityLevelByUsers", sum / count);
+            boolean affected = ConnectionClass.DBHelper.update(cv, "Sites", "idSite=" + id);
 
-            Toast.makeText(this, "thanks for sharing your opinion!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "תודה על ששיתפת אותנו!", Toast.LENGTH_LONG).show();
 
             etClientName.setText("");
             etOpinion.setText("");
+
+            OpinionsList = ConnectionClass.DBHelper.getListOpinions("name,DateOfOpinion,score,textOpinion", "IdSite=" + MapPage.IdSite);
+
             addOpinions();
         }
+        else
+        {
+            Toast.makeText(this, "עקב תקלה זמנית, חוות הדעת לא נוספה. נסו שנית במועד מאוחר יותר", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
     public void OnClickNavigate(View v)
@@ -174,8 +170,7 @@ public class Information extends AppCompatActivity {
     {
         //set values of a specific site
         EditText siteName = (EditText) findViewById(R.id.etName);
-        siteName.setText(siteList.get(0).getName());
-
+        siteName.setText(siteList.get(0).getName()+", " + siteList.get(0).getCategory());
         EditText siteAdd = (EditText) findViewById(R.id.etAddress);
         siteAdd.setText(siteList.get(0).getAddSite());
 
@@ -196,7 +191,14 @@ public class Information extends AppCompatActivity {
             }
         });
 
+        TextView tvOpenHour = (TextView) findViewById(R.id.tvOpenHours);
+        if(MapPage.SiteName.equals("בית-ספר") || MapPage.SiteName.equals("גן-ילדים") || MapPage.SiteName.equals("מרחב-מוגן"))
+            tvOpenHour.setText("מידע נוסף: ");
+        else
+            tvOpenHour.setText("שעות פתיחה: ");
+
         EditText siteOpenHour = (EditText) findViewById(R.id.etOpenHours);
+
         String hours = siteList.get(0).getDesSite();
         if (hours == null)
             siteOpenHour.setText("נתון חסר");
@@ -316,32 +318,42 @@ public class Information extends AppCompatActivity {
 
     private void OnClickCall(View v)
     {
+        if(phone!=null)
+        {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:"+phone));
+            TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+phone));
-        TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CALL_PHONE)) {
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CALL_PHONE)) {
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                }
+            }
+            try {
+                startActivity(callIntent);
+            }catch (SecurityException e){
+                e.printStackTrace();
             }
         }
-        try {
-            startActivity(callIntent);
-        }catch (SecurityException e){
-            e.printStackTrace();
-        }
-
+        else
+            Toast.makeText(this, "מספר טלפון חסר", Toast.LENGTH_LONG).show();
     }
 
     private void addOpinions()
     {
         //init adapter
-        OpinionAdapter = new ListOpinionAdapter(OpinionsList,this);
-        lvOpinion=(ListView)findViewById(R.id.lvOpinion);
-        lvOpinion.setAdapter(OpinionAdapter);
-        lvOpinion.setFastScrollEnabled(true);
+        if(OpinionsList!=null)
+        {
+            if(OpinionsList.size()!=0)
+            {
+                OpinionAdapter = new ListOpinionAdapter(OpinionsList,this);
+                lvOpinion=(ListView)findViewById(R.id.lvOpinion);
+                lvOpinion.setAdapter(OpinionAdapter);
+                lvOpinion.setFastScrollEnabled(true);
+            }
+        }
+
     }
 
     private boolean isDatabaseExists()

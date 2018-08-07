@@ -19,9 +19,7 @@ import java.util.ArrayList;
 
 public class AdminPage extends AppCompatActivity {
 
-
-
-    public static int count=0;
+    public static int chose=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +38,7 @@ public class AdminPage extends AppCompatActivity {
         bttnOpnion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnClickOpnion(v);
+                OnClickOpinion(v);
             }
 
         });
@@ -51,29 +49,25 @@ public class AdminPage extends AppCompatActivity {
             public void onClick(View v) {
                 OnClickMap(v);
             }
-
-            private void OnClickMap(View v) {
-            }
         });
 
     }
 
     private void OnClickSite(View v) {
-
+        chose=1;
         Intent i = new Intent(this, EditSite.class);
         startActivity(i);
     }
 
-    private void OnClickOpnion(View v) {
-        Intent i = new Intent(this, Opninions.class);
+    private void OnClickOpinion(View v) {
+        chose=2;
+        Intent i = new Intent(this, EditSite.class);
         startActivity(i);
-
     }
 
     private void OnClickMap(View v) {
         Intent i = new Intent(this, SlopeMap.class);
         startActivity(i);
-
     }
 
 }

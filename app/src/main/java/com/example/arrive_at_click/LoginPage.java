@@ -1,22 +1,36 @@
 package com.example.arrive_at_click;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
+import android.os.Build;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
 
 public class LoginPage extends AppCompatActivity {
+
+    private PopupWindow mPopupWindow;
+    private RelativeLayout mRelativeLayout;
+    private EditText pass;
+    public static int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
+
+        pass = (EditText)findViewById(R.id.etPass);
+
+        // Get the widgets reference from XML layout
+        mRelativeLayout = (RelativeLayout)findViewById(R.id.rl);
 
         //set bttnLogin listener
         ImageButton bttnLogin = (ImageButton)findViewById(R.id.bttnLogin);
@@ -30,41 +44,48 @@ public class LoginPage extends AppCompatActivity {
 
     public void OnClickLogin(View v)
     {
+        count++;
 
-        EditText pass = (EditText)findViewById(R.id.etPass);
-        AdminPage.count++;
-        if (pass.equals("AdminOnly"))
+        if (pass.getText().toString().equals("AdminOnly"))
         {
             Intent i = new Intent(this,AdminPage.class);
             startActivity(i);
         }
-
-        else if (AdminPage.count <3 )
+        else if(count < 3)
         {
+            // Initialize a new instance of LayoutInflater service
+            LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
 
-            PopupWindow po = new PopupWindow();
-            
-            /*AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder();
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.popup_message,null);
 
-            final EditText et = new EditText(context);
+            // Initialize a new instance of popup window
+            mPopupWindow = new PopupWindow(customView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-            // set prompts.xml to alertdialog builder
-            alertDialogBuilder.setView(et);
+            // Set an elevation value for popup window
+            // Call requires API level 27
+            if(Build.VERSION.SDK_INT>=27){
+                mPopupWindow.setElevation(10);
+            }
 
-            // set dialog message
-            alertDialogBuilder.setCancelable(false).setPositiveButton("Error! Wrong password", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
+            // Get a reference for the custom view close button
+            ImageButton closeButton = (ImageButton)customView.findViewById(R.id.ib_close);
+
+            // Set a click listener for the popup window close button
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Dismiss the popup window
+                    mPopupWindow.dismiss();
+                    pass.setText("");
                 }
             });
 
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            // show it
-            alertDialog.show();*/
+            mPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+
         }
-        else {
-        //Exit App
-        }
+        else
+            this.finish();
 
     }
 }

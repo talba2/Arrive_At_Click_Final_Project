@@ -182,6 +182,86 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/bttnSchool"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/school"
+                        android:onClick="OnClickSchool" />
+
+                    <TextView
+                        android:id="@+id/tvSchool"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="בתי ספר"
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/bttnKindergarten"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/kindergarten"
+                        android:onClick="OnClickKindergarten" />
+
+                    <TextView
+                        android:id="@+id/tvKindergarten"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="גני ילדים"
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/bttnMamad"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/mamad"
+                        android:onClick="OnClickMamad" />
+
+                    <TextView
+                        android:id="@+id/tvMamad"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="מרחב מוגן"
+                        android:textSize="22dp"
+                        tools:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

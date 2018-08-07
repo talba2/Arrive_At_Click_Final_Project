@@ -1,24 +1,17 @@
 package com.example.arrive_at_click;
 
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.arrive_at_click.adapter.ListSiteAdapter;
 import com.example.arrive_at_click.database.DatabaseHelper;
 import com.example.arrive_at_click.model.Site;
-import com.google.android.gms.maps.model.LatLng;
-import android.widget.Toast;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +26,7 @@ public class ChooseSearchMethod extends AppCompatActivity {
     public static String Address=null;
     public static int idSite=-1;
     private ArrayList<Site> SitesList;
+    private ArrayList<Site> siteProperties;
     private ListSiteAdapter adapter;
 
     @Override
@@ -123,8 +117,6 @@ public class ChooseSearchMethod extends AppCompatActivity {
                         branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         BranchSpinner.setAdapter(branchAdapter);
 
-                        //add address
-
                         break;
                     case "בית מרקחת":
                         BranchArray.clear();
@@ -139,7 +131,41 @@ public class ChooseSearchMethod extends AppCompatActivity {
                         break;
                     case "עירייה":
                         BranchArray.clear();
-                        //add branches
+                        BranchArray.add("בית אבות");
+                        BranchArray.add("מוסד סיעוד גריאטרי");
+                        BranchArray.add("מחלקת-רווחה");
+                        BranchArray.add("מרפאה כירורגית");
+
+                        branchAdapter = new ArrayAdapter<String>(ChooseSearchMethod.this, android.R.layout.simple_spinner_item, BranchArray);
+                        branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        BranchSpinner.setAdapter(branchAdapter);
+                        break;
+                    case "בית-ספר":
+                        BranchArray.clear();
+                        BranchArray.add("בתי ספר");
+
+                        branchAdapter = new ArrayAdapter<String>(ChooseSearchMethod.this, android.R.layout.simple_spinner_item, BranchArray);
+                        branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        BranchSpinner.setAdapter(branchAdapter);
+
+                        break;
+                    case "גן-ילדים":
+                        BranchArray.clear();
+                        BranchArray.add("גני ילדים");
+
+                        branchAdapter = new ArrayAdapter<String>(ChooseSearchMethod.this, android.R.layout.simple_spinner_item, BranchArray);
+                        branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        BranchSpinner.setAdapter(branchAdapter);
+
+                        break;
+                    case "מרחב-מוגן":
+                        BranchArray.clear();
+                        BranchArray.add("מרחב מוגן");
+
+                        branchAdapter = new ArrayAdapter<String>(ChooseSearchMethod.this, android.R.layout.simple_spinner_item, BranchArray);
+                        branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        BranchSpinner.setAdapter(branchAdapter);
+
                         break;
                     case "בחר קטגוריה...":
                         break;
@@ -157,7 +183,9 @@ public class ChooseSearchMethod extends AppCompatActivity {
         BranchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView adapt, View v, int i, long lng) {
+
                 String selectedBranch = BranchSpinner.getSelectedItem().toString();
+
                 if (selectedBranch != "") {
                     //check if the database exists
                     ConnectionClass.DBHelper = new DatabaseHelper(ChooseSearchMethod.this);
@@ -175,7 +203,6 @@ public class ChooseSearchMethod extends AppCompatActivity {
                             return;
                         }
                     }
-
 
                     switch (CategorySpinner.getSelectedItem().toString()) {
                         case "סניף בנק":
@@ -195,24 +222,27 @@ public class ChooseSearchMethod extends AppCompatActivity {
                             FieldName = "category";
                             break;
                         case "בית מרקחת":
-                            SiteName = selectedBranch;
+                            if(selectedBranch.equals("ניו פארם"))
+                                SiteName="ניו פארם%' OR name LIKE '%ניופארם%' OR name LIKE '%ניופרם";
+                            else
+                                SiteName = selectedBranch;
                             FieldName = "name";
                             break;
-                        case "מחלקת-רווחה":
+                        case "עירייה":
                             SiteName = selectedBranch;
                             FieldName = "category";
                             break;
-                        case "בית אבות":
-                            SiteName = selectedBranch;
-                            FieldName = "category";
+                        case "בית-ספר":
+                            SiteName= "בית-ספר";
+                            FieldName="category";
                             break;
-                        case "מוסד סיעוד גריאטרי":
-                            SiteName = selectedBranch;
-                            FieldName = "category";
+                        case "גן-ילדים":
+                            SiteName="גן-ילדים";
+                            FieldName="category";
                             break;
-                        case "מרפאה כירורגית":
-                            SiteName = selectedBranch;
-                            FieldName = "category";
+                        case "מרחב-מוגן":
+                            SiteName="מרחב-מוגן";
+                            FieldName="category";
                             break;
                         default:
                             SiteName = null;
@@ -250,76 +280,24 @@ public class ChooseSearchMethod extends AppCompatActivity {
             Address=null;
             Toast.makeText(this, "לא בחרת מה אתה רוצה לחפש, נסה שנית", Toast.LENGTH_LONG).show();
         }
+        else if(!categorySelected.equals("בחר קטגוריה...")&& BranchSpinner.getSelectedItem() != null && AddressSpinner.getSelectedItem()==null)
+            Toast.makeText(this, "לא בחרת מה אתה רוצה לחפש, נסה שנית", Toast.LENGTH_LONG).show();
         else
         {
             MapPage.SiteName=null;
             MapPage.FieldName=null;
             Categories.categoryName=null;
-            idSite=SitesList.get(0).getIdSite();
+            siteProperties = ConnectionClass.DBHelper.getListSites("*","Sites", "addSite LIKE '%" + AddressSpinner.getSelectedItem().toString() + "%' " + "AND " + FieldName + " LIKE '%" + SiteName + "%'");
+            idSite=siteProperties.get(0).getIdSite();
             Address =AddressSpinner.getSelectedItem().toString();
-            SiteToUpdate.address = AddressSpinner.getSelectedItem().toString();
-            SiteToUpdate.fieldName = FieldName;
-            SiteToUpdate.siteName = SiteName;
             Intent i = new Intent(ChooseSearchMethod.this,MapPage.class);
             startActivity(i);
         }
     }
 
-    public void OnClickChoose(View v)
+    public void OnClickChooseByCategory(View v)
     {
-        String categorySelected=CategorySpinner.getSelectedItem().toString();
-        if(categorySelected.equals("בחר קטגוריה..."))
-        {
-            Intent i = new Intent(ChooseSearchMethod.this,Categories.class);
-            startActivity(i);
-        }
-        else {
-            Intent i = null;
-            switch (CategorySpinner.getSelectedItem().toString()) {
-                case "סניף בנק":
-                    i = new Intent(ChooseSearchMethod.this, Banks.class);
-                    Categories.categoryName = "Banks";
-                    break;
-                case "בית חולים":
-                    i = new Intent(ChooseSearchMethod.this, MapPage.class);
-                    Categories.categoryName = "Hospitals";
-                    break;
-                case "קופת חולים":
-                    i = new Intent(ChooseSearchMethod.this, HMO.class);
-                    Categories.categoryName = "HMO";
-                    break;
-                case "סניף דואר":
-                    i = new Intent(ChooseSearchMethod.this, MapPage.class);
-                    Categories.categoryName = "Postal";
-                    break;
-                case "בית מרקחת":
-                    i = new Intent(ChooseSearchMethod.this, Pharmacies.class);
-                    Categories.categoryName = "Pharmacies";
-                    break;
-                case "מחלקת-רווחה":
-                    i = new Intent(ChooseSearchMethod.this, MapPage.class);
-                    Categories.categoryName = "Municipality";
-                    Municipality.MunicipalityWasClicked="מחלקת-רווחה";
-                    break;
-                case "בית אבות":
-                    i = new Intent(ChooseSearchMethod.this, MapPage.class);
-                    Categories.categoryName = "Municipality";
-                    Municipality.MunicipalityWasClicked="בית אבות";
-                    break;
-                case "מוסד סיעוד גריאטרי":
-                    i = new Intent(ChooseSearchMethod.this, MapPage.class);
-                    Categories.categoryName = "Municipality";
-                    Municipality.MunicipalityWasClicked="מוסד סיעוד גריאטרי";
-                    break;
-                case "מרפאה כירורגית":
-                    i = new Intent(ChooseSearchMethod.this, MapPage.class);
-                    Categories.categoryName = "Municipality";
-                    Municipality.MunicipalityWasClicked="מרפאה כירורגית";
-                    break;
-                default: // in case "choose category"
-                    break;
-            }
-            startActivity(i);
-        }
+        Intent i = new Intent(ChooseSearchMethod.this,Categories.class);
+        startActivity(i);
     }
 }

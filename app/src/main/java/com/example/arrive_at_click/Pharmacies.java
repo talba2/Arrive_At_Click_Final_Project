@@ -19,7 +19,7 @@ public class Pharmacies extends AppCompatActivity {
         bttnSuperPharm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PharmaciesWasClicked="פארם";
+                PharmaciesWasClicked="סופר פארם";
                 OnClickPharamacies(v);
             }
         });

@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.arrive_at_click.model.Users;
-
-import java.util.ArrayList;
-
 public class RegistedSearch extends AppCompatActivity {
     public static int isOrdinary=0;
     public static int isSuitable=0;

@@ -35,17 +35,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="פרטי אתר הניתנים לעריכה"
+                    android:text="פרטי אתר הניתנים לעריכה:"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp"
-                    android:textStyle="bold|italic" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:gravity="right"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -67,8 +67,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
-                    android:enabled="false"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:maxLines="4"
+                    android:minLines="1"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -98,8 +100,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
-                    android:enabled="false"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:minLines="1"
+                    android:maxLines="4"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -129,8 +133,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
-                    android:enabled="false"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:minLines="1"
+                    android:maxLines="4"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -159,9 +165,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:enabled="false"
                     android:inputType="textMultiLine"
-                    android:lines="2"
+                    android:lines="3"
+                    android:minLines="2"
                     android:maxLines="6"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
@@ -197,7 +203,6 @@
                         android:id="@+id/cbParking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
                         android:gravity="right"
                         android:text="חניית נכים"
                         android:textSize="18sp" />
@@ -206,7 +211,6 @@
                         android:id="@+id/cbToilet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
                         android:gravity="right"
                         android:text="שירותי נכים"
                         android:textSize="18sp" />
@@ -215,7 +219,6 @@
                         android:id="@+id/cbRailing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
                         android:gravity="right"
                         android:text="מעקה"
                         android:textSize="18sp" />
@@ -224,40 +227,35 @@
                         android:id="@+id/cbRamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
                         android:gravity="right"
                         android:text="רמפה"
-                        android:textSize="18sp" />
-
-                    <CheckBox
-                        android:id="@+id/cbAnimal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:gravity="right"
-                        android:text="הכנסת כלבי נחייה"
                         android:textSize="18sp" />
 
                     <CheckBox
                         android:id="@+id/cbHearing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
                         android:gravity="right"
-                        android:text="מתקן ללקוי שמיעה"
+                        android:text="מכשיר ללקויי שמיעה"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/cbAnimal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="הכנסת בעלי חיים"
                         android:textSize="18sp" />
 
                     <CheckBox
                         android:id="@+id/cbStand"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
                         android:gravity="right"
-                        android:text="עמדה ללקוי ראיה"
+                        android:text="עמדה ללקויי ראיה"
                         android:textSize="18sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -271,7 +269,6 @@
                     android:id="@+id/bttnDelete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:background="@drawable/categorybttn"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="OnClickDelete"
@@ -285,6 +282,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -292,11 +290,10 @@
                     android:id="@+id/bttnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:background="@drawable/categorybttn"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="OnClickSave"
-                    android:text="SAVE"
+                    android:text="Save Changes"
                     android:textColor="@android:color/background_light"
                     android:textStyle="bold" />
 

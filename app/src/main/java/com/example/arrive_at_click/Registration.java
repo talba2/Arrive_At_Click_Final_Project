@@ -8,20 +8,13 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.EditText;
-import android.text.TextUtils;
-
-import com.example.arrive_at_click.adapter.ListSiteAdapter;
 import com.example.arrive_at_click.database.DatabaseHelper;
-
-import org.w3c.dom.Text;
-
 import java.io.File;
 
 public class Registration extends AppCompatActivity {

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="sqLite8.0.db";
+    public static final String DBNAME="sqLite14.0.db";
     public static final String DBLOCATION="/data/data/com.example.arrive_at_click/databases/";
     private Context mContext;
     private SQLiteDatabase mDatabase;
@@ -141,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            user = new Users(cursor.getString(0),cursor.getString(1), cursor.getString(3), cursor.getString(4),cursor.getInt(5),cursor.getInt(6),cursor.getInt(7));
+            user = new Users(cursor.getString(0),cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4),cursor.getInt(5),cursor.getInt(6));
             usersList.add(user);
             cursor.moveToNext();
         }
@@ -167,7 +167,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         closeDatabase();
         return count;
-
     }
 
     public long insertValues(String table,ContentValues cv)
@@ -193,6 +192,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         openDatabase();
         int affectedRows=mDatabase.update(table, cv, where, null);
+        closeDatabase();
+        return affectedRows>0;
+    }
+
+    public boolean delete(String table,String where)
+    {
+        openDatabase();
+        int affectedRows=mDatabase.delete(table,where, null);
         closeDatabase();
         return affectedRows>0;
     }

@@ -70,7 +70,10 @@
                     android:background="@android:color/transparent"
                     android:enabled="false"
                     android:layout_marginTop="5dp"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:minLines="1"
+                    android:maxLines="4"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -100,7 +103,10 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:enabled="false"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:lines="2"
+                android:minLines="1"
+                android:maxLines="4"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold" />
@@ -131,7 +137,10 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:background="@android:color/transparent"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:lines="2"
+                android:minLines="1"
+                android:maxLines="4"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
@@ -175,6 +184,7 @@
                 android:enabled="false"
                 android:inputType="textMultiLine"
                 android:lines="3"
+                android:minLines="2"
                 android:maxLines="6"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />

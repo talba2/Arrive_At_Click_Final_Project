@@ -1,21 +1,15 @@
 package com.example.arrive_at_click;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.arrive_at_click.database.DatabaseHelper;
 import com.example.arrive_at_click.model.Users;
 
@@ -30,7 +24,6 @@ public class SignIn extends AppCompatActivity {
     public static boolean isLogged=false;
     public static String userName=null;
     public static String password=null;
-
     private Button sign_in_button;
     private EditText etName;
     private EditText etPassword;
@@ -43,8 +36,12 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         etName = (EditText)findViewById(R.id.etName);
+        etName.setText("");
         etPassword = (EditText)findViewById(R.id.etPassword);
+        etPassword.setText("");
 
         sign_in_button =(Button)findViewById(R.id.sign_in_button);
         sign_in_button.setOnClickListener(new View.OnClickListener() {

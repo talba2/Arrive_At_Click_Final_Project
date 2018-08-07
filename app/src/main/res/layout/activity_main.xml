@@ -1,90 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    android:orientation="vertical"
+    android:paddingBottom="25dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="25dp">
+
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
+        android:fillViewport="true"
         android:layout_height="match_parent"
-        android:background="@drawable/background_image"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <Button
-            android:id="@+id/bttnAdmin"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/admin_image"
-            android:onClick="OnClickAdmin"
-            android:textColor="@android:color/background_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvWelcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="Welcome!"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/tvLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="10dp"
-            android:text="Language:"
-            android:textStyle="bold"
-            tools:textColor="@color/colorAccent" />
+        android:gravity="center" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
 
             <Button
-                android:id="@+id/bttnOk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/categorybttn"
-                android:backgroundTint="@color/colorAccent"
-                android:text="OK"
-                android:onClick="OnClickOk"
+                android:id="@+id/bttnAdmin"
+                android:layout_width="36dp"
+                android:layout_height="33dp"
+                android:layout_gravity="left"
+                android:background="@drawable/admin_image"
+                android:onClick="OnClickAdmin"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/LanguageSpinner"
-                android:spinnerMode="dialog"
-                android:layout_width="230dp"
-                android:layout_height="60dp"
-                android:entries="@array/language_arrays"
-                android:background="@drawable/langsp"/>
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Welcome!"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold|italic" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Language:"
+                    android:textStyle="bold"
+                    tools:textColor="@color/colorAccent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/bttnOk"
+                        android:layout_width="52dp"
+                        android:layout_height="46dp"
+                        android:background="@drawable/categorybttn"
+                        android:backgroundTint="@color/colorAccent"
+                        android:onClick="OnClickOk"
+                        android:text="OK"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/LanguageSpinner"
+                        android:layout_width="245dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/langsp"
+                        android:entries="@array/language_arrays"
+                        android:spinnerMode="dialog" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="50dp"
                 android:src="@drawable/background" />
 
         </LinearLayout>
+    </ScrollView>
 </LinearLayout>
-
 

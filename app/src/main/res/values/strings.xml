@@ -34,10 +34,10 @@
         <item>קופת חולים</item>
         <item>סניף דואר</item>
         <item>בית מרקחת</item>
-        <item>מחלקת-רווחה</item>
-        <item>בית אבות</item>
-        <item>מוסד סיעוד גריאטרי</item>
-        <item>מרפאה כירורגית</item>
+        <item>עירייה</item>
+		<item>בית-ספר</item>
+		<item>גן-ילדים</item>
+		<item>מרחב-מוגן</item>
     </string-array>
 
     <string-array name="disability_arrays">

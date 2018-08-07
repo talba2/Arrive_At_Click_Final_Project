@@ -49,7 +49,7 @@
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="מוסדות n\סיעוד"
+                        android:text="מוסדות סיעוד"
                         android:textSize="22dp"
                         tools:textColor="@color/colorAccent" />
 
@@ -85,7 +85,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/bttnDayCare"
+                        android:id="@+id/bttnHospital"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_gravity="center"
@@ -93,11 +93,11 @@
                         android:background="@drawable/day_care"/>
 
                     <TextView
-                        android:id="@+id/tvDayCare"
+                        android:id="@+id/tvHospital"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="מעון יום"
+                        android:text="מרפאה כירורגית"
                         android:textSize="22dp"
                         tools:textColor="@color/colorAccent" />
 
